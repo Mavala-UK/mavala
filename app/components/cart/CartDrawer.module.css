@@ -1,0 +1,48 @@
+.header {
+  --padding-drawer-header-cart: var(--drawer-gutter);
+  --size-loader: 1.6rem;
+
+  flex-wrap: wrap;
+  padding: 0;
+  background-color: var(--color-graynish);
+}
+
+.title {
+  display: grid;
+  place-items: center;
+  min-block-size: 5.6rem;
+  padding-block: 0.8rem;
+  padding-inline-start: var(--padding-drawer-header-cart);
+}
+
+.close {
+  padding-inline-end: var(--drawer-gutter-close);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  padding-block-start: 0;
+  padding-inline: 0;
+}
+
+.empty,
+.lines {
+  flex: 1;
+}
+
+.empty {
+  padding: var(--drawer-gutter);
+}
+
+.product-recommendations {
+  padding-inline: var(--drawer-gutter);
+  overflow: clip;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.2rem;
+  text-align: center;
+}

@@ -1,0 +1,32 @@
+.steps {
+  display: flex;
+  flex-direction: column;
+  row-gap: 2.4rem;
+}
+
+.step {
+  display: flex;
+  column-gap: 3.2rem;
+  align-items: start;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.6rem;
+  padding-block: 1.6rem;
+}
+
+.image {
+  inline-size: var(--size);
+
+  @media (width >= 64rem) {
+    --size: 20rem;
+  }
+
+  @media (width < 64rem) {
+    --size: 15.5rem;
+
+    margin-block-start: 2.4rem;
+  }
+}

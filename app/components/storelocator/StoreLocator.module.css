@@ -1,0 +1,234 @@
+.root {
+  display: grid;
+
+  @media (width >= 64rem) {
+    grid-template-columns: minmax(0, 1fr) minmax(36rem, 0.4fr);
+    block-size: clamp(70rem, calc(100vh - var(--header-height)), 80rem);
+  }
+
+  @media (width < 64rem) {
+    padding-block-end: 3.2rem;
+    padding-inline: var(--padding-global);
+  }
+}
+
+.map-container {
+  position: relative;
+  display: grid;
+  overflow: clip;
+  background-color: var(--color-graynish);
+  isolation: isolate;
+
+  @media (width < 64rem) {
+    aspect-ratio: 1;
+    border-radius: var(--border-radius);
+  }
+}
+
+.map,
+.map-button,
+.error {
+  grid-area: 1 / -1;
+}
+
+.map {
+  block-size: 100%;
+  font: inherit;
+
+  &::after {
+    position: absolute;
+    inset: 0;
+    content: '';
+    background-color: var(--color-light);
+    opacity: 0.5;
+
+    @media (width >= 64rem) {
+      content: none;
+    }
+  }
+
+  :global(.mapboxgl-control-container) {
+    display: none;
+
+    @media (width >= 64rem) {
+      display: block;
+    }
+  }
+
+  :global(.mapboxgl-ctrl-geocoder) {
+    position: relative;
+    inline-size: 35rem;
+    font: inherit;
+    font-size: var(--font-size-sm);
+    background-color: transparent;
+
+    &::after {
+      position: absolute;
+      inset-block-start: 50%;
+      inset-inline-end: 1.6rem;
+      inline-size: 3.2rem;
+      aspect-ratio: 1;
+      content: '';
+      background-color: currentcolor;
+      mask-image: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M19.9107 19.9099C16.9818 22.8388 12.2331 22.8388 9.30412 19.9099C6.37519 16.981 6.37519 12.2322 9.30412 9.3033C12.2331 6.37437 16.9818 6.37437 19.9107 9.3033C22.8397 12.2322 22.8397 16.981 19.9107 19.9099ZM19.9107 19.9099L24.4185 24.4177' stroke='%233F3F3F' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E%0A");
+      mask-size: contain;
+      translate: 0 -50%;
+    }
+  }
+
+  :global(
+    :is(
+      .mapboxgl-ctrl-geocoder--icon-search,
+      .mapboxgl-ctrl-geocoder--pin-right
+    )
+  ) {
+    display: none;
+  }
+
+  :global(.mapboxgl-ctrl-geocoder--input) {
+    block-size: 4.8rem;
+    padding-inline: 2rem 5.6rem;
+    background-color: var(--color-light);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+
+    &:focus {
+      outline: unset;
+      border-color: var(--color-gray-medium);
+      transition: border-color 0.15s linear;
+    }
+  }
+
+  :global(:is(.mapboxgl-ctrl-geocoder, .mapboxgl-ctrl-group:not(:empty))) {
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  :global(.mapboxgl-ctrl-top-left) {
+    display: flex;
+    column-gap: 0.8rem;
+    margin-block-start: 2.4rem;
+    margin-inline-start: 2.4rem;
+
+    :global(.mapboxgl-ctrl) {
+      margin: 0;
+    }
+  }
+
+  :global(.mapboxgl-ctrl-group) {
+    background-color: transparent;
+
+    button:focus:focus-visible {
+      outline: 0.2rem solid var(--color-accent);
+      outline-offset: 0.2rem;
+      box-shadow: none;
+      transition: outline 0.15s linear;
+    }
+  }
+
+  :global(.mapboxgl-ctrl) :global(.mapboxgl-ctrl-geolocate) {
+    inline-size: 4.8rem;
+    block-size: 4.8rem;
+    padding: 1.2rem;
+    margin-block-start: 0.1rem;
+    color: var(--color-text);
+    background-color: var(--color-text);
+    border-radius: var(--border-radius);
+    transition: background-color 0.15s linear;
+
+    &:is(:hover, :focus-visible) {
+      background-color: var(--color-focus);
+    }
+
+    :global(.mapboxgl-ctrl-icon) {
+      background-color: var(--color-light);
+      background-image: none;
+      mask-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='12.0711' cy='12.0713' r='5' transform='rotate(-45 12.0711 12.0713)' stroke='white' stroke-width='1.5'/%3E%3Cpath d='M17 12.0713L20 12.0713' stroke='white' stroke-width='1.5'/%3E%3Cpath d='M4 12.0713L7 12.0713' stroke='white' stroke-width='1.5'/%3E%3Cpath d='M12 17.0713V20.0713' stroke='white' stroke-width='1.5'/%3E%3Cpath d='M12 4.07129V7.07129' stroke='white' stroke-width='1.5'/%3E%3C/svg%3E%0A");
+      mask-repeat: no-repeat;
+      mask-size: contain;
+      transition: background-color 0.15s linear;
+    }
+  }
+
+  :global(.mapboxgl-ctrl-bottom-left)
+    :global(.mapboxgl-ctrl:not(.mapboxgl-ctrl-group)) {
+    display: none !important;
+  }
+
+  :global(.mapboxgl-ctrl-bottom-left) :global(.mapboxgl-ctrl-group) {
+    display: flex;
+    margin-block-end: 2.4rem;
+    margin-inline-start: 2.4rem;
+    overflow: clip;
+    background-color: var(--color-light);
+    border: 0.1rem solid var(--color-border);
+    border-radius: var(--border-radius);
+  }
+
+  :global(.mapboxgl-ctrl-group) button {
+    inline-size: 4rem;
+    block-size: 4rem;
+    color: var(--color-text);
+    border-radius: 0;
+    transition: background-color 0.15s linear;
+
+    &:is(:hover, :focus-visible) {
+      background-color: var(--color-focus);
+
+      :global(.mapboxgl-ctrl-icon) {
+        background-color: var(--color-light);
+      }
+    }
+
+    + button {
+      border: none;
+    }
+
+    :global(.mapboxgl-ctrl-icon) {
+      background-color: var(--color-text);
+      background-image: none;
+      mask-repeat: no-repeat;
+      mask-position: center;
+      mask-size: contain;
+      transition: background-color 0.15s linear;
+    }
+
+    &:global(.mapboxgl-ctrl-zoom-in) {
+      :global(.mapboxgl-ctrl-icon) {
+        mask-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M16 20L24 20' stroke='%231B1B1B' stroke-width='1.5' stroke-linecap='square'/%3E%3Cpath d='M20 24L20 16' stroke='%231B1B1B' stroke-width='1.5' stroke-linecap='square'/%3E%3C/svg%3E%0A");
+      }
+    }
+
+    &:global(.mapboxgl-ctrl-zoom-out) {
+      :global(.mapboxgl-ctrl-icon) {
+        mask-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M16 20L24 20' stroke='%231B1B1B' stroke-width='1.5' stroke-linecap='square'/%3E%3C/svg%3E%0A");
+      }
+    }
+  }
+
+  :global(.mapboxgl-ctrl-logo) {
+    display: none;
+  }
+}
+
+.map-button {
+  position: static;
+  z-index: 1;
+  place-self: center;
+
+  @media (width >= 1024px) {
+    display: none;
+  }
+
+  &::before {
+    position: absolute;
+    inset: 0;
+    content: '';
+  }
+}
+
+.error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

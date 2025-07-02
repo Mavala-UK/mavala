@@ -1,0 +1,73 @@
+.root {
+  display: flex;
+  column-gap: 0.8rem;
+  align-items: flex-end;
+  block-size: var(--announcement-bar-height);
+  padding-block-end: 0.4rem;
+  padding-inline: var(--padding-global);
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none;
+  background-color: var(--color-light);
+  transition-timing-function: ease-in-out;
+  transition-duration: var(--header-transition-duration);
+  transition-property: block-size;
+
+  @media (width >= 120rem) {
+    padding-inline: var(--max-size-container);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition-property: block-size;
+    will-change: block-size;
+  }
+
+  &[data-collapsed='true'] {
+    --announcement-bar-height: 0rem;
+  }
+}
+
+.tag {
+  display: flex;
+  column-gap: 0.8rem;
+  block-size: 3.2rem;
+  padding-block: 0.8rem;
+  padding-inline: 1.2rem 1rem;
+  letter-spacing: 0;
+  background-color: var(--color-graynish);
+  border-radius: var(--border-radius);
+
+  a,
+  button {
+    color: var(--color-text);
+  }
+}
+
+.close {
+  display: block;
+  inline-size: 1.6rem;
+  aspect-ratio: 1;
+  cursor: pointer;
+  content: '';
+  background-color: currentcolor;
+  mask-image: var(--icon-close);
+  mask-size: contain;
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition: transform 0.15s ease-in-out;
+  }
+
+  @media (any-hover: hover) and (prefers-reduced-motion: no-preference) {
+    &:where(:hover) {
+      @media (any-hover: hover) {
+        animation: rotate 0.15s forwards;
+      }
+    }
+  }
+}
+
+@keyframes rotate {
+  to {
+    rotate: 90deg;
+  }
+}

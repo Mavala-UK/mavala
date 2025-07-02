@@ -1,0 +1,8 @@
+node_modules
+build
+dist
+storefrontapi.generated.d.ts
+customer-accountapi.generated.d.ts
+sanity.schema.json
+sanity.generated.d.ts
+pnpm-lock.yaml

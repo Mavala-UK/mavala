@@ -1,0 +1,23 @@
+.root {
+  --gap: 1.6rem;
+
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--gap);
+}
+
+.launchers {
+  display: grid;
+  grid-template-columns: var(--columns);
+  gap: 0.8rem 1.6rem;
+
+  @media (width >= 64rem) {
+    --columns: repeat(2, minmax(0, 1fr));
+
+    max-inline-size: 88rem;
+  }
+
+  @media (width < 64rem) {
+    --columns: minmax(0, 1fr);
+  }
+}

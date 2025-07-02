@@ -1,0 +1,126 @@
+.root {
+  --size-submit: 4rem;
+
+  padding-block-start: 2.4rem;
+  padding-inline: var(--padding-global-extend);
+
+  @media (width >= 64rem) {
+    --outer-columns: 2;
+
+    display: grid;
+    grid-template-columns:
+      repeat(var(--outer-columns), minmax(0, 1fr))
+      [form-start] repeat(8, minmax(0, 1fr))
+      [form-end] repeat(var(--outer-columns), minmax(0, 1fr));
+    column-gap: var(--grid-gutter);
+  }
+
+  @media (width >= 120rem) {
+    --outer-columns: 4;
+
+    padding-inline: var(--max-size-container-extend);
+  }
+}
+
+.form {
+  --transition: background-color 0.15s;
+
+  @media (width >= 64rem) {
+    grid-column: form;
+  }
+
+  [type='submit'] {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-end: 0;
+    display: grid;
+    place-items: center;
+    inline-size: var(--size-submit);
+    aspect-ratio: 1;
+    color: var(--color-accent);
+    background-color: var(--color-graynish);
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+
+    @media (width < 64rem) {
+      --size-submit: 3.2rem;
+    }
+
+    &::after {
+      --size-icon: 2rem;
+
+      display: block;
+      inline-size: var(--size-icon);
+      aspect-ratio: 1;
+      content: '';
+      background-color: var(--color-gray-medium);
+      mask-image: var(--icon-chevron-right);
+      mask-size: contain;
+      transition: var(--transition);
+
+      @media (width < 64rem) {
+        --size-icon: 1.8rem;
+      }
+    }
+
+    &:is(:hover, :focus-within) {
+      background-color: var(--color-dark);
+
+      &::after {
+        background-color: var(--color-light);
+      }
+    }
+  }
+}
+
+.form-container {
+  position: relative;
+
+  &:only-child {
+    padding-block-end: 3.2rem;
+  }
+}
+
+.control {
+  --height: 5.2rem;
+
+  inline-size: 100%;
+  block-size: var(--height);
+  padding-inline-end: calc(var(--size-submit) + 1rem);
+  text-overflow: ellipsis;
+  appearance: none;
+  background-color: transparent;
+  border-block-end: 1px solid var(--color-border);
+  transition: border-color 0.15s linear;
+
+  @media (width < 64rem) {
+    --height: 4.4rem;
+  }
+
+  &:focus-visible {
+    border-color: var(--color-gray-medium);
+    outline: transparent;
+  }
+
+  &::placeholder {
+    opacity: 0.5;
+  }
+
+  &::-webkit-search-cancel-button {
+    display: none;
+  }
+}
+
+.results {
+  margin-block: var(--margin-block-start) var(--margin-block-end);
+
+  @media (width >= 64rem) {
+    --margin-block-start: 1.6rem;
+    --margin-block-end: 3.2rem;
+  }
+
+  @media (width < 64rem) {
+    --margin-block-start: 1.2rem;
+    --margin-block-end: 2.4rem;
+  }
+}

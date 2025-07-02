@@ -1,0 +1,101 @@
+:root {
+  --margin-inside: 4.8rem;
+}
+
+.root {
+  order: -1;
+
+  &:global(.swiper),
+  &.skeleton {
+    @media (width >= 64rem) {
+      grid-row: 1 / -1;
+      grid-column: gallery;
+    }
+
+    @media (width < 64rem) {
+      max-inline-size: calc(100% + (var(--section-gutter) * 2));
+      margin-block-start: var(--padding-block-start);
+      margin-inline: calc(var(--section-gutter) * -1);
+    }
+  }
+
+  &:global(.swiper) {
+    @media (width >= 64rem) {
+      inline-size: 100%;
+      padding-inline-end: var(--margin-inside);
+    }
+  }
+
+  &.skeleton {
+    aspect-ratio: 1;
+    background-color: var(--color-graynish);
+    border-radius: var(--border-radius);
+
+    @media (width >= 64rem) {
+      inline-size: calc(100% - var(--margin-inside));
+    }
+  }
+
+  :global(.swiper-wrapper) {
+    @media (width >= 64rem) {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--grid-gutter);
+      transform: none !important;
+    }
+  }
+
+  :global(.swiper-slide) {
+    aspect-ratio: 1;
+    background-color: var(--color-graynish);
+
+    @media (width >= 64rem) {
+      overflow: clip;
+      border-radius: var(--border-radius);
+
+      &:first-of-type {
+        grid-column: 1 / -1;
+      }
+    }
+  }
+
+  :global(.swiper-pagination.swiper-pagination-bullets) {
+    --swiper-pagination-bullet-width: 100%;
+    --swiper-pagination-bullet-inactive-opacity: 0;
+    --swiper-pagination-bullet-height: 0.3rem;
+    --swiper-pagination-bullet-border-radius: 0;
+
+    position: absolute;
+    inset-block-end: 0;
+    column-gap: 0;
+    margin-block-start: 0;
+
+    @media (width < 64rem) {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+    }
+
+    &::before {
+      border-radius: 0;
+    }
+
+    :global(.swiper-pagination-bullet) {
+      padding-block: 0;
+      margin-block: 0;
+
+      &::before {
+        border-radius: var(--swiper-pagination-bullet-border-radius);
+      }
+    }
+  }
+}
+
+.trigger {
+  @media (width >= 64rem) {
+    cursor: zoom-in;
+  }
+
+  @media (width < 64rem) {
+    pointer-events: none;
+  }
+}

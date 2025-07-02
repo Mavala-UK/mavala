@@ -1,0 +1,35 @@
+.root {
+  position: relative;
+  display: grid;
+  grid-template:
+    'title buttons' min-content
+    'carousel carousel ' auto / 1fr;
+  gap: 1.2rem 0.4rem;
+  margin-block-start: var(--margin-top);
+
+  @media (width >= 64rem) {
+    --margin-top: 3.2rem;
+  }
+
+  @media (width < 64rem) {
+    --margin-top: 4rem;
+  }
+}
+
+.title {
+  grid-area: title;
+  align-self: center;
+}
+
+.carousel {
+  grid-area: carousel;
+  border-radius: var(--border-radius);
+
+  &:global(.swiper) {
+    inline-size: 100%;
+  }
+}
+
+.buttons {
+  grid-area: buttons;
+}

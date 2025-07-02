@@ -1,0 +1,118 @@
+.root {
+  display: grid;
+  grid-auto-columns: 100%;
+  gap: 3.2rem;
+  padding-block: var(--padding-block);
+  padding-inline: var(--padding-global-extend);
+
+  @media (width >= 120rem) {
+    padding-inline: var(--max-size-container-extend);
+  }
+
+  @media (width >= 64rem) {
+    --padding-block: 6.4rem;
+
+    grid-template-columns:
+      [header] repeat(7, minmax(0, 1fr)) [header-end content-start] repeat(
+        5,
+        minmax(0, 1fr)
+      )
+      [content-end];
+    column-gap: var(--grid-gutter);
+  }
+
+  @media (width < 64rem) {
+    --padding-block: 3.2rem;
+  }
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+
+  & span {
+    font-weight: 300;
+  }
+}
+
+.title {
+  max-inline-size: 30ch;
+}
+
+.image {
+  inline-size: 40%;
+}
+
+.rating {
+  display: flex;
+  gap: 1.2rem;
+  align-items: center;
+
+  & svg {
+    inline-size: 2.2rem;
+    block-size: 2.2rem;
+    fill: var(--color-dark);
+  }
+}
+
+.rating-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.rating-value {
+  font-size: 3.2rem;
+}
+
+@media (width >= 64rem) {
+  .header {
+    grid-column: header;
+  }
+
+  .reviews {
+    grid-column: content;
+  }
+}
+
+.reviews-carousel {
+  overflow: hidden;
+
+  :global(.swiper-pagination.swiper-pagination-bullets) {
+    justify-content: flex-start;
+
+    :global(.swiper-pagination-bullet) {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      inline-size: 4rem;
+      block-size: 4rem;
+      padding: 0;
+      margin: 0;
+      border: 1px solid var(--color-gray-light);
+      border-radius: 0.4rem;
+      opacity: 1;
+
+      &::before {
+        display: none;
+      }
+    }
+
+    :global(.swiper-pagination-bullet-active) {
+      color: var(--color-light);
+      background-color: var(--color-dark);
+      border-color: var(--color-dark);
+    }
+
+    @media (width >= 64rem) {
+      display: flex;
+    }
+  }
+}
+
+.reviews-group {
+  display: flex;
+  flex-direction: column;
+  row-gap: 3.2rem;
+}

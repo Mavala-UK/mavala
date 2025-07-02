@@ -1,0 +1,52 @@
+.root {
+  display: flex;
+  align-items: center;
+  inline-size: 100%;
+}
+
+.gauge {
+  display: grid;
+  grid-template:
+    'text amount'
+    'progress progress';
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.6rem 1.2rem;
+  inline-size: 100%;
+}
+
+.text {
+  grid-area: text;
+}
+
+.amount {
+  grid-area: amount;
+  justify-self: end;
+}
+
+.progress {
+  --color-progress-bar: var(--color-gray-light);
+  --color-progress-value: var(--color-dark-red);
+  --size: 0.2rem;
+
+  display: block;
+  grid-area: progress;
+  inline-size: 100%;
+  block-size: var(--size);
+  overflow: hidden;
+  appearance: none;
+  background-color: var(--color-progress-bar);
+  border: none;
+  border-radius: var(--size);
+
+  &::-webkit-progress-bar {
+    background-color: var(--color-progress-bar);
+  }
+
+  &::-webkit-progress-value {
+    background-color: var(--color-progress-value);
+  }
+
+  &::-moz-progress-bar {
+    background-color: var(--color-progress-value);
+  }
+}

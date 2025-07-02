@@ -1,0 +1,44 @@
+.root {
+  display: grid;
+  place-items: center;
+  inline-size: var(--size-color);
+  block-size: var(--size-color);
+  overflow: clip;
+  border-radius: 50%;
+
+  &:nth-child(1) {
+    background-color: var(--color-light);
+  }
+
+  &:nth-child(2) {
+    background-color: var(--color-graynish2);
+  }
+
+  &:nth-child(3) {
+    background-color: var(--color-gray-light2);
+  }
+
+  &:where([data-border='true']) {
+    box-shadow: inset 0 0 0 0.15rem var(--color-border);
+  }
+
+  &:where([data-size='xs']) {
+    --size-color: 0.8rem;
+  }
+
+  &:where([data-size='sm']) {
+    --size-color: 1.2rem;
+  }
+
+  &:where([data-size='lg']) {
+    --size-color: 3.2rem;
+  }
+
+  &:where([data-size='xl']) {
+    --size-color: 4.8rem;
+  }
+}
+
+.image {
+  grid-area: 1 / -1;
+}

@@ -1,0 +1,33 @@
+.root {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--gap);
+  padding: var(--padding);
+  text-align: start;
+  background-color: var(--color-light);
+  border: 0.1rem solid var(--color-border);
+  border-radius: calc(var(--border-radius) * 1.5);
+
+  &:where([data-variant='order']) {
+    --gap: 1.2rem;
+  }
+
+  &:where([data-variant='form']) {
+    --gap: 3.5rem;
+  }
+
+  @media (width >= 64rem) {
+    --padding: 3.2rem;
+  }
+
+  @media (width < 64rem) {
+    --padding: 2rem;
+
+    grid-column: span 2;
+  }
+}
+
+.title,
+.address {
+  grid-column: 1 / -1;
+}

@@ -1,0 +1,26 @@
+.root {
+  display: grid;
+  row-gap: var(--row-gap);
+
+  @media (width >= 64rem) {
+    --row-gap: 4.8rem;
+  }
+
+  @media (width < 64rem) {
+    --row-gap: 3.2rem;
+  }
+}
+
+.button {
+  justify-self: center;
+  border: 1px solid var(--color-border);
+  transition: 0.2s;
+  transition-property: color, background-color;
+
+  &:where(:hover:not([aria-disabled='true'])) {
+    @media (any-hover: hover) {
+      --bg-color: var(--color-dark);
+      --text-color: var(--color-light);
+    }
+  }
+}

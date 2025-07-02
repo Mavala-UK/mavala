@@ -1,0 +1,15 @@
+.root {
+  inline-size: var(--size);
+  aspect-ratio: 1;
+  overflow: clip;
+  background-color: var(--color-graynish);
+  border-radius: var(--border-radius);
+
+  @media (width >= 64rem) {
+    --size: 20rem;
+  }
+
+  @media (width < 64rem) {
+    --size: 16.4rem;
+  }
+}

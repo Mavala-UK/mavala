@@ -1,0 +1,41 @@
+.root {
+  display: flex;
+  flex-flow: column nowrap;
+  row-gap: var(--gap);
+  align-items: center;
+  padding-block: var(--padding-block-start) var(--padding-block-end);
+  padding-inline: var(--padding-global-extend);
+
+  @media (width >= 120rem) {
+    padding-inline: var(--max-size-container-extend);
+  }
+
+  @media (width >= 64rem) {
+    --padding-block-start: 8rem;
+    --padding-block-end: 6.4rem;
+    --gap: 4.8rem;
+  }
+
+  @media (width < 64rem) {
+    --padding-block-start: 4.8rem;
+    --padding-block-end: 3.2rem;
+    --gap: 3.2rem;
+  }
+
+  &:where([data-title='false']) {
+    --padding-block-start: 3.2rem;
+  }
+}
+
+.title {
+  @media (width >= 64rem) {
+    max-inline-size: 60vw;
+    text-align: center;
+  }
+}
+
+.carousel {
+  &:global(.swiper) {
+    inline-size: 100%;
+  }
+}

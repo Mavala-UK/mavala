@@ -1,0 +1,31 @@
+.root {
+  --section-gutter: var(--padding-global-extend);
+  --padding-block: 3.2rem;
+
+  display: grid;
+  grid-auto-columns: 100%;
+  row-gap: var(--drawer-gutter);
+  padding: var(--padding-block) var(--section-gutter);
+  overflow-inline: clip;
+
+  @media (width >= 64rem) {
+    --padding-block: 6.4rem;
+
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr))
+      [content-start] repeat(6, minmax(0, 1fr))
+      [content-end] repeat(3, minmax(0, 1fr));
+    gap: var(--drawer-gutter) var(--grid-gutter);
+  }
+
+  @media (width >= 120rem) {
+    padding-inline: var(--max-size-container-extend);
+  }
+}
+
+.title,
+.content {
+  @media (width >= 64rem) {
+    grid-column: content;
+  }
+}

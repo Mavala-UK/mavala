@@ -1,0 +1,31 @@
+.root {
+  --padding-block-end: 6.4rem;
+
+  &:has(+ section) {
+    --padding-block-end: 3.2rem;
+  }
+
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--row-gap);
+  padding-block: var(--padding-block-start) var(--padding-block-end);
+  padding-inline: var(--padding-global-extend);
+
+  @media (width >= 120rem) {
+    padding-inline: var(--max-size-container-extend);
+  }
+
+  @media (width >= 64rem) {
+    --padding-block-start: 6.4rem;
+    --row-gap: 4rem;
+  }
+
+  @media (width < 64rem) {
+    --padding-block-start: 3.2rem;
+    --row-gap: 3.2rem;
+  }
+}
+
+.accordion {
+  border-block-start: 1px solid var(--color-border);
+}

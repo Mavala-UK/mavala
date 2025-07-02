@@ -1,0 +1,118 @@
+.header,
+.nav,
+.content {
+  --section-gutter: var(--padding-global-extend);
+
+  padding-inline: var(--section-gutter);
+
+  @media (width >= 120rem) {
+    padding-inline: var(--max-size-container-extend);
+  }
+}
+
+.header,
+.content {
+  padding-block: var(--padding-block);
+
+  @media (width >= 64rem) {
+    --padding-block: 6.4rem;
+  }
+
+  @media (width < 64rem) {
+    --padding-block: 3.2rem;
+  }
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  row-gap: 2.4rem;
+
+  @media (width >= 64rem) {
+    align-items: center;
+  }
+}
+
+.nav {
+  @media (width >= 64rem) {
+    :global(.swiper-wrapper) {
+      justify-content: center;
+    }
+  }
+}
+
+.content {
+  text-align: center;
+  background-color: var(--color-graynish);
+
+  header {
+    :is([data-variant='underline']) {
+      display: inline-flex;
+      column-gap: 0.4rem;
+      align-items: center;
+      margin-block-end: var(--margin);
+
+      &::before {
+        inline-size: 1.2rem;
+        aspect-ratio: 1;
+        margin-block-start: -1px;
+        content: '';
+        background-color: currentcolor;
+        mask-image: var(--icon-chevron-left);
+        mask-size: contain;
+      }
+
+      @media (width >= 64rem) {
+        --margin: 2.2rem;
+      }
+
+      @media (width < 64rem) {
+        --margin: 1.4rem;
+      }
+    }
+  }
+
+  form:not(:where([data-variant='form'] form)) {
+    position: relative;
+    inline-size: 100%;
+    max-inline-size: 66.4rem;
+
+    :is([data-variant='float']) {
+      margin-block-end: 0.8rem;
+    }
+
+    :is([type='checkbox']) {
+      &,
+      & + label {
+        margin-block-start: 1.6rem;
+      }
+    }
+
+    :is([type='submit']) {
+      inline-size: 100%;
+      margin-block-start: 1.6rem;
+    }
+
+    :is([role='status']) {
+      position: absolute;
+      inline-size: 100%;
+      margin-block-start: 0.8rem;
+      text-align: center;
+
+      &[data-active='true'] {
+        animation: fade-out 0.5s ease-in-out 1s forwards;
+      }
+    }
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    translate: 0 50%;
+  }
+}

@@ -1,0 +1,19 @@
+.root {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.review {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.title {
+  font-weight: 500;
+}
+
+.author {
+  font-size: 1.4rem;
+  line-height: 140%;
+  color: var(--color-gray-medium, #939391);
+}

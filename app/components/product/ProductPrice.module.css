@@ -1,0 +1,8 @@
+.root {
+  display: inline-flex;
+  column-gap: calc(6 / 14 * 1em);
+}
+
+.original-price {
+  opacity: 0.4;
+}

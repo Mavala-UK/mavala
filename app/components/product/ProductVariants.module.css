@@ -1,0 +1,33 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.6rem;
+
+  :global(.swiper-button-next) {
+    inset-block-start: 0;
+    block-size: 100%;
+    margin-block-start: 0;
+  }
+}
+
+.trigger {
+  display: inline-flex;
+  column-gap: 0.8rem;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.selected-shade {
+  display: flex;
+  column-gap: 1.6rem;
+  justify-content: space-between;
+  padding-block: 2rem;
+  border-block-start: 1px solid var(--color-border);
+  border-block-end: 1px solid var(--color-border);
+}
+
+.shade {
+  display: flex;
+  column-gap: 0.8rem;
+  align-items: center;
+}

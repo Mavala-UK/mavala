@@ -1,0 +1,13 @@
+.root {
+  display: grid;
+  row-gap: var(--row-gap);
+  text-wrap: balance;
+
+  @media (width >= 64rem) {
+    --row-gap: 2.4rem;
+  }
+
+  @media (width < 64rem) {
+    --row-gap: 1.6rem;
+  }
+}

@@ -1,0 +1,13 @@
+.root {
+  position: relative;
+  display: block;
+  padding-block-start: 56.25%;
+  margin-block-start: var(--margin-block-start);
+  overflow: clip;
+  border-radius: var(--border-radius);
+
+  iframe {
+    position: absolute;
+    inset-block-start: 0;
+  }
+}

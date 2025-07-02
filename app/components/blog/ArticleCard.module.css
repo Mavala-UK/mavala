@@ -1,0 +1,62 @@
+.root {
+  --bg-color-card: var(--color-graynish);
+  --color-border-card: var(--bg-color-card);
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) max-content;
+  column-gap: var(--grid-gutter);
+  min-block-size: 16rem;
+  padding: 2rem;
+  overflow: clip;
+  background-color: var(--color-graynish);
+  border: 1px solid var(--color-border-card);
+  border-radius: var(--border-radius);
+
+  @media (width < 64rem) {
+    &:nth-of-type(3) {
+      display: none;
+    }
+  }
+
+  &:where(:hover) {
+    @media (any-hover: hover) {
+      --color-border-card: var(--color-border);
+    }
+  }
+
+  &:where(:focus-visible, :active) {
+    --color-border-card: var(--color-border);
+  }
+
+  &:is(:hover, :focus-within) {
+    @media (any-hover: hover) and (prefers-reduced-motion: no-preference) {
+      .image {
+        scale: 1.05;
+      }
+    }
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.2rem;
+  justify-content: space-between;
+}
+
+.title {
+  flex: 1;
+  max-inline-size: 22ch;
+  text-wrap: auto;
+}
+
+.image-wrapper {
+  inline-size: 5.6rem;
+  aspect-ratio: 1;
+  overflow: clip;
+  border-radius: 0.2rem;
+}
+
+.image {
+  transition: scale 0.5s;
+}

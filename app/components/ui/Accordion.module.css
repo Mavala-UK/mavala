@@ -1,0 +1,85 @@
+.item {
+  border-block-end: 1px solid var(--color-border);
+}
+
+.trigger {
+  display: flex;
+  column-gap: 1.6rem;
+  align-items: flex-start;
+  justify-content: space-between;
+  inline-size: 100%;
+  padding-block: var(--padding-block-trigger);
+  font-weight: 500;
+
+  @media (width >= 64rem) {
+    --padding-block-trigger: 2rem;
+  }
+
+  @media (width < 64rem) {
+    --padding-block-trigger: 1.6rem;
+  }
+
+  &::after {
+    flex-shrink: 0;
+    inline-size: 2rem;
+    aspect-ratio: 1;
+    content: '';
+    background-color: currentcolor;
+    mask-image: var(--icon-chevron-down);
+    mask-size: contain;
+
+    @media (prefers-reduced-motion: no-preference) {
+      transition: rotate 0.2s;
+    }
+  }
+
+  &:where([data-state='open'])::after {
+    rotate: -180deg;
+  }
+
+  &:where(:hover) {
+    @media (any-hover: hover) {
+      color: currentcolor;
+    }
+  }
+
+  &:where(:focus-visible, :active) {
+    color: currentcolor;
+  }
+}
+
+@keyframes slide-down {
+  from {
+    block-size: 0;
+  }
+
+  to {
+    block-size: var(--radix-collapsible-content-height);
+  }
+}
+
+@keyframes slide-up {
+  from {
+    block-size: var(--radix-collapsible-content-height);
+  }
+
+  to {
+    block-size: 0;
+  }
+}
+
+.content {
+  overflow-block: clip;
+
+  &:where([data-state='open']) {
+    animation: slide-down 0.2s;
+  }
+
+  &:where([data-state='closed']) {
+    animation: slide-up 0.2s;
+  }
+
+  > :where(div) {
+    padding-block-end: 3.2rem;
+  }
+}

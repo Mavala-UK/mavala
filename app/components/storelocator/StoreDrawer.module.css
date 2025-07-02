@@ -1,0 +1,22 @@
+.title {
+  margin-block-end: 1.6rem;
+}
+
+.address {
+  margin-block-end: 2.4rem;
+}
+
+.infos {
+  display: flex;
+  column-gap: 1.6rem;
+  margin-block-start: 1.2rem;
+
+  svg {
+    inline-size: 2rem;
+    aspect-ratio: 1;
+  }
+}
+
+.button {
+  inline-size: 100%;
+}

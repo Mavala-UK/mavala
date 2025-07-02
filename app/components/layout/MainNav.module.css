@@ -1,0 +1,112 @@
+.root {
+  &[data-state='open'] .trigger::after {
+    transform: rotate(180deg);
+  }
+}
+
+.trigger {
+  display: inline-flex;
+  column-gap: 0.2rem;
+  align-items: center;
+
+  &::after {
+    display: block;
+    inline-size: 1.6rem;
+    aspect-ratio: 1;
+    content: '';
+    background-color: currentcolor;
+    mask-image: var(--icon-chevron-down);
+    mask-size: contain;
+
+    @media (prefers-reduced-motion: no-preference) {
+      transition: transform 0.15s ease-in-out;
+    }
+  }
+}
+
+.category-button {
+  padding-block: 0.8rem;
+  transition-duration: 0.15s;
+  transition-property: color, opacity;
+
+  &:is(:where(:any-link), button):not([data-highlighted='true']) {
+    &:where(:hover) {
+      @media (any-hover: hover) {
+        color: currentcolor;
+      }
+    }
+
+    &:where(:focus-visible, :active) {
+      color: currentcolor;
+    }
+  }
+
+  &:where([data-highlighted='true']) {
+    color: var(--color-dark-red);
+  }
+
+  &:where([data-active='true']) {
+    opacity: 1;
+  }
+
+  &:where([data-active='false']) {
+    opacity: 0.4;
+  }
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 36rem minmax(0, 1fr);
+  min-block-size: 41.5rem;
+
+  @media (width >= 120rem) {
+    padding-inline: var(--max-size-container);
+
+    .primary-nav {
+      padding-inline-start: 0;
+    }
+  }
+}
+
+.primary-nav {
+  padding: var(--padding-global);
+  border-inline-end: 1px solid var(--color-border);
+
+  > ul {
+    display: flex;
+    flex-direction: column;
+  }
+
+  li {
+    &:first-of-type {
+      .category-button {
+        padding-block-start: 0;
+      }
+    }
+
+    &:last-of-type {
+      .category-button {
+        padding-block-end: 0;
+      }
+    }
+  }
+}
+
+.right-content {
+  inline-size: 100%;
+  padding: 3.2rem var(--padding-global) 6.4rem;
+}
+
+.menus {
+  display: flex;
+  display: grid;
+  grid-template-columns:
+    repeat(2, minmax(min-content, 0.25fr))
+    [launcher] minmax(min-content, 0.5fr);
+  column-gap: 2.4rem;
+  padding-block-start: 0.8rem;
+}
+
+.launcher {
+  grid-column: launcher;
+}

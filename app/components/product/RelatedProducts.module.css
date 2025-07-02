@@ -1,0 +1,26 @@
+.root {
+  --section-gutter: var(--padding-global-extend);
+
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--row-gap);
+  padding: var(--padding-block) var(--section-gutter);
+
+  @media (width >= 120rem) {
+    padding-inline: var(--max-size-container-extend);
+  }
+
+  @media (width >= 64rem) {
+    --padding-block: 6.4rem;
+    --row-gap: 4rem;
+  }
+
+  @media (width < 64rem) {
+    --padding-block: 3.2rem;
+    --row-gap: 3.2rem;
+  }
+}
+
+.carousel {
+  inline-size: 100%;
+}

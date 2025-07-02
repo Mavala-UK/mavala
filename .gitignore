@@ -1,0 +1,12 @@
+node_modules
+/.cache
+/build
+/dist
+/public/build
+/.mf
+.env
+.env.france
+.env.corporate
+.env.italia
+.shopify
+.react-router

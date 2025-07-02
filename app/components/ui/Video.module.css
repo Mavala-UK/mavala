@@ -1,0 +1,9 @@
+.root {
+  aspect-ratio: 1;
+  pointer-events: none;
+  object-fit: cover;
+
+  &:where([controls]) {
+    pointer-events: auto;
+  }
+}

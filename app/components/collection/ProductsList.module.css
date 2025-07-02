@@ -1,0 +1,42 @@
+.root {
+  padding-block: 3.2rem var(--padding-block-end);
+  padding-inline: var(--padding-global-extend);
+
+  @media (width >= 120rem) {
+    padding-inline: var(--max-size-container-extend);
+  }
+
+  @media (width >= 64rem) {
+    --padding-block-end: 6.4rem;
+  }
+
+  @media (width < 64rem) {
+    --padding-block-end: 3.2rem;
+  }
+}
+
+.list > ul {
+  display: grid;
+  grid-template-columns: var(--columns);
+  gap: var(--row-gap) var(--column-gap);
+
+  @media (width >= 64rem) {
+    --columns: repeat(4, minmax(0, 1fr));
+    --column-gap: var(--grid-gutter);
+    --row-gap: 4rem;
+  }
+
+  @media (width < 64rem) {
+    --columns: repeat(2, minmax(0, 1fr));
+    --column-gap: calc(var(--grid-gutter) / 2);
+    --row-gap: 3.2rem;
+  }
+
+  > li {
+    display: contents;
+  }
+}
+
+.insert {
+  grid-column: span 2;
+}

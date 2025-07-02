@@ -1,0 +1,31 @@
+.root {
+  position: relative;
+  inline-size: fit-content;
+}
+
+.stars-empty svg,
+.stars-full svg {
+  flex-shrink: 0;
+  inline-size: 1.4rem;
+  block-size: 1.4rem;
+}
+
+.stars-empty,
+.stars-full {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.stars-empty svg {
+  stroke: var(--color-dark);
+}
+
+.stars-full svg {
+  fill: var(--color-dark);
+}
+
+.stars-full {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}

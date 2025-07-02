@@ -1,0 +1,102 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.2rem;
+  inline-size: 100%;
+  max-inline-size: 37.3rem;
+  background-color: var(--color-graynish);
+  border-radius: var(--border-radius);
+
+  &:where([data-variant='mini']) {
+    padding: 2rem;
+
+    p {
+      &:first-of-type {
+        font-weight: 500;
+      }
+
+      &:last-of-type {
+        margin-block: 0.2rem 0;
+        font-weight: 300;
+      }
+    }
+  }
+}
+
+.titles {
+  & > p:last-of-type {
+    margin-block-end: 0.8rem;
+  }
+}
+
+.form {
+  --transition: background-color 0.15s;
+
+  position: relative;
+  border-radius: var(--border-radius);
+
+  [type='submit'] {
+    --bg-submit: var(--color-graynish);
+
+    position: absolute;
+    inset-block-start: 1.2rem;
+    inset-inline-end: 1.2rem;
+    display: grid;
+    place-items: center;
+    inline-size: 3.2rem;
+    aspect-ratio: 1;
+    background-color: var(--bg-submit);
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+
+    &::after {
+      display: block;
+      inline-size: 1.8rem;
+      aspect-ratio: 1;
+      content: '';
+      background-color: var(--color-gray-medium);
+      mask-image: var(--icon-chevron-right);
+      mask-size: contain;
+      transition: var(--transition);
+    }
+
+    &:is(:hover, :focus-within) {
+      background-color: var(--color-dark);
+
+      &::after {
+        background-color: var(--color-light);
+      }
+    }
+
+    &:where([aria-busy='true']) {
+      --bg-submit: var(--color-dark);
+      --size-icon-loading: 1.6rem;
+
+      &::after {
+        position: absolute;
+        inset-block-start: 50%;
+        inset-inline-start: 50%;
+        inline-size: var(--size-icon-loading);
+        aspect-ratio: 1;
+        margin-block-start: calc((var(--size-icon-loading) / 2) * -1);
+        margin-inline-start: calc((var(--size-icon-loading) / 2) * -1);
+        pointer-events: none;
+        content: '';
+        background-color: var(--color-light);
+        mask-image: var(--icon-loading);
+        mask-size: contain;
+        animation: rotate-loading 0.5s linear infinite;
+      }
+    }
+
+    &:where([aria-disabled='true']) {
+      pointer-events: none;
+    }
+  }
+}
+
+@keyframes rotate-loading {
+  to {
+    rotate: 360deg;
+  }
+}

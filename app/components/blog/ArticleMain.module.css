@@ -1,0 +1,48 @@
+.root {
+  --margin-bottom: 3.2rem;
+
+  margin-block-end: var(--margin-bottom);
+  border-block-end: 1px solid var(--color-border);
+
+  &:has(+ section) {
+    --margin-bottom: 0;
+  }
+}
+
+.content {
+  grid-column: 1 / 9;
+  row-gap: 0;
+
+  @media (width >= 64rem) {
+    padding-inline-end: 4.8rem;
+  }
+
+  @media (width < 64rem) {
+    padding-block-end: 0;
+  }
+}
+
+.category {
+  margin-block-end: 2.4rem;
+}
+
+.image {
+  margin-block-start: var(--margin);
+  overflow: clip;
+  background-color: var(--color-graynish);
+  border-radius: var(--border-radius);
+
+  @media (width >= 64rem) {
+    --margin: 4rem;
+  }
+
+  @media (width < 64rem) {
+    --margin: 3.2rem;
+  }
+}
+
+.related-categories {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: 0.8rem;
+}

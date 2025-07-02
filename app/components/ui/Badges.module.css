@@ -1,0 +1,27 @@
+.root {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap);
+  color: var(--color-text);
+
+  &:where([data-size='md']) {
+    --gap: 0.4rem;
+    --bg-color: var(--color-light);
+    --height: 2rem;
+  }
+
+  &:where([data-size='lg']) {
+    --gap: 0.8rem;
+    --bg-color: var(--color-graynish);
+    --height: var(--min-height-tags);
+  }
+}
+
+.badge {
+  display: block;
+  padding-inline: 0.8rem;
+  line-height: var(--height);
+  letter-spacing: 0.05rem;
+  background-color: var(--bg-color);
+  border-radius: calc(var(--border-radius) / 2);
+}

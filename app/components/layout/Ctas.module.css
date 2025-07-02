@@ -1,0 +1,52 @@
+.root {
+  padding-block: 3.2rem 6.4rem;
+  padding-inline: var(--padding-global-extend);
+  overflow: clip;
+
+  @media (width >= 120rem) {
+    padding-inline: var(--max-size-container-extend);
+  }
+
+  @media (width < 64rem) {
+    padding-block: 4.8rem;
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  row-gap: 3.2rem;
+  align-items: start;
+  justify-content: space-between;
+  padding: 4rem;
+  padding-inline-end: 5.6rem;
+  background: var(--color-graynish);
+  border-radius: var(--border-radius);
+
+  @media (width < 64rem) {
+    padding: 2.4rem;
+    padding-inline-end: 3.2rem;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.2rem;
+  max-inline-size: 50ch;
+}
+
+.picto {
+  display: grid;
+  place-items: center;
+  inline-size: 4.8rem;
+  aspect-ratio: 1;
+  padding: 1.4rem;
+  background-color: var(--color-light);
+  border-radius: var(--border-radius);
+}
+
+.title {
+  margin-block-start: 1.2rem;
+  text-wrap: balance;
+}

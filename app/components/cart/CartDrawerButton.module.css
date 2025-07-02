@@ -1,0 +1,39 @@
+.root {
+  position: relative;
+
+  .count {
+    position: absolute;
+    inset-inline-start: calc(100% - (var(--size) / 1.5));
+    display: grid;
+    place-items: center;
+    min-inline-size: var(--size);
+    block-size: var(--size);
+    padding-inline: 0.35rem;
+    line-height: 1;
+    color: var(--color-light);
+    background-color: var(--color-dark-red);
+    border: 0.15rem solid var(--color-light);
+    border-radius: calc(var(--size) / 2);
+    transform-origin: center;
+
+    @media (width >= 64rem) {
+      --size: 2rem;
+
+      inset-block-start: -0.6rem;
+    }
+
+    @media (width < 64rem) {
+      --size: 1.6rem;
+
+      inset-block-start: -0.4rem;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      transition: scale 0.15s linear;
+    }
+
+    &[data-count='0'] {
+      scale: 0;
+    }
+  }
+}

@@ -1,0 +1,21 @@
+@keyframes rotate {
+  to {
+    rotate: 90deg;
+  }
+}
+
+.root {
+  border-radius: var(--border-radius);
+
+  @media (any-hover: hover) and (prefers-reduced-motion: no-preference) {
+    &:where(:hover) svg {
+      @media (any-hover: hover) {
+        animation: rotate 0.2s forwards;
+      }
+    }
+  }
+
+  :where(svg) {
+    inline-size: 4rem;
+  }
+}

@@ -1,0 +1,7 @@
+.button {
+  inline-size: 100%;
+
+  &:where([aria-disabled='true']) {
+    pointer-events: none;
+  }
+}

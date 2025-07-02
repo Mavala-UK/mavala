@@ -1,0 +1,83 @@
+.collapsible-root {
+  --transition-duration: 0.25s;
+}
+
+.collapsible-trigger {
+  display: block;
+}
+
+.collapsible-content {
+  --overlay-height: var(--radix-collapsible-content-height);
+
+  position: absolute;
+  inset-block-start: 100%;
+  inset-inline: 0;
+  z-index: 1;
+  overflow: hidden;
+  background-color: var(--color-light);
+
+  &[data-state='open'] {
+    animation: slide-down var(--transition-duration) forwards;
+
+    + .overlay {
+      animation: fade-in var(--transition-duration) linear forwards;
+    }
+  }
+
+  &[data-state='closed'] {
+    animation: slide-up var(--transition-duration) forwards;
+
+    + .overlay {
+      animation: fade-out var(--transition-duration) linear forwards;
+    }
+  }
+
+  &:not(:empty) + .overlay {
+    position: absolute;
+    inset-block-start: 100%;
+    inset-inline: 0;
+    block-size: 100vmax;
+    background-color: var(--color-overlay);
+    opacity: 0;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes slide-down {
+  from {
+    clip-path: inset(0 0 var(--overlay-height) 0);
+  }
+
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes slide-up {
+  from {
+    clip-path: inset(0 0 0 0);
+  }
+
+  to {
+    clip-path: inset(0 0 var(--overlay-height) 0);
+  }
+}

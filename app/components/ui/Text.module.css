@@ -1,0 +1,84 @@
+.root {
+  /* size */
+  &:where([data-size='5xs']) {
+    font-size: var(--font-size-5xs);
+    line-height: var(--line-height-xs);
+    letter-spacing: 0.05rem;
+  }
+
+  &:where([data-size='4xs']) {
+    font-size: var(--font-size-4xs);
+    line-height: var(--line-height-xs);
+  }
+
+  &:where([data-size='3xs']) {
+    font-size: var(--font-size-3xs);
+    line-height: var(--line-height-sm);
+  }
+
+  &:where([data-size='2xs']) {
+    font-size: var(--font-size-2xs);
+    line-height: var(--line-height-xs);
+  }
+
+  &:where([data-size='xs']) {
+    font-size: var(--font-size-xs);
+    line-height: var(--line-height-sm);
+  }
+
+  &:where([data-size='sm']) {
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-md);
+  }
+
+  &:where([data-size='md']) {
+    font-size: var(--font-size-default);
+    line-height: var(--line-height-default);
+  }
+
+  &:where([data-size='lg']) {
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-md);
+  }
+
+  &:where([data-size='xl']) {
+    font-size: var(--font-size-xl);
+    line-height: var(--line-height-lg);
+  }
+
+  /* weight */
+  &:where([data-weight='medium']) {
+    font-weight: 500;
+  }
+
+  &:where([data-weight='regular']) {
+    font-weight: 400;
+  }
+
+  &:where([data-weight='light']) {
+    font-weight: 300;
+  }
+
+  /* color */
+  &:where([data-color='light']) {
+    opacity: 0.6;
+  }
+
+  &:where([data-color='medium']) {
+    color: var(--color-gray-medium);
+  }
+
+  &:where([data-color='accent']) {
+    color: var(--color-dark-red);
+  }
+
+  /* styles */
+  &:where([data-uppercase='true']) {
+    text-transform: uppercase;
+    letter-spacing: 0.06rem;
+  }
+
+  :where(b, strong) {
+    font-weight: inherit;
+  }
+}

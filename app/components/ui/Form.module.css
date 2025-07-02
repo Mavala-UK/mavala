@@ -1,0 +1,272 @@
+.field {
+  --padding: 2rem;
+
+  position: relative;
+  font-size: var(--font-size-default);
+  font-weight: 300;
+  line-height: var(--line-height-default);
+
+  &:where([data-invalid='true']) {
+    :is(input, textarea, select) {
+      border-color: var(--color-error);
+    }
+
+    label {
+      color: var(--color-error);
+    }
+  }
+
+  :where(label) {
+    display: block;
+    max-inline-size: fit-content;
+    margin-block-end: 0.5rem;
+    font-weight: 300;
+    color: var(--color-gray-medium);
+
+    > span {
+      margin-inline-start: 0.25rem;
+      font-size: var(--font-size-xs);
+      font-weight: 300;
+      opacity: 0.5;
+      transition: opacity 0.15s linear;
+    }
+
+    &:where(:has(+ [readonly])) {
+      opacity: 0.5;
+    }
+  }
+
+  :where(input, textarea, select) {
+    display: block;
+    inline-size: 100%;
+    block-size: 6.4rem;
+    padding: var(--padding);
+    overflow-inline: clip;
+    text-overflow: ellipsis;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    transition: border-color 0.15s linear;
+
+    &:where(:focus-visible) {
+      outline: transparent;
+
+      &:not([readonly]) {
+        border-color: var(--color-gray-medium);
+      }
+    }
+
+    &:where(:disabled, [readonly]) {
+      color: var(--color-gray-medium);
+    }
+
+    &:where(:autofill) {
+      -webkit-text-fill-color: var(--color-text);
+      background-clip: text;
+    }
+
+    &:is(textarea) {
+      min-block-size: 21.5rem;
+      resize: none;
+    }
+
+    &:is(select) {
+      --size-icon: 2rem;
+      --padding-icon: 1.6rem;
+
+      padding-inline-end: calc(var(--size-icon) + (var(--padding-icon) * 2));
+      background-image: var(--icon-chevron-down);
+      background-repeat: no-repeat;
+      background-position: right var(--padding-icon) center;
+      background-size: var(--size-icon);
+    }
+
+    &::placeholder {
+      opacity: 0.5;
+    }
+  }
+
+  &:where([data-variant='float']),
+  &:where([data-variant='newsletter']) {
+    @supports selector(:has(+ *)) {
+      :where(label) {
+        position: absolute;
+        inset-block-start: calc(0.8rem + 1px);
+        inset-inline: calc(var(--padding) + 1px);
+        max-inline-size: none;
+        margin-block-end: 0;
+        overflow: clip;
+        text-overflow: ellipsis;
+        font: inherit;
+        text-align: start;
+        white-space: nowrap;
+        pointer-events: none;
+        transition: 0.15s linear;
+      }
+
+      :where(input, textarea, select) {
+        &::placeholder {
+          color: transparent;
+        }
+      }
+    }
+  }
+
+  &:where([data-variant='float']) {
+    @supports selector(:has(+ *)) {
+      :where(label) {
+        inset-block-start: 1.2rem;
+        translate: 0 0.8rem;
+        transition-property: font-size, opacity, translate;
+
+        &:where(
+            :has(
+              + :is(:focus-visible, :not(:placeholder-shown)):not(
+                  [value=''][readonly]
+                )
+            )
+          ) {
+          font-size: var(--font-size-xs);
+          translate: none;
+
+          > span {
+            opacity: 0;
+          }
+        }
+      }
+
+      :where(input, textarea, select) {
+        padding: 2.8rem var(--padding) 1rem;
+      }
+    }
+  }
+
+  &:where([data-variant='newsletter']) {
+    font-size: var(--font-size-sm);
+
+    &:where([data-valid='true']) {
+      background-color: var(--color-light);
+    }
+
+    @supports selector(:has(+ *)) {
+      :where(label) {
+        inset-block-start: 18px;
+        display: flex;
+        column-gap: 0.2rem;
+        align-items: center;
+        transition-property: opacity;
+
+        &::before {
+          display: block;
+          inline-size: 2rem;
+          aspect-ratio: 1;
+          margin-inline-end: 0.6rem;
+          content: '';
+          background-color: currentcolor;
+          mask-image: var(--icon-mail);
+          mask-size: contain;
+        }
+
+        > span {
+          translate: 0 0.1rem;
+        }
+
+        &:where(
+            :has(
+              + :is(:focus-visible, :not(:placeholder-shown)):not(
+                  [value=''][readonly]
+                )
+            )
+          ) {
+          opacity: 0;
+        }
+      }
+
+      :where(input) {
+        --size: 5.6rem;
+
+        block-size: var(--size);
+        padding: var(--padding);
+        padding-inline-end: var(--size);
+      }
+    }
+  }
+}
+
+.checkbox {
+  --color-checkbox: var(--color-text);
+
+  color: var(--color-checkbox);
+  text-align: start;
+
+  :where(.checkbox-container) {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 1.2rem;
+  }
+
+  :where(input) {
+    --size-checkbox: 2rem;
+
+    display: grid;
+    place-items: center;
+    inline-size: var(--size-checkbox);
+    block-size: var(--size-checkbox);
+    aspect-ratio: 1;
+    overflow: clip;
+    color: var(--color-light);
+    appearance: none;
+    cursor: pointer;
+    border-radius: calc(var(--border-radius) / 2);
+    box-shadow: inset 0 0 0 0.1rem var(--color-checkbox);
+    transition: 0.15s linear;
+    transition-property: color, background-color, box-shadow;
+
+    &::after {
+      display: block;
+      inline-size: 1.6rem;
+      aspect-ratio: 1;
+      content: '';
+      background-color: currentcolor;
+      mask-image: var(--icon-check);
+      mask-size: contain;
+      scale: 0;
+      transition: scale 0.15s linear;
+    }
+
+    &:where(:checked) {
+      background-color: var(--color-checkbox);
+
+      &::after {
+        scale: 1;
+      }
+    }
+  }
+
+  :where(label) {
+    flex: 1;
+    cursor: pointer;
+  }
+
+  &:where([data-invalid='true']) {
+    --color-checkbox: var(--color-error);
+  }
+}
+
+.message {
+  margin-block-start: 0.2rem;
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-md);
+  text-align: start;
+
+  &:where(:first-of-type) {
+    margin-block-start: 0.5rem;
+  }
+
+  &:where(:last-of-type) {
+    margin-block-end: 0.75rem;
+  }
+
+  :where([data-invalid='true']) &[data-variant='status'] {
+    color: var(--color-error);
+  }
+}

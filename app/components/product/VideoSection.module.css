@@ -1,0 +1,59 @@
+.root {
+  --section-gutter: var(--padding-global-extend);
+
+  display: flex;
+  flex-direction: column;
+  padding: var(--padding-block) var(--section-gutter);
+
+  @media (width >= 120rem) {
+    padding-inline: var(--max-size-container-extend);
+  }
+
+  @media (width >= 64rem) {
+    --padding-block: 6.4rem;
+
+    align-items: center;
+    text-align: center;
+  }
+
+  @media (width < 64rem) {
+    --padding-block: 3.2rem;
+  }
+}
+
+.title {
+  margin-block-end: var(--margin-bottom);
+
+  @media (width >= 64rem) {
+    --margin-bottom: 2.4rem;
+
+    max-inline-size: 52%;
+  }
+
+  @media (width < 64rem) {
+    --margin-bottom: 2rem;
+  }
+}
+
+.text {
+  max-inline-size: 64ch;
+  margin-block-end: var(--margin-bottom);
+
+  @media (width >= 64rem) {
+    --margin-bottom: 4rem;
+
+    max-inline-size: 52%;
+  }
+
+  @media (width < 64rem) {
+    --margin-bottom: 3.2rem;
+  }
+}
+
+.video {
+  inline-size: 100%;
+  aspect-ratio: 16/9;
+  overflow: clip;
+  background-color: var(--color-graynish);
+  border-radius: var(--border-radius);
+}

@@ -1,0 +1,20 @@
+.root {
+  grid-column: var(--grid-column);
+
+  @media (width >= 64rem) {
+    --grid-column: 3 / -3;
+  }
+
+  @media (width >= 80rem) {
+    --grid-column: 4 / -4;
+  }
+
+  @media (width < 64rem) {
+    --grid-column: 1 / -1;
+  }
+}
+
+.buttons {
+  justify-content: flex-end;
+  margin-block-start: 1rem;
+}

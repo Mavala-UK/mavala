@@ -1,0 +1,19 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.6rem;
+
+  &:where([data-size='sm']) {
+    --gap: 1.2rem;
+  }
+
+  &:where([data-size='md']) {
+    --gap: 1.6rem;
+  }
+}
+
+.items {
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--gap);
+}

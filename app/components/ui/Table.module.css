@@ -1,0 +1,41 @@
+.root {
+  overflow-inline: auto;
+  font-size: var(--font-size-sm);
+  font-weight: 300;
+  line-height: 1;
+  text-align: start;
+  scrollbar-width: thin;
+  border: 0.1rem solid var(--color-border);
+  border-radius: calc(var(--border-radius) * 1.5);
+
+  & table {
+    inline-size: 100%;
+    table-layout: auto;
+    border-spacing: 0;
+    border-collapse: collapse;
+    border-style: hidden;
+  }
+
+  &::-webkit-scrollbar {
+    block-size: 1rem;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--color-scrollbar);
+    border: 0.2rem solid var(--color-light);
+    border-radius: var(--border-radius);
+  }
+}
+
+:is(.header, .cell) {
+  min-inline-size: 15rem;
+  padding: 1.6rem;
+  vertical-align: top;
+  white-space: nowrap;
+  background-color: var(--color-light);
+  border: 0.1rem solid var(--color-border);
+}
+
+.header {
+  font-weight: 500;
+}

@@ -1,0 +1,62 @@
+.root {
+  --padding-inline: var(--padding-global-extend);
+
+  position: relative;
+
+  &:where([data-align='left']) {
+    &:global(.swiper) {
+      inline-size: 100%;
+    }
+  }
+
+  :global(.swiper-slide) {
+    inline-size: auto;
+  }
+
+  &::before {
+    position: absolute;
+    inset-block-end: 0;
+    inset-inline-start: 50%;
+    inline-size: var(--size-border);
+    block-size: 0.1rem;
+    content: '';
+    background-color: var(--color-border);
+    translate: -50% 0;
+
+    @media (width >= 64rem) {
+      --size-border: min(
+        calc(100vw - var(--padding-inline) * 2),
+        var(--max-screen-width-padding)
+      );
+    }
+
+    @media (width < 64rem) {
+      --size-border: 100vw;
+    }
+  }
+}
+
+.link {
+  --color-active: var(--color-text);
+  --position-border-active: 1.6rem;
+
+  display: block;
+  padding-block-end: calc(var(--position-border-active) - 0.4rem);
+
+  &:where(:hover) {
+    @media (any-hover: hover) {
+      color: var(--color-hover);
+    }
+  }
+
+  &:where(:focus-visible, :active) {
+    color: var(--color-hover);
+  }
+
+  &:where([data-active='true']) {
+    color: var(--color-active);
+    text-decoration: underline;
+    text-decoration-thickness: 0.2rem;
+    text-underline-offset: var(--position-border-active);
+  }
+}

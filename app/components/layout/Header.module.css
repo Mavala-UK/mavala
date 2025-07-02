@@ -1,0 +1,17 @@
+.root {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 1;
+  transition-timing-function: ease-in-out;
+  transition-duration: var(--header-transition-duration);
+  transition-property: inset-block-start;
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition-property: opacity, inset-block-start;
+    will-change: opacity, inset-block-start;
+  }
+
+  &[data-collapsed='true'] {
+    inset-block-start: calc(var(--header-height) * -1);
+  }
+}

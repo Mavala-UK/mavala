@@ -1,0 +1,45 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  row-gap: 2.4rem;
+  margin-block-start: var(--margin-block-start);
+
+  @media (width >= 64rem) {
+    --margin-block-start: 1.6rem;
+  }
+
+  @media (width < 64rem) {
+    --margin-block-start: 4rem;
+  }
+}
+
+.text {
+  max-inline-size: 53ch;
+}
+
+.reassurances {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.2rem;
+}
+
+.reassurance {
+  --line-height: 1.6rem;
+
+  display: flex;
+  gap: 1.2rem;
+
+  &::before {
+    display: block;
+    inline-size: 0.4rem;
+    block-size: var(--line-height);
+    content: '';
+    background-color: currentcolor;
+    border-radius: var(--border-radius);
+    transform: translate3d(0, 0.2rem, 0);
+  }
+}
+
+.reassurance-text {
+  flex: 1;
+}

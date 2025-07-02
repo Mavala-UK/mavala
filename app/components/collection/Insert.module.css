@@ -1,0 +1,50 @@
+.root {
+  position: relative;
+  overflow: clip;
+  color: var(--color-light);
+  background-color: var(--color-dark-red);
+  border-radius: var(--border-radius);
+
+  &::before {
+    position: absolute;
+    inset-block-end: 0;
+    z-index: 1;
+    display: block;
+    inline-size: 100%;
+    block-size: 22.8rem;
+    content: '';
+    background: linear-gradient(rgb(255 255 255 / 0%) 25%, black 100%);
+    opacity: 0.48;
+  }
+
+  @media (width < 64rem) {
+    aspect-ratio: 1;
+  }
+}
+
+.infos {
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--row-gap);
+  align-items: start;
+  inline-size: 100%;
+  max-inline-size: 40ch;
+  padding: 3.2rem;
+
+  @media (width >= 64rem) {
+    --row-gap: 2.4rem;
+  }
+
+  @media (width < 64rem) {
+    --row-gap: 1.6rem;
+  }
+}
+
+.image {
+  min-block-size: 100%;
+  object-fit: cover;
+}

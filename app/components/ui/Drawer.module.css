@@ -1,0 +1,243 @@
+.overlay,
+.content {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+
+  60% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+
+  60% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.overlay {
+  background-color: var(--color-overlay);
+  animation-duration: var(--animation-drawer-duration);
+  animation-timing-function: linear;
+
+  &:where([data-state='open']) {
+    animation-name: fade-in;
+  }
+
+  &:where([data-state='closed']) {
+    animation-name: fade-out;
+  }
+}
+
+@keyframes slide-in {
+  from {
+    translate: var(--x) var(--y);
+  }
+
+  to {
+    translate: none;
+  }
+}
+
+@keyframes slide-out {
+  from {
+    translate: none;
+  }
+
+  to {
+    translate: var(--x) var(--y);
+  }
+}
+
+.content,
+.container {
+  display: grid;
+  grid-auto-columns: 100%;
+}
+
+.content {
+  isolation: isolate;
+  animation-duration: var(--animation-drawer-duration);
+  animation-timing-function: linear;
+
+  @media (width >= 64rem) {
+    --width: 45rem;
+    --offset: 1.6rem;
+    --border-radius-drawer: var(--border-radius);
+
+    inline-size: min(100%, calc(var(--width) + var(--offset) * 2));
+  }
+
+  @media (width < 64rem) {
+    --width: 100%;
+    --offset: 0;
+    --border-radius-drawer: 0;
+
+    inline-size: 100%;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+  }
+
+  &::-webkit-scrollbar {
+    inline-size: 1rem;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--color-scrollbar);
+    border: 0.2rem solid var(--color-light);
+    border-radius: var(--border-radius);
+  }
+
+  &:where([data-state='open']) {
+    animation-name: fade-in;
+
+    @media (prefers-reduced-motion: no-preference) {
+      animation-name: slide-in;
+    }
+  }
+
+  &:where([data-state='closed']) {
+    animation-name: fade-in;
+
+    @media (prefers-reduced-motion: no-preference) {
+      animation-name: slide-out;
+    }
+  }
+
+  &:where([data-animation-origin='left']) {
+    --x: -100%;
+    --y: 0;
+
+    inset-inline-end: auto;
+  }
+
+  &:where([data-animation-origin='right']) {
+    --x: 100%;
+    --y: 0;
+
+    inset-inline-start: auto;
+  }
+
+  &:where([data-animation-origin='top']) {
+    --x: 0;
+    --y: -100%;
+
+    inset-block-end: auto;
+  }
+
+  &:where([data-animation-origin='bottom']) {
+    --x: 0;
+    --y: 100%;
+
+    inset-block-start: auto;
+  }
+
+  &::before {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    content: '';
+    background-color: var(--color-light);
+    opacity: 0;
+    transition: opacity 0.4s linear;
+
+    @media (width >= 64rem) {
+      margin: 1.6rem;
+      border-radius: var(--border-radius);
+    }
+  }
+
+  &:where([aria-busy='true'])::before {
+    pointer-events: auto;
+    opacity: 0.5;
+  }
+}
+
+.container {
+  display: grid;
+  grid-template-rows: min-content 1fr min-content;
+  margin: var(--offset);
+  overflow-block: auto;
+  scrollbar-color: var(--color-scrollbar) transparent;
+  scrollbar-width: thin;
+  background-color: var(--color-light);
+  border-radius: var(--border-radius-drawer);
+  translate: 0;
+
+  &::-webkit-scrollbar {
+    inline-size: 1rem;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--color-scrollbar);
+    border: 0.2rem solid var(--color-light);
+    border-radius: var(--border-radius);
+  }
+}
+
+.header,
+.body,
+.footer {
+  padding-inline: var(--drawer-gutter);
+}
+
+.header {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 11;
+  display: flex;
+  align-items: center;
+  min-block-size: 5.6rem;
+  padding-block: 0.8rem;
+  padding-inline-end: var(--drawer-gutter-close);
+  background-color: var(--color-light);
+  border-block-end: 1px solid var(--color-border);
+}
+
+.title {
+  content: '';
+}
+
+.body {
+  padding-block: var(--drawer-gutter);
+}
+
+.footer {
+  position: sticky;
+  inset-block-end: 0;
+  z-index: 11;
+  display: flex;
+  padding-block: 1.6rem;
+  background-color: var(--color-light);
+  border-block-start: 1px solid var(--color-border);
+
+  > :only-child {
+    flex: 1;
+    max-inline-size: none;
+  }
+}
+
+.close {
+  margin-inline-start: auto;
+}

@@ -1,0 +1,43 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--padding-block-end);
+  padding-block-start: var(--padding-block-start);
+  padding-inline: var(--padding-global-extend);
+
+  @media (width >= 120rem) {
+    padding-inline: var(--max-size-container-extend);
+  }
+
+  @media (width >= 64rem) {
+    --padding-block-start: 6.4rem;
+    --padding-block-end: 4rem;
+    --row-gap-content: 2.4rem;
+  }
+
+  @media (width < 64rem) {
+    --padding-block-start: 3.2rem;
+    --padding-block-end: 3.2rem;
+    --row-gap-content: 1.6rem;
+  }
+
+  &.no-categories {
+    padding-block-end: 3.2rem;
+  }
+}
+
+.content {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--row-gap-content) var(--grid-gutter);
+
+  & > * {
+    @media (width >= 64rem) {
+      grid-column: 1 / 2;
+    }
+
+    @media (width < 64rem) {
+      grid-column: 1 / -1;
+    }
+  }
+}

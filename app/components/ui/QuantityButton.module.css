@@ -1,0 +1,45 @@
+.root {
+  --gap: 0.4rem;
+  --opacity: 0.24;
+  --height: 4rem;
+
+  display: flex;
+  column-gap: var(--gap);
+  align-items: center;
+  max-inline-size: fit-content;
+  block-size: var(--height);
+  padding-inline: var(--gap);
+  border: 0.1rem solid var(--color-border);
+  border-radius: var(--border-radius);
+}
+
+.button {
+  transition-property: color, opacity;
+
+  &[aria-disabled='true'] {
+    color: var(--color-text);
+    pointer-events: none;
+    opacity: var(--opacity);
+  }
+
+  svg {
+    inline-size: var(--height);
+  }
+}
+
+.control {
+  block-size: 100%;
+  text-align: center;
+  text-overflow: ellipsis;
+  appearance: textfield;
+  background-color: transparent;
+
+  &[aria-disabled='true'] {
+    pointer-events: none;
+    opacity: var(--opacity);
+  }
+
+  &::-webkit-inner-spin-button {
+    display: none;
+  }
+}

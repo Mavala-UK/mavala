@@ -1,0 +1,21 @@
+.root {
+  display: flex;
+  column-gap: 0.6rem;
+  align-items: center;
+  color: var(--color-text);
+}
+
+.color {
+  --size: 1.2rem;
+
+  display: block;
+  inline-size: var(--size);
+  block-size: var(--size);
+  border: 0.1rem solid var(--color-border);
+  border-radius: 100%;
+
+  &:where([data-border='true']) {
+    border: 0.1rem solid var(--color-gray-medium);
+    opacity: 0.32;
+  }
+}

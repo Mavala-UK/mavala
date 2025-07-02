@@ -1,0 +1,132 @@
+.root {
+  .header {
+    min-block-size: 0;
+    padding-block: 0;
+    padding-inline-end: var(--drawer-gutter);
+    background-color: transparent;
+    border-block-end: none;
+  }
+
+  .body {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--drawer-gutter);
+    padding-block-start: 0;
+  }
+}
+
+.primary-nav {
+  flex: 1;
+  padding-block: 0.8rem 1.6rem;
+
+  .items {
+    row-gap: 1.6rem;
+  }
+}
+
+.secondary-nav {
+  .items {
+    row-gap: 0.8rem;
+  }
+}
+
+.link {
+  display: inline-block;
+  inline-size: 100%;
+}
+
+.trigger,
+.trigger-back,
+.trigger-categories {
+  display: flex;
+  column-gap: 1.2rem;
+  align-items: center;
+  inline-size: 100%;
+
+  &::after {
+    display: block;
+    inline-size: 2rem;
+    aspect-ratio: 1;
+    content: '';
+    background-color: currentcolor;
+    mask-image: var(--icon-chevron-right);
+    mask-size: contain;
+
+    @media (prefers-reduced-motion: no-preference) {
+      transition: transform 0.15s ease-in-out;
+    }
+  }
+}
+
+.header-content,
+.header-content-back {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  inline-size: 100%;
+  padding-block-start: var(--drawer-gutter-close);
+
+  .close {
+    align-self: start;
+    transform: translate3d(1rem, 0, 0);
+  }
+}
+
+.header-content-back {
+  min-block-size: 10.4rem;
+  padding-block-end: 2rem;
+  background-color: var(--color-light);
+  border-block-end: 1px solid var(--color-border);
+}
+
+.trigger-back {
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+
+  &::after {
+    margin-block-start: 1px;
+    transform: rotate(180deg);
+  }
+}
+
+.items {
+  display: flex;
+  flex-direction: column;
+}
+
+.categories-nav {
+  flex: 1;
+
+  .items {
+    row-gap: 1.6rem;
+  }
+}
+
+.body > .categories-nav,
+.categories-panel {
+  padding-block-start: 3rem;
+}
+
+.categories-panel {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  row-gap: 4rem;
+}
+
+.trigger-categories {
+  justify-content: space-between;
+
+  &:where([data-highlighted='true']) {
+    color: var(--color-dark-red);
+
+    &::after {
+      background-color: var(--color-dark);
+    }
+  }
+}
+
+.categories-launchers {
+  flex: 1;
+  justify-content: end;
+}

@@ -1,0 +1,6 @@
+name = "mavala-italia"
+main = "./dist/server/index.js"
+compatibility_date = "2025-01-29"
+workers_dev = true
+assets.directory = "./dist/client"
+build.command = "pnpm run build"

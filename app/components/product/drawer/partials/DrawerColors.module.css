@@ -1,0 +1,45 @@
+.root {
+  --padding-colors: var(--padding-blocks-product-drawer);
+  --height-carousel: var(--height-sticky);
+
+  :global(.swiper) {
+    padding-inline: var(--padding-colors);
+    overflow: hidden;
+  }
+
+  :global(.swiper-slide) {
+    inline-size: auto;
+  }
+
+  :global(.swiper-button-next) {
+    --position-button: 0rem;
+    --swiper-navigation-size: var(--height-carousel);
+
+    &::after {
+      margin-inline-end: calc(var(--padding-colors) / 2);
+    }
+  }
+}
+
+.button {
+  --color-border-button: transparent;
+
+  block-size: var(--height-carousel);
+  color: var(--color-text);
+  border-block-end: 0.2rem solid var(--color-border-button);
+  transition: border 0.15s;
+
+  &:where(:hover) {
+    @media (any-hover: hover) {
+      --color-border-button: var(--color-gray-medium);
+    }
+  }
+
+  &:where(:focus-visible, :active) {
+    --color-border-button: var(--color-gray-medium);
+  }
+
+  &:where([data-active='true']) {
+    --color-border-button: var(--color-dark);
+  }
+}

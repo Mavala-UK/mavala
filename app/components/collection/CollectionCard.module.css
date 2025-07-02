@@ -1,0 +1,39 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  inline-size: 100%;
+
+  &:is(:hover, :focus-within) {
+    @media (any-hover: hover) and (prefers-reduced-motion: no-preference) {
+      .image {
+        scale: 1.05;
+      }
+    }
+  }
+
+  &:where([data-size='xs']) {
+    gap: 0.8rem;
+  }
+
+  &:where([data-variant='compact']) {
+    flex-direction: row;
+    align-items: center;
+
+    .image-wrapper {
+      inline-size: 5.6rem;
+    }
+  }
+}
+
+.image-wrapper {
+  inline-size: 100%;
+  aspect-ratio: 1;
+  overflow: clip;
+  background-color: var(--color-graynish);
+  border-radius: var(--border-radius);
+}
+
+.image {
+  transition: scale 0.5s;
+}

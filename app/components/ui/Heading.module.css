@@ -1,0 +1,43 @@
+.root {
+  font-weight: 300;
+  text-wrap: balance;
+
+  &:where([data-size='xs']) {
+    font-size: var(--font-size-xs);
+    line-height: var(--line-height-sm);
+  }
+
+  &:where([data-size='sm']) {
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-md);
+  }
+
+  &:where([data-size='md']) {
+    font-size: var(--font-size-md);
+    line-height: var(--line-height-md);
+  }
+
+  &:where([data-size='lg']) {
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-sm);
+  }
+
+  &:where([data-size='xl']) {
+    font-size: var(--font-size-xl);
+    line-height: var(--line-height-xs);
+  }
+
+  &:where([data-size='2xl']) {
+    font-size: var(--font-size-2xl);
+    line-height: var(--line-height-xs);
+  }
+
+  &:where([data-size='3xl']) {
+    font-size: var(--font-size-3xl);
+    line-height: var(--line-height-2xs);
+  }
+
+  :where(b, strong) {
+    font-weight: inherit;
+  }
+}
