@@ -1,7 +1,7 @@
 import {PresentationIcon} from '@sanity/icons';
 import {defineField, defineType} from 'sanity';
 
-const TITLE = 'Section éditoriale';
+const TITLE = 'Editorial Section';
 
 export const editorialSectionType = defineType({
   name: 'editorialSection',
@@ -11,17 +11,17 @@ export const editorialSectionType = defineType({
   fields: [
     defineField({
       name: 'title',
-      title: 'Titre',
+      title: 'Title',
       type: 'internationalizedArrayString',
     }),
     defineField({
       name: 'text',
-      title: 'Texte',
+      title: 'Text',
       type: 'internationalizedArrayPortableText',
     }),
     defineField({
       name: 'link',
-      title: 'Lien',
+      title: 'Link',
       type: 'link',
     }),
     defineField({

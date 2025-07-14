@@ -116,18 +116,16 @@ export const productWithVariantType = defineType({
       }
 
       const description = [
-        variantCount
-          ? pluralize('variante', variantCount, true)
-          : 'Aucune variante',
-        optionCount ? pluralize('option', optionCount, true) : 'Aucune option',
+        variantCount ? pluralize('variant', variantCount, true) : 'No variants',
+        optionCount ? pluralize('option', optionCount, true) : 'No options',
       ];
 
       let subtitle = getPriceRange(priceRange);
       if (status !== 'active') {
-        subtitle = '(Indisponible sur Shopify)';
+        subtitle = '(Unavailable on Shopify)';
       }
       if (isDeleted) {
-        subtitle = '(Supprimé de Shopify)';
+        subtitle = '(Deleted from Shopify)';
       }
 
       return {

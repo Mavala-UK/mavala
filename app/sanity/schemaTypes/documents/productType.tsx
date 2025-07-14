@@ -8,7 +8,7 @@ import {getPriceRange} from '../../utils/getPriceRange';
 
 export const productType = defineType({
   name: 'product',
-  title: 'Produit',
+  title: 'Product',
   type: 'document',
   icon: TagIcon,
   groups: GROUPS,
@@ -30,7 +30,7 @@ export const productType = defineType({
     }),
     defineField({
       name: 'titleProxy',
-      title: 'Titre',
+      title: 'Title',
       type: 'proxyString',
       options: {field: 'store.title'},
     }),
@@ -44,12 +44,12 @@ export const productType = defineType({
       name: 'store',
       title: 'Shopify',
       type: 'shopifyProduct',
-      description: 'Données du produit provenant de Shopify (lecture seule)',
+      description: 'Product data from Shopify (read-only)',
       group: 'shopifySync',
     }),
     defineField({
       name: 'faqSection',
-      title: 'Section FAQ',
+      title: 'FAQ Section',
       type: 'faqSection',
       group: 'editorial',
       options: {
@@ -59,7 +59,7 @@ export const productType = defineType({
     }),
     defineField({
       name: 'relatedArticles',
-      title: 'Articles mis en avant',
+      title: 'Featured Articles',
       type: 'featuredArticles',
       group: 'editorial',
       hidden: SITES?.isMavalaCorporate,
@@ -68,22 +68,22 @@ export const productType = defineType({
   orderings: [
     {
       name: 'titleAsc',
-      title: 'Titre (A-Z)',
+      title: 'Title (A-Z)',
       by: [{field: 'store.title', direction: 'asc'}],
     },
     {
       name: 'titleDesc',
-      title: 'Titre (Z-A)',
+      title: 'Title (Z-A)',
       by: [{field: 'store.title', direction: 'desc'}],
     },
     {
       name: 'priceDesc',
-      title: 'Prix (du plus élevé au plus bas)',
+      title: 'Price (High to Low)',
       by: [{field: 'store.priceRange.minVariantPrice', direction: 'desc'}],
     },
     {
       name: 'priceAsc',
-      title: 'Prix (du plus bas au plus élevé)',
+      title: 'Price (Low to High)',
       by: [{field: 'store.priceRange.minVariantPrice', direction: 'asc'}],
     },
   ],
@@ -112,26 +112,24 @@ export const productType = defineType({
       const variantCount = variants?.length;
 
       const description = [
-        variantCount
-          ? pluralize('variante', variantCount, true)
-          : 'Aucune variante',
-        optionCount ? pluralize('option', optionCount, true) : 'Aucune option',
+        variantCount ? pluralize('variant', variantCount, true) : 'No variants',
+        optionCount ? pluralize('option', optionCount, true) : 'No options',
       ];
 
       let subtitle = '';
-      
+
       try {
         subtitle = getPriceRange(priceRange);
       } catch (error) {
         console.warn('Error getting price range for product:', title, error);
-        subtitle = 'Prix non disponible';
+        subtitle = 'Price unavailable';
       }
 
       if (status !== 'active') {
-        subtitle = '(Indisponible sur Shopify)';
+        subtitle = '(Unavailable on Shopify)';
       }
       if (isDeleted) {
-        subtitle = '(Supprimé de Shopify)';
+        subtitle = '(Deleted from Shopify)';
       }
 
       return {

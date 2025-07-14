@@ -83,17 +83,17 @@ export const GROUPS = [
   {
     default: true,
     name: 'editorial',
-    title: 'Éditorial',
+    title: 'Editorial',
     icon: ComposeIcon,
   },
   {
     name: 'additional',
-    title: 'Contenu additionnel',
+    title: 'Additional Content',
     icon: DashboardIcon,
   },
   {
     name: 'shopifySync',
-    title: 'Synchronisation Shopify',
+    title: 'Shopify Sync',
     icon: ShopifyIcon,
   },
   {

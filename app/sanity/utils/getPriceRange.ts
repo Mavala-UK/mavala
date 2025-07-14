@@ -8,7 +8,7 @@ type PriceObject = {
 const formatNumber = (val: number) => {
   const currencyCode = DEFAULT_CURRENCY_CODE || 'GBP';
   const locale = LANGUAGES[0]?.id ?? 'fr';
-  
+
   return new Intl.NumberFormat(locale, {
     currency: currencyCode,
     style: 'currency',
@@ -16,10 +16,14 @@ const formatNumber = (val: number) => {
 };
 
 export const getPriceRange = (price: PriceObject) => {
-  if (!price || typeof price?.minVariantPrice === 'undefined' || price?.minVariantPrice === null) {
-    return 'Aucun prix trouvé';
+  if (
+    !price ||
+    typeof price?.minVariantPrice === 'undefined' ||
+    price?.minVariantPrice === null
+  ) {
+    return 'No price found';
   }
-  
+
   try {
     if (
       price.maxVariantPrice &&
@@ -34,6 +38,6 @@ export const getPriceRange = (price: PriceObject) => {
     return formatNumber(price.minVariantPrice);
   } catch (error) {
     console.warn('Error formatting price range:', error);
-    return 'Prix non disponible';
+    return 'Price unavailable';
   }
 };

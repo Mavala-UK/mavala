@@ -38,12 +38,10 @@ export default (
       message: (
         <Stack space={4}>
           <Text>
-            Supprimer le produit actuel et toutes les variantes associées de
-            votre ensemble de données.
+            Delete the current product and all associated variants from your
+            dataset.
           </Text>
-          <Text weight="medium">
-            Aucun contenu sur Shopify ne sera supprimé.
-          </Text>
+          <Text weight="medium">No content on Shopify will be deleted.</Text>
         </Stack>
       ),
       onCancel: onComplete,
@@ -104,12 +102,8 @@ export default (
     dialog = {
       message: (
         <Stack space={4}>
-          <Text>
-            Supprimer la collection actuelle de votre ensemble de données.
-          </Text>
-          <Text weight="medium">
-            Aucun contenu sur Shopify ne sera supprimé.
-          </Text>
+          <Text>Delete the current collection from your dataset.</Text>
+          <Text weight="medium">No content on Shopify will be deleted.</Text>
         </Stack>
       ),
       onCancel: onComplete,

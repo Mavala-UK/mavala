@@ -6,7 +6,7 @@ import {GROUPS} from '../../constants';
 
 export const productVariantType = defineType({
   name: 'productVariant',
-  title: 'Variante de produit',
+  title: 'Product Variant',
   type: 'document',
   icon: CopyIcon,
   groups: GROUPS,
@@ -24,7 +24,7 @@ export const productVariantType = defineType({
       },
     }),
     defineField({
-      title: 'Titre',
+      title: 'Title',
       name: 'titleProxy',
       type: 'proxyString',
       options: {field: 'store.title'},
@@ -32,7 +32,7 @@ export const productVariantType = defineType({
     defineField({
       name: 'store',
       title: 'Shopify',
-      description: 'Données de variante provenant de Shopify (lecture seule)',
+      description: 'Variant data from Shopify (read-only)',
       type: 'shopifyProductVariant',
       group: 'shopifySync',
     }),

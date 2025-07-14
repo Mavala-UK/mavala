@@ -25,7 +25,7 @@ export const collectionType = defineType({
     }),
     defineField({
       name: 'titleProxy',
-      title: 'Titre',
+      title: 'Title',
       type: 'proxyString',
       options: {field: 'store.title'},
     }),
@@ -39,12 +39,12 @@ export const collectionType = defineType({
       name: 'store',
       title: 'Shopify',
       type: 'shopifyCollection',
-      description: 'Données de collection provenant de Shopify (lecture seule)',
+      description: 'Collection data from Shopify (read-only)',
       group: 'shopifySync',
     }),
     defineField({
       name: 'insert',
-      title: 'Encart',
+      title: 'Insert',
       type: 'insert',
       group: 'editorial',
       options: {
@@ -54,7 +54,7 @@ export const collectionType = defineType({
     }),
     defineField({
       name: 'seoSection',
-      title: 'Section SEO',
+      title: 'SEO Section',
       type: 'seoSection',
       group: 'editorial',
       options: {
@@ -64,7 +64,7 @@ export const collectionType = defineType({
     }),
     defineField({
       name: 'faqSection',
-      title: 'Section FAQ',
+      title: 'FAQ Section',
       type: 'faqSection',
       group: 'editorial',
       options: {
@@ -74,7 +74,7 @@ export const collectionType = defineType({
     }),
     defineField({
       name: 'additionalBlocks',
-      title: 'Blocs additionnels',
+      title: 'Additional Blocks',
       type: 'array',
       group: 'additional',
       of: [
@@ -87,7 +87,7 @@ export const collectionType = defineType({
     }),
     defineField({
       name: 'relatedArticles',
-      title: 'Articles mis en avant',
+      title: 'Featured Articles',
       type: 'featuredArticles',
       group: 'editorial',
       hidden: SITES?.isMavalaCorporate,
@@ -96,12 +96,12 @@ export const collectionType = defineType({
   orderings: [
     {
       name: 'titleAsc',
-      title: 'Titre (A-Z)',
+      title: 'Title (A-Z)',
       by: [{field: 'store.title', direction: 'asc'}],
     },
     {
       name: 'titleDesc',
-      title: 'Titre (Z-A)',
+      title: 'Title (Z-A)',
       by: [{field: 'store.title', direction: 'desc'}],
     },
   ],
@@ -126,8 +126,8 @@ export const collectionType = defineType({
         ),
         subtitle:
           ruleCount > 0
-            ? `Automatique (${pluralize('règle', ruleCount, true)})`
-            : 'Manuel',
+            ? `Automatic (${pluralize('rule', ruleCount, true)})`
+            : 'Manual',
         title,
       };
     },

@@ -3,14 +3,14 @@ import {defineField, defineType} from 'sanity';
 
 export const collectionRuleType = defineType({
   name: 'collectionRule',
-  title: 'Règle de collection',
+  title: 'Collection Rule',
   type: 'object',
   icon: FilterIcon,
   readOnly: true,
   fields: [
     defineField({
       name: 'column',
-      title: 'Colonne',
+      title: 'Column',
       type: 'string',
     }),
     defineField({
