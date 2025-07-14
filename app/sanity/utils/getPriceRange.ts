@@ -6,24 +6,34 @@ type PriceObject = {
 };
 
 const formatNumber = (val: number) => {
-  return new Intl.NumberFormat(LANGUAGES[0].id ?? 'fr', {
-    currency: DEFAULT_CURRENCY_CODE,
+  const currencyCode = DEFAULT_CURRENCY_CODE || 'GBP';
+  const locale = LANGUAGES[0]?.id ?? 'fr';
+  
+  return new Intl.NumberFormat(locale, {
+    currency: currencyCode,
     style: 'currency',
   }).format(val);
 };
 
 export const getPriceRange = (price: PriceObject) => {
-  if (!price || typeof price?.minVariantPrice === 'undefined') {
+  if (!price || typeof price?.minVariantPrice === 'undefined' || price?.minVariantPrice === null) {
     return 'Aucun prix trouvé';
   }
-  if (
-    price.maxVariantPrice &&
-    price.minVariantPrice !== price.maxVariantPrice
-  ) {
-    return `${formatNumber(price.minVariantPrice)} – ${formatNumber(
-      price.maxVariantPrice,
-    )}`;
-  }
+  
+  try {
+    if (
+      price.maxVariantPrice &&
+      typeof price.maxVariantPrice === 'number' &&
+      price.minVariantPrice !== price.maxVariantPrice
+    ) {
+      return `${formatNumber(price.minVariantPrice)} – ${formatNumber(
+        price.maxVariantPrice,
+      )}`;
+    }
 
-  return formatNumber(price.minVariantPrice);
+    return formatNumber(price.minVariantPrice);
+  } catch (error) {
+    console.warn('Error formatting price range:', error);
+    return 'Prix non disponible';
+  }
 };

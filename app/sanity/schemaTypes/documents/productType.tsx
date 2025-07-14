@@ -118,7 +118,14 @@ export const productType = defineType({
         optionCount ? pluralize('option', optionCount, true) : 'Aucune option',
       ];
 
-      let subtitle = getPriceRange(priceRange);
+      let subtitle = '';
+      
+      try {
+        subtitle = getPriceRange(priceRange);
+      } catch (error) {
+        console.warn('Error getting price range for product:', title, error);
+        subtitle = 'Prix non disponible';
+      }
 
       if (status !== 'active') {
         subtitle = '(Indisponible sur Shopify)';
