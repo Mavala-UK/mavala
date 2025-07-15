@@ -3,12 +3,12 @@ import {defineType} from 'sanity';
 
 export const video = defineType({
   name: 'video',
-  title: 'Vidéo',
+  title: 'Video',
   type: 'object',
   icon: DocumentVideoIcon,
   fields: [
     {
-      title: 'Fichier',
+      title: 'File',
       name: 'file',
       type: 'internationalizedArrayFile',
       validation: (Rule) => Rule.required(),
@@ -17,11 +17,10 @@ export const video = defineType({
       },
     },
     {
-      title: 'Vignette',
+      title: 'Thumbnail',
       name: 'poster',
       type: 'internationalizedArrayImage',
-      description:
-        'Image à afficher tant que la vidéo est en cours de téléchargement.',
+      description: 'Image to display while the video is downloading.',
     },
   ],
   preview: {
@@ -31,7 +30,7 @@ export const video = defineType({
     },
     prepare({title, media}) {
       return {
-        title: title || 'Vidéo',
+        title: title || 'Video',
         media,
       };
     },
@@ -40,7 +39,7 @@ export const video = defineType({
 
 export const bunnyVideo = defineType({
   name: 'bunnyVideo',
-  title: 'Bunny Vidéo',
+  title: 'Bunny Video',
   type: 'object',
   icon: DocumentVideoIcon,
   fields: [
@@ -57,7 +56,7 @@ export const bunnyVideo = defineType({
     },
     prepare({id}) {
       return {
-        title: `Bunny ID : ${id}` || 'Vidéo Bunny',
+        title: `Bunny ID: ${id}` || 'Bunny Video',
       };
     },
   },

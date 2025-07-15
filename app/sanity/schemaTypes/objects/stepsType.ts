@@ -1,7 +1,7 @@
 import {ListIcon, ImageIcon} from '@sanity/icons';
 import {defineArrayMember, defineField, defineType} from 'sanity';
 
-const TITLE = 'Étapes';
+const TITLE = 'Steps';
 
 export const steps = defineType({
   name: 'steps',
@@ -11,13 +11,13 @@ export const steps = defineType({
   fields: [
     defineField({
       name: 'steps',
-      title: 'Étapes',
+      title: 'Steps',
       type: 'array',
       of: [
         defineArrayMember({
           type: 'object',
           name: 'step',
-          title: 'Étape',
+          title: 'Step',
           fields: [
             defineField({
               name: 'image',
@@ -27,13 +27,13 @@ export const steps = defineType({
             }),
             defineField({
               name: 'title',
-              title: `Titre de l'étape`,
+              title: 'Step Title',
               type: 'internationalizedArrayString',
               validation: (Rule) => Rule.required(),
             }),
             defineField({
               name: 'text',
-              title: 'Texte',
+              title: 'Text',
               type: 'internationalizedArrayText',
               validation: (Rule) => Rule.required(),
             }),
@@ -45,13 +45,14 @@ export const steps = defineType({
             },
             prepare({title, media}) {
               return {
-                title: title ?? 'Sans titre',
-                media: media ?? ImageIcon,
+                title: title || 'Step',
+                media,
               };
             },
           },
         }),
       ],
+      validation: (Rule) => Rule.min(1).max(4),
     }),
   ],
   preview: {

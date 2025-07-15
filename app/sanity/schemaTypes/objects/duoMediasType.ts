@@ -1,7 +1,7 @@
 import {InlineIcon} from '@sanity/icons';
 import {defineField, defineType} from 'sanity';
 
-const TITLE = 'Duo de médias';
+const TITLE = 'Media Duo';
 
 export const duoMedias = defineType({
   name: 'duoMedias',
@@ -11,13 +11,13 @@ export const duoMedias = defineType({
   fields: [
     defineField({
       name: 'largeImage',
-      title: 'Image large',
+      title: 'Large Image',
       type: 'image',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'smallImage',
-      title: 'Image small',
+      title: 'Small Image',
       type: 'image',
       validation: (Rule) => Rule.required(),
     }),
@@ -27,8 +27,8 @@ export const duoMedias = defineType({
       type: 'string',
       options: {
         list: [
-          {title: 'Gauche', value: 'left'},
-          {title: 'Droite', value: 'right'},
+          {title: 'Left', value: 'left'},
+          {title: 'Right', value: 'right'},
         ],
       },
       initialValue: 'left',

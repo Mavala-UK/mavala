@@ -2,7 +2,7 @@ import {ImagesIcon, ImageIcon} from '@sanity/icons';
 import {defineArrayMember, defineField, defineType} from 'sanity';
 import {video} from './videoType';
 
-const TITLE = 'Galerie de médias';
+const TITLE = 'Media Gallery';
 
 export const galleryCarousel = defineType({
   name: 'galleryCarousel',

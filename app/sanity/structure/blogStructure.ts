@@ -10,14 +10,14 @@ import defineStructure from '../utils/defineStructure';
 
 export default defineStructure<ListItemBuilder>((S) =>
   S.listItem()
-    .title('Conseils et astuces')
+    .title('Tips and Advice')
     .schemaType('blog')
     .child(
       S.list()
-        .title('Conseils et astuces')
+        .title('Tips and Advice')
         .items([
           S.listItem()
-            .title('Accueil')
+            .title('Home')
             .schemaType('blog')
             .icon(HomeIcon)
             .child(
@@ -27,13 +27,13 @@ export default defineStructure<ListItemBuilder>((S) =>
                 .views([S.view.form()]),
             ),
           S.listItem()
-            .title('Catégories')
+            .title('Categories')
             .schemaType('articleCategory')
             .icon(FilterIcon)
             .child(
               S.documentList()
                 .id('articleCategories')
-                .title('Catégories')
+                .title('Categories')
                 .schemaType('articleCategory')
                 .filter('_type == "articleCategory"')
                 .apiVersion(SANITY_API_VERSION)
@@ -59,7 +59,7 @@ export default defineStructure<ListItemBuilder>((S) =>
                 ),
             ),
           S.listItem()
-            .title('Lanceur articles')
+            .title('Article Launcher')
             .schemaType('articleLauncher')
             .icon(BlockElementIcon)
             .child(

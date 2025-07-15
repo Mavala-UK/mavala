@@ -1,7 +1,7 @@
 import {ProjectsIcon} from '@sanity/icons';
 import {defineArrayMember, defineField, defineType} from 'sanity';
 
-const TITLE = 'Sélection du moment';
+const TITLE = 'Hot Picks';
 
 export const hotPicksType = defineType({
   name: 'hotPicks',
@@ -11,7 +11,7 @@ export const hotPicksType = defineType({
   fields: [
     defineField({
       name: 'title',
-      title: 'Titre',
+      title: 'Title',
       type: 'internationalizedArrayString',
     }),
     defineField({

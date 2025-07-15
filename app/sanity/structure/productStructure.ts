@@ -18,14 +18,14 @@ export default defineStructure<ListItemBuilder>((S) =>
           .items([
             // Details
             S.listItem()
-              .title('Détails')
+              .title('Details')
               .icon(InfoOutlineIcon)
               .schemaType('product')
               .id(id)
               .child(S.document().schemaType('product').documentId(id)),
             // Product variants
             S.listItem()
-              .title('Variantes')
+              .title('Variants')
               .schemaType('productVariant')
               .child(
                 S.documentList()

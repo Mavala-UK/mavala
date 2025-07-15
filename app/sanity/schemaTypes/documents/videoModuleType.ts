@@ -1,7 +1,7 @@
 import {VideoIcon} from '@sanity/icons';
 import {defineField, defineType} from 'sanity';
 
-const TITLE = 'Module Vidéo';
+const TITLE = 'Video Module';
 
 export const videoModuleType = defineType({
   name: 'videoModule',
@@ -11,17 +11,17 @@ export const videoModuleType = defineType({
   fields: [
     defineField({
       name: 'title',
-      title: 'Titre',
+      title: 'Title',
       type: 'internationalizedArrayString',
     }),
     defineField({
       name: 'text',
-      title: 'Texte',
+      title: 'Text',
       type: 'internationalizedArrayText',
     }),
     defineField({
       name: 'video',
-      title: 'Vidéo',
+      title: 'Video',
       type: 'video',
     }),
   ],

@@ -33,7 +33,7 @@ export const homeType = defineType({
     }),
     defineField({
       name: 'hotPicks',
-      title: 'Sélection du moment',
+      title: 'Hot Picks',
       type: 'hotPicks',
       group: 'editorial',
       options: {
@@ -43,7 +43,7 @@ export const homeType = defineType({
     }),
     defineField({
       name: 'editorialSection',
-      title: 'Section éditoriale',
+      title: 'Editorial Section',
       type: 'editorialSection',
       group: 'editorial',
       options: {

@@ -12,18 +12,18 @@ export const shopifyProductType = defineType({
   fieldsets: [
     {
       name: 'status',
-      title: 'Statut',
+      title: 'Status',
     },
     {
       name: 'organization',
-      title: 'Organisation',
+      title: 'Organization',
       options: {
         columns: 2,
       },
     },
     {
       name: 'variants',
-      title: 'Variantes',
+      title: 'Variants',
       options: {
         collapsed: true,
         collapsible: true,
@@ -34,54 +34,54 @@ export const shopifyProductType = defineType({
     defineField({
       fieldset: 'status',
       name: 'createdAt',
-      title: 'Date de création',
+      title: 'Created Date',
       type: 'string',
     }),
     defineField({
       fieldset: 'status',
       name: 'updatedAt',
-      title: 'Date de mise à jour',
+      title: 'Updated Date',
       type: 'string',
     }),
     defineField({
       fieldset: 'status',
       name: 'status',
-      title: 'Statut',
+      title: 'Status',
       type: 'string',
       options: {
         layout: 'dropdown',
-        list: ['actif', 'archivé', 'brouillon'],
+        list: ['active', 'archived', 'draft'],
       },
     }),
     defineField({
       fieldset: 'status',
       name: 'isDeleted',
-      title: 'Supprimé de Shopify ?',
+      title: 'Deleted from Shopify?',
       type: 'boolean',
     }),
     defineField({
       name: 'title',
-      title: 'Titre',
+      title: 'Title',
       type: 'string',
-      description: 'Titre affiché dans le panier et à la caisse',
+      description: 'Title displayed in cart and checkout',
     }),
     defineField({
       name: 'id',
       title: 'ID',
       type: 'number',
-      description: 'ID du produit Shopify',
+      description: 'Shopify product ID',
     }),
     defineField({
       name: 'gid',
       title: 'GID',
       type: 'string',
-      description: 'GID du produit Shopify',
+      description: 'Shopify product GID',
     }),
     defineField({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
-      description: 'Handle du produit Shopify',
+      description: 'Shopify product handle',
     }),
     defineField({
       name: 'descriptionHtml',
@@ -92,13 +92,13 @@ export const shopifyProductType = defineType({
     defineField({
       fieldset: 'organization',
       name: 'productType',
-      title: 'Type de produit',
+      title: 'Product Type',
       type: 'string',
     }),
     defineField({
       fieldset: 'organization',
       name: 'vendor',
-      title: 'Vendeur',
+      title: 'Vendor',
       type: 'string',
     }),
     defineField({
@@ -109,14 +109,14 @@ export const shopifyProductType = defineType({
     }),
     defineField({
       name: 'priceRange',
-      title: 'Fourchette de prix',
+      title: 'Price Range',
       type: 'priceRange',
     }),
     defineField({
       name: 'previewImageUrl',
-      title: 'URL de l’image de prévisualisation',
+      title: 'Preview Image URL',
       type: 'string',
-      description: 'Image affichée dans le panier et à la caisse',
+      description: 'Image displayed in cart and checkout',
     }),
     defineField({
       name: 'options',
@@ -127,11 +127,11 @@ export const shopifyProductType = defineType({
     defineField({
       fieldset: 'variants',
       name: 'variants',
-      title: 'Variantes',
+      title: 'Variants',
       type: 'array',
       of: [
         defineArrayMember({
-          title: 'Variante',
+          title: 'Variant',
           type: 'reference',
           weak: true,
           to: [{type: 'productVariant'}],

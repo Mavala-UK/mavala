@@ -1,7 +1,7 @@
 import {ImageIcon} from '@sanity/icons';
 import {defineField, defineType} from 'sanity';
 
-const TITLE = 'Petit média';
+const TITLE = 'Small Media';
 
 export const tinyImage = defineType({
   name: 'tinyImage',
@@ -13,7 +13,7 @@ export const tinyImage = defineType({
       name: 'image',
       title: 'Image',
       type: 'image',
-      description: '(Ratio carré)',
+      description: '(Square ratio)',
     }),
   ],
   preview: {

@@ -26,7 +26,7 @@ export const chronologicalCarousel = defineType({
             }),
             defineField({
               name: 'year',
-              title: 'Année',
+              title: 'Year',
               type: 'number',
               validation: (Rule) =>
                 Rule.integer().positive().max(new Date().getFullYear()),

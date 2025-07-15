@@ -12,7 +12,7 @@ export const articleType = defineType({
   fields: [
     defineField({
       name: 'title',
-      title: 'Titre',
+      title: 'Title',
       type: 'internationalizedArrayString',
       validation: (Rule) => Rule.required(),
       group: 'editorial',
@@ -27,7 +27,7 @@ export const articleType = defineType({
     }),
     defineField({
       name: 'publishedAt',
-      title: 'Date de publication',
+      title: 'Publication Date',
       type: 'datetime',
       initialValue: () => new Date().toISOString(),
       validation: (Rule) => Rule.required(),
@@ -35,7 +35,7 @@ export const articleType = defineType({
     }),
     defineField({
       name: 'category',
-      title: 'Catégorie',
+      title: 'Category',
       type: 'reference',
       to: [{type: 'articleCategory'}],
       validation: (Rule) => Rule.required(),
@@ -92,7 +92,7 @@ export const articleType = defineType({
     }),
     defineField({
       name: 'relatedCategories',
-      title: 'Catégories liées',
+      title: 'Related Categories',
       group: 'editorial',
       type: 'array',
       of: [defineArrayMember({type: 'reference', to: [{type: 'collection'}]})],

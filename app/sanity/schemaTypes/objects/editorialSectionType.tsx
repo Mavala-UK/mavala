@@ -31,12 +31,12 @@ export const editorialSectionType = defineType({
     }),
     defineField({
       name: 'imagePosition',
-      title: 'Position de l’image',
+      title: 'Image Position',
       type: 'string',
       options: {
         list: [
-          {title: 'Gauche', value: 'left'},
-          {title: 'Droite', value: 'right'},
+          {title: 'Left', value: 'left'},
+          {title: 'Right', value: 'right'},
         ],
       },
       initialValue: 'left',

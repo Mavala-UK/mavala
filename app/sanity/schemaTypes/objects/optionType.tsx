@@ -2,7 +2,7 @@ import {SunIcon} from '@sanity/icons';
 import {defineField, defineType} from 'sanity';
 
 export const optionType = defineType({
-  title: 'Option de produit',
+  title: 'Product Option',
   name: 'option',
   type: 'object',
   icon: SunIcon,
@@ -10,12 +10,12 @@ export const optionType = defineType({
   fields: [
     defineField({
       name: 'name',
-      title: 'Nom',
+      title: 'Name',
       type: 'string',
     }),
     defineField({
       name: 'values',
-      title: 'Valeurs',
+      title: 'Values',
       type: 'array',
       of: [{type: 'string'}],
     }),

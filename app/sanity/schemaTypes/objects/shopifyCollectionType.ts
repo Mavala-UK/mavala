@@ -12,50 +12,50 @@ export const shopifyCollectionType = defineType({
   fieldsets: [
     {
       name: 'status',
-      title: 'Statut',
+      title: 'Status',
     },
   ],
   fields: [
     defineField({
       fieldset: 'status',
       name: 'createdAt',
-      title: 'Date de création',
+      title: 'Created Date',
       type: 'string',
     }),
     defineField({
       fieldset: 'status',
       name: 'updatedAt',
-      title: 'Date de mise à jour',
+      title: 'Updated Date',
       type: 'string',
     }),
     defineField({
       fieldset: 'status',
       name: 'isDeleted',
-      title: 'Supprimé de Shopify ?',
+      title: 'Deleted from Shopify?',
       type: 'boolean',
     }),
     defineField({
       name: 'title',
-      title: 'Titre',
+      title: 'Title',
       type: 'string',
     }),
     defineField({
       name: 'id',
       title: 'ID',
       type: 'number',
-      description: 'ID de la collection Shopify',
+      description: 'Shopify collection ID',
     }),
     defineField({
       name: 'gid',
       title: 'GID',
       type: 'string',
-      description: 'GID de la collection Shopify',
+      description: 'Shopify collection GID',
     }),
     defineField({
       name: 'slug',
       title: 'Slug',
-      description: 'Handle de la collection Shopify',
       type: 'slug',
+      description: 'Shopify collection handle',
     }),
     defineField({
       name: 'descriptionHtml',
@@ -64,28 +64,27 @@ export const shopifyCollectionType = defineType({
       rows: 5,
     }),
     defineField({
+      name: 'sortOrder',
+      title: 'Sort Order',
+      type: 'string',
+    }),
+    defineField({
       name: 'imageUrl',
-      title: 'URL de l’image',
+      title: 'Image URL',
       type: 'string',
     }),
     defineField({
       name: 'rules',
-      title: 'Règles',
+      title: 'Rules',
       type: 'array',
-      description: 'Inclure les produits Shopify qui satisfont ces conditions',
       of: [{type: 'collectionRule'}],
     }),
     defineField({
       name: 'disjunctive',
-      title: 'Règles disjonctives ?',
-      description:
-        'Exiger une condition si vraie, sinon exiger toutes les conditions',
+      title: 'Disjunctive Rules?',
       type: 'boolean',
-    }),
-    defineField({
-      name: 'sortOrder',
-      title: 'Ordre de tri',
-      type: 'string',
+      description:
+        'If true, products must match only one rule. If false, products must match all rules.',
     }),
   ],
 });

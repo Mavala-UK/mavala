@@ -5,14 +5,14 @@ import {validateSlug} from '../../utils/validateSlug';
 
 export const articleCategoryType = defineType({
   name: 'articleCategory',
-  title: 'Catégorie d’article',
+  title: 'Article Category',
   type: 'document',
   icon: FilterIcon,
   groups: GROUPS,
   fields: [
     defineField({
       name: 'title',
-      title: 'Titre',
+      title: 'Title',
       type: 'internationalizedArrayString',
       validation: (Rule) => Rule.required(),
       group: 'editorial',
