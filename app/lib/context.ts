@@ -31,7 +31,7 @@ export async function createAppLoadContext(
   ]);
 
   const sites: Sites = {
-    isMavalaFrance: env.PUBLIC_STORE_DOMAIN === 'mavala-shop.myshopify.com',
+    isMavalaFrance: env.PUBLIC_STORE_DOMAIN === 'mavalauk.myshopify.com',
     isMavalaCorporate:
       env.PUBLIC_STORE_DOMAIN === 'mavala-corporate.myshopify.com',
   };
