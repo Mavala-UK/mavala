@@ -14,7 +14,7 @@ export const pageType = defineType({
   fields: [
     defineField({
       name: 'title',
-      title: 'Titre',
+      title: 'Title',
       type: 'internationalizedArrayString',
       validation: (Rule) => Rule.required(),
       group: 'editorial',
@@ -29,25 +29,25 @@ export const pageType = defineType({
     }),
     defineField({
       name: 'introTitle',
-      title: 'Titre introduction',
+      title: 'Introduction Title',
       type: 'internationalizedArrayText',
       group: 'editorial',
     }),
     defineField({
       name: 'introDescription',
-      title: 'Description introduction',
+      title: 'Introduction Description',
       type: 'internationalizedArrayText',
       group: 'editorial',
     }),
     defineField({
       name: 'content',
-      title: 'Contenu',
+      title: 'Content',
       type: 'internationalizedArrayPortableTextEditorial',
       group: 'editorial',
     }),
     defineField({
       name: 'relatedArticles',
-      title: 'Articles mis en avant',
+      title: 'Featured Articles',
       type: 'featuredArticles',
       group: 'editorial',
       hidden: SITES?.isMavalaCorporate,

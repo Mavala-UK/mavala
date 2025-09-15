@@ -55,7 +55,7 @@ export const articleType = defineType({
     }),
     defineField({
       name: 'sections',
-      title: 'Contenus',
+      title: 'Content',
       group: 'editorial',
       type: 'array',
       of: [
@@ -66,13 +66,13 @@ export const articleType = defineType({
           fields: [
             defineField({
               name: 'title',
-              title: 'Titre sommaire',
+              title: 'Summary Title',
               type: 'internationalizedArrayString',
               validation: (Rule) => Rule.required(),
             }),
             defineField({
               name: 'content',
-              title: 'Contenu section',
+              title: 'Section Content',
               type: 'internationalizedArrayPortableTextArticle',
               validation: (Rule) => Rule.required(),
             }),
@@ -83,7 +83,7 @@ export const articleType = defineType({
             },
             prepare({title}) {
               return {
-                title: title ?? 'Sans titre',
+                title: title ?? 'Untitled',
               };
             },
           },

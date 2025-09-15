@@ -2,7 +2,7 @@ import {SparkleIcon} from '@sanity/icons';
 import {defineField, defineType} from 'sanity';
 import {GROUPS} from '../../constants';
 
-const TITLE = "Lanceurs d'articles";
+const TITLE = 'Article Launchers';
 
 export const articleLauncherType = defineType({
   name: 'articleLauncher',
@@ -13,14 +13,14 @@ export const articleLauncherType = defineType({
   fields: [
     defineField({
       name: 'shortDescription',
-      title: 'Description courte',
+      title: 'Short Description',
       type: 'internationalizedArrayString',
       group: 'editorial',
       validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'featuredArticles',
-      title: 'Articles mis en avant',
+      title: 'Featured Articles',
       type: 'featuredArticles',
       group: 'editorial',
     }),

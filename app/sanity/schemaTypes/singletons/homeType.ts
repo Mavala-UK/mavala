@@ -2,7 +2,7 @@ import {HomeIcon} from '@sanity/icons';
 import {defineField, defineType} from 'sanity';
 import {GROUPS, SITES} from '../../constants';
 
-const TITLE = 'Accueil';
+const TITLE = 'Home';
 
 export const homeType = defineType({
   name: 'home',
@@ -13,7 +13,7 @@ export const homeType = defineType({
   fields: [
     defineField({
       name: 'hero',
-      title: 'Section hero',
+      title: 'Hero Section',
       type: 'hero',
       group: 'editorial',
       options: {
@@ -23,7 +23,7 @@ export const homeType = defineType({
     }),
     defineField({
       name: 'featuredCollections',
-      title: 'Collections en vedette',
+      title: 'Featured Collections',
       type: 'featuredCollections',
       group: 'editorial',
       options: {
@@ -53,7 +53,7 @@ export const homeType = defineType({
     }),
     defineField({
       name: 'focusCollection',
-      title: 'Mise en avant collection',
+      title: 'Featured Collection',
       type: 'focusCollection',
       group: 'editorial',
       options: {
@@ -63,7 +63,7 @@ export const homeType = defineType({
     }),
     defineField({
       name: 'relatedArticles',
-      title: 'Articles mis en avant',
+      title: 'Featured Articles',
       type: 'featuredArticles',
       group: 'editorial',
       hidden: SITES?.isMavalaCorporate,

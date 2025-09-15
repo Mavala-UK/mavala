@@ -45,7 +45,7 @@ const hiddenDocTypes = (listItem: ListItemBuilder) => {
 
 export const structure: StructureResolver = (S, context) =>
   S.list()
-    .title('Contenu')
+    .title('Content')
     .items([
       home(S, context),
       pages(S, context),

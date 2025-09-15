@@ -12,7 +12,6 @@ export function PageContent({page}: {page: PageQueryResult}) {
   if (!content) {
     return null;
   }
-
   return (
     <article className={styles.root}>
       <Heading size={isDesktop ? '3xl' : 'xl'} className={styles.title} asChild>

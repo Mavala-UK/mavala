@@ -10,7 +10,12 @@ import type {
   PageRelatedArticlesQueryResult,
 } from 'sanity.generated';
 import {truncate} from '~/lib/utils';
-import { useRouteLoaderData, Await, useLoaderData, type MetaFunction } from 'react-router';
+import {
+  useRouteLoaderData,
+  Await,
+  useLoaderData,
+  type MetaFunction,
+} from 'react-router';
 import {FeaturedArticles} from '~/components/blog/FeaturedArticles';
 import {articleFragment} from '~/sanity/fragments/articleFragment';
 import {portableTextFragment} from '~/sanity/fragments/portableTextFragment';
@@ -133,6 +138,7 @@ export default function Page() {
     useLoaderData<typeof loader>();
   const {relatedArticles} = use(relatedArticlesPromise).data ?? {};
 
+  console.log(page);
   return (
     <>
       <Breadcrumb items={[{title: page.data?.title ?? ''}]} />
