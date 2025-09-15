@@ -17,16 +17,7 @@ const dataset = globalThis.process?.env.SANITY_DATASET;
 
 export default defineConfig({
   name: 'default',
-  title: (() => {
-    switch (true) {
-      case SITES?.isMavalaCorporate:
-        return 'Mavala Corporate';
-      case SITES?.isMavalaFrance:
-        return 'Mavala UK';
-      default:
-        return 'Mavala';
-    }
-  })(),
+  title: 'Mavala UK',
   projectId: SANITY?.projectId ?? projectId,
   dataset: SANITY?.dataset ?? dataset ?? 'production',
   plugins: [
@@ -42,24 +33,8 @@ export default defineConfig({
       resolve: {mainDocuments},
     }),
     internationalizedArray({
-      languages: (() => {
-        switch (true) {
-          case SITES?.isMavalaCorporate:
-            return LANGUAGES?.reverse();
-          case SITES?.isMavalaFrance:
-          default:
-            return LANGUAGES;
-        }
-      })(),
-      defaultLanguages: (() => {
-        switch (true) {
-          case SITES?.isMavalaCorporate:
-            return ['en'];
-          case SITES?.isMavalaFrance:
-          default:
-            return ['en'];
-        }
-      })(),
+      languages: [{id: 'en', title: 'English'}],
+      defaultLanguages: ['en'],
       fieldTypes: [
         'file',
         'image',

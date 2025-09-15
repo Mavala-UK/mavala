@@ -11,37 +11,20 @@ export const LOCALES: Record<
       country: 'GB',
       currency: 'GBP',
     },
-    // '/fr': {
-    //   label: 'Français',
-    //   language: 'FR',
-    //   country: 'GB',
-    //   currency: 'GBP',
-    // },
   },
   mavalaCorporate: {
     default: {
       label: 'English',
       language: 'EN',
-      country: 'CH',
-      currency: 'CHF',
+      country: 'GB',
+      currency: 'GBP',
     },
-    // '/fr': {
-    //   label: 'Français',
-    //   language: 'FR',
-    //   country: 'FR',
-    //   currency: 'CHF',
-    // },
   },
 };
 
 export function getLocalesByDomain(sites: Sites) {
-  switch (true) {
-    case sites?.isMavalaCorporate:
-      return LOCALES.mavalaCorporate;
-    case sites?.isMavalaFrance:
-    default:
-      return LOCALES.mavalaFrance;
-  }
+  // Since both sites use the same English configuration
+  return LOCALES.mavalaFrance; // or mavalaCorporate - they're identical now
 }
 
 export function getLocaleFromRequest(

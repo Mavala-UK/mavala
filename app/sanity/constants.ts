@@ -25,14 +25,7 @@ export const SHOPIFY_STORE_ID = (() => {
 })();
 
 // https://en.wikipedia.org/wiki/ISO_4217
-export const DEFAULT_CURRENCY_CODE = (() => {
-  switch (true) {
-    case SITES?.isMavalaFrance:
-      return 'GBP';
-    case SITES?.isMavalaCorporate:
-      return 'CHF';
-  }
-})();
+export const DEFAULT_CURRENCY_CODE = 'GBP';
 
 /* To put back when multiplus locales */
 // LANGUAGES to use in the studio
@@ -41,16 +34,8 @@ export const DEFAULT_CURRENCY_CODE = (() => {
 //   {id: 'en', title: 'English'},
 // ];
 
-/* To remove back when multiplus locales */
-export const LANGUAGES = (() => {
-  switch (true) {
-    case SITES?.isMavalaCorporate:
-      return [{id: 'en', title: 'English'}];
-    case SITES?.isMavalaFrance:
-    default:
-      return [{id: 'en', title: 'English'}];
-  }
-})();
+/* Single language configuration */
+export const LANGUAGES = [{id: 'en', title: 'English'}];
 
 // Document types which:
 // - cannot be created in the 'new document' menu

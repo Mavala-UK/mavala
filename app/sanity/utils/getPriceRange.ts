@@ -7,7 +7,7 @@ type PriceObject = {
 
 const formatNumber = (val: number) => {
   const currencyCode = DEFAULT_CURRENCY_CODE || 'GBP';
-  const locale = LANGUAGES[0]?.id ?? 'en';
+  const locale = 'en'; // English only
 
   return new Intl.NumberFormat(locale, {
     currency: currencyCode,
