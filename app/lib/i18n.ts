@@ -6,16 +6,16 @@ export const LOCALES: Record<
 > = {
   mavalaFrance: {
     default: {
-      label: 'Français',
-      language: 'FR',
-      country: 'FR',
-      currency: 'EUR',
+      label: 'English',
+      language: 'EN',
+      country: 'GB',
+      currency: 'GBP',
     },
-    // '/en': {
-    //   label: 'English',
-    //   language: 'EN',
-    //   country: 'FR',
-    //   currency: 'EUR',
+    // '/fr': {
+    //   label: 'Français',
+    //   language: 'FR',
+    //   country: 'GB',
+    //   currency: 'GBP',
     // },
   },
   mavalaCorporate: {

@@ -28,7 +28,7 @@ export const SHOPIFY_STORE_ID = (() => {
 export const DEFAULT_CURRENCY_CODE = (() => {
   switch (true) {
     case SITES?.isMavalaFrance:
-      return 'EUR';
+      return 'GBP';
     case SITES?.isMavalaCorporate:
       return 'CHF';
   }
@@ -48,7 +48,7 @@ export const LANGUAGES = (() => {
       return [{id: 'en', title: 'English'}];
     case SITES?.isMavalaFrance:
     default:
-      return [{id: 'fr', title: 'Français'}];
+      return [{id: 'en', title: 'English'}];
   }
 })();
 

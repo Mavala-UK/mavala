@@ -1,4 +1,3 @@
-import {frFRLocale} from '@sanity/locale-fr-fr';
 import {visionTool} from '@sanity/vision';
 import {defineConfig, isDev, type PluginOptions} from 'sanity';
 import {structureTool} from 'sanity/structure';
@@ -23,7 +22,7 @@ export default defineConfig({
       case SITES?.isMavalaCorporate:
         return 'Mavala Corporate';
       case SITES?.isMavalaFrance:
-        return 'Mavala France';
+        return 'Mavala UK';
       default:
         return 'Mavala';
     }
@@ -31,7 +30,6 @@ export default defineConfig({
   projectId: SANITY?.projectId ?? projectId,
   dataset: SANITY?.dataset ?? dataset ?? 'production',
   plugins: [
-    frFRLocale(),
     structureTool({structure}),
     customDocumentActions(),
     media() as PluginOptions,
@@ -59,7 +57,7 @@ export default defineConfig({
             return ['en'];
           case SITES?.isMavalaFrance:
           default:
-            return ['fr'];
+            return ['en'];
         }
       })(),
       fieldTypes: [
