@@ -1,14 +1,14 @@
 import {defineArrayMember, defineType} from 'sanity';
 
 export const portableTextType = defineType({
-  title: 'Texte enrichi',
+  title: 'Rich Text',
   name: 'portableText',
   type: 'array',
   of: [defineArrayMember({type: 'block'})],
 });
 
 export const portableTextEditorialType = defineType({
-  title: 'Texte enrichi',
+  title: 'Rich Text',
   name: 'portableTextEditorial',
   type: 'array',
   of: [
@@ -26,7 +26,7 @@ export const portableTextEditorialType = defineType({
 });
 
 export const portableTextArticleType = defineType({
-  title: 'Texte enrichi',
+  title: 'Rich Text',
   name: 'portableTextArticle',
   type: 'array',
   of: [

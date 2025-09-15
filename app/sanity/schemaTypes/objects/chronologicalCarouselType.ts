@@ -1,7 +1,7 @@
 import {TimelineIcon} from '@sanity/icons';
 import {defineArrayMember, defineField, defineType} from 'sanity';
 
-const TITLE = 'Carousel chronologique';
+const TITLE = 'Chronological Carousel';
 
 export const chronologicalCarousel = defineType({
   name: 'chronologicalCarousel',
@@ -33,13 +33,13 @@ export const chronologicalCarousel = defineType({
             }),
             defineField({
               name: 'title',
-              title: 'Titre',
+              title: 'Title',
               type: 'internationalizedArrayString',
               validation: (rule) => rule.required(),
             }),
             defineField({
               name: 'text',
-              title: 'Texte',
+              title: 'Text',
               type: 'internationalizedArrayText',
               validation: (rule) => rule.required(),
             }),

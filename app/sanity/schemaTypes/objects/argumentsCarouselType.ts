@@ -1,7 +1,7 @@
 import {MasterDetailIcon} from '@sanity/icons';
 import {defineArrayMember, defineField, defineType} from 'sanity';
 
-const TITLE = `Carousel d'arguments`;
+const TITLE = `Arguments Carousel`;
 
 export const argumentsCarousel = defineType({
   name: 'argumentsCarousel',
@@ -11,7 +11,7 @@ export const argumentsCarousel = defineType({
   fields: [
     defineField({
       name: 'subtitle',
-      title: 'Surtitre',
+      title: 'Subtitle',
       type: 'internationalizedArrayString',
       validation: (rule) => rule.required(),
     }),
@@ -33,19 +33,19 @@ export const argumentsCarousel = defineType({
             }),
             defineField({
               name: 'title',
-              title: 'Titre',
+              title: 'Title',
               type: 'internationalizedArrayString',
               validation: (rule) => rule.required(),
             }),
             defineField({
               name: 'text',
-              title: 'Texte',
+              title: 'Text',
               type: 'internationalizedArrayText',
               validation: (rule) => rule.required(),
             }),
             defineField({
               name: 'sizeText',
-              title: 'Taille du texte',
+              title: 'Text Size',
               type: 'string',
               options: {
                 list: [

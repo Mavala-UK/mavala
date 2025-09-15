@@ -2,17 +2,17 @@ import {defineField, defineType} from 'sanity';
 
 export const seoSectionType = defineType({
   name: 'seoSection',
-  title: 'Section SEO',
+  title: 'SEO Section',
   type: 'object',
   fields: [
     defineField({
       name: 'title',
-      title: 'Titre',
+      title: 'Title',
       type: 'internationalizedArrayString',
     }),
     defineField({
       name: 'text',
-      title: 'Texte',
+      title: 'Text',
       type: 'internationalizedArrayPortableText',
     }),
     defineField({

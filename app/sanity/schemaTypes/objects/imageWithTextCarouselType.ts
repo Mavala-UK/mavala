@@ -1,7 +1,7 @@
 import {SplitHorizontalIcon} from '@sanity/icons';
 import {defineField, defineType, defineArrayMember} from 'sanity';
 
-const TITLE = 'Carousel image et texte';
+const TITLE = 'Image and Text Carousel';
 
 export const imageWithTextCarousel = defineType({
   name: 'imageWithTextCarousel',
@@ -27,7 +27,7 @@ export const imageWithTextCarousel = defineType({
             }),
             defineField({
               name: 'text',
-              title: 'Texte',
+              title: 'Text',
               type: 'internationalizedArrayText',
               validation: (rule) => rule.required(),
             }),

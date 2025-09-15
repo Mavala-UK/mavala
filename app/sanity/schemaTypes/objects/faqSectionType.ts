@@ -3,7 +3,7 @@ import {HelpCircleIcon} from '@sanity/icons';
 
 export const faqSectionType = defineType({
   name: 'faqSection',
-  title: 'Section FAQ',
+  title: 'FAQ Section',
   type: 'object',
   fields: [
     defineField({
@@ -18,13 +18,13 @@ export const faqSectionType = defineType({
           fields: [
             defineField({
               name: 'title',
-              title: `Titre`,
+              title: `Title`,
               type: 'internationalizedArrayString',
               validation: (Rule) => Rule.required(),
             }),
             defineField({
               name: 'text',
-              title: 'Texte',
+              title: 'Text',
               type: 'internationalizedArrayPortableText',
               validation: (Rule) => Rule.required(),
             }),
@@ -35,7 +35,7 @@ export const faqSectionType = defineType({
             },
             prepare({title}) {
               return {
-                title: title ?? 'Sans titre',
+                title: title ?? 'Untitled',
                 media: HelpCircleIcon,
               };
             },
