@@ -1,17 +1,17 @@
 import {TagIcon} from '@sanity/icons';
 import {defineArrayMember, defineField, defineType} from 'sanity';
 
-const TITLE = 'Liste de produits';
+const TITLE = 'Product List';
 
 export const productList = defineType({
   name: 'productList',
-  title: 'Liste de produits',
+  title: 'Product List',
   icon: TagIcon,
   type: 'object',
   fields: [
     defineField({
       name: 'products',
-      title: 'Produits',
+      title: 'Products',
       type: 'array',
       of: [defineArrayMember({type: 'reference', to: [{type: 'product'}]})],
       validation: (Rule) => Rule.required(),

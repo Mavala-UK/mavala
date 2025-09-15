@@ -3,13 +3,13 @@ import {defineField, defineType} from 'sanity';
 
 export default defineType({
   name: 'translation',
-  title: 'Traduction',
+  title: 'Translation',
   icon: TranslateIcon,
   type: 'document',
   fields: [
     defineField({
       name: 'id',
-      title: 'Identifiant',
+      title: 'Identifier',
       type: 'slug',
       validation: (Rule) => Rule.required(),
     }),

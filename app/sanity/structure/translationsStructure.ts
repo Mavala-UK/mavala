@@ -3,7 +3,7 @@ import defineStructure from '../utils/defineStructure';
 
 export default defineStructure<ListItemBuilder>((S) =>
   S.listItem()
-    .title('Traductions')
+    .title('Translations')
     .schemaType('translation')
-    .child(S.documentTypeList('translation').title('Traductions')),
+    .child(S.documentTypeList('translation').title('Translations')),
 );

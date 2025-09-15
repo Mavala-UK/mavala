@@ -5,12 +5,12 @@ import {SANITY_API_VERSION} from '../constants';
 
 export default defineStructure<ListItemBuilder>((S) =>
   S.listItem()
-    .title('Produits')
+    .title('Products')
     .schemaType('product')
     .child(
       S.documentTypeList('product').child(async (id) =>
         S.list()
-          .title('Produit')
+          .title('Product')
           .canHandleIntent(
             (intentName, params) =>
               intentName === 'edit' && params.type === 'product',
@@ -29,7 +29,7 @@ export default defineStructure<ListItemBuilder>((S) =>
               .schemaType('productVariant')
               .child(
                 S.documentList()
-                  .title('Variantes')
+                  .title('Variants')
                   .apiVersion(SANITY_API_VERSION)
                   .schemaType('productVariant')
                   .filter(
