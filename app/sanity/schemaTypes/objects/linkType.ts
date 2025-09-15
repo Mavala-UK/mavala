@@ -51,7 +51,6 @@ export const linkType = defineType({
       name: 'text',
       title: 'Text',
       type: 'internationalizedArrayString',
-      validation: (Rule) => Rule.required(),
     }),
   ],
   preview: {
