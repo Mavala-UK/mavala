@@ -2,7 +2,7 @@ import {defineArrayMember, defineField, defineType} from 'sanity';
 
 export const insertType = defineType({
   name: 'insert',
-  title: 'Encart',
+  title: 'Insert',
   type: 'object',
   options: {
     collapsed: true,
@@ -16,12 +16,12 @@ export const insertType = defineType({
     }),
     defineField({
       name: 'title',
-      title: 'Titre',
+      title: 'Title',
       type: 'internationalizedArrayString',
     }),
     defineField({
       name: 'link',
-      title: 'Lien',
+      title: 'Link',
       type: 'link',
     }),
   ],

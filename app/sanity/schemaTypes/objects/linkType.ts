@@ -4,7 +4,7 @@ import {PAGE_REFERENCES} from '~/sanity/constants';
 
 export const linkType = defineType({
   name: 'link',
-  title: 'Lien',
+  title: 'Link',
   type: 'object',
   icon: LinkIcon,
   options: {
@@ -18,9 +18,9 @@ export const linkType = defineType({
       type: 'string',
       options: {
         list: [
-          {title: 'Interne', value: 'internal'},
-          {title: 'Externe', value: 'external'},
-          {title: 'E-mail', value: 'email'},
+          {title: 'Internal', value: 'internal'},
+          {title: 'External', value: 'external'},
+          {title: 'Email', value: 'email'},
         ],
         layout: 'dropdown',
       },
@@ -43,13 +43,13 @@ export const linkType = defineType({
     }),
     defineField({
       name: 'email',
-      title: 'Adresse e-mail',
+      title: 'Email Address',
       type: 'email',
       hidden: ({parent}) => parent?.type !== 'email',
     }),
     defineField({
       name: 'text',
-      title: 'Texte',
+      title: 'Text',
       type: 'internationalizedArrayString',
       validation: (Rule) => Rule.required(),
     }),

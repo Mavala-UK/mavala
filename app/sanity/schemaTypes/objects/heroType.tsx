@@ -5,7 +5,7 @@ import {video, bunnyVideo} from './videoType';
 
 export const heroType = defineType({
   name: 'hero',
-  title: 'Section hero',
+  title: 'Hero Section',
   type: 'object',
   fields: [
     defineField({
@@ -64,18 +64,18 @@ export const heroType = defineType({
             }),
             defineField({
               name: 'title',
-              title: 'Titre',
+              title: 'Title',
               type: 'internationalizedArrayString',
               validation: (rule) => rule.required(),
             }),
             defineField({
               name: 'linkReferences',
-              title: 'Lien',
+              title: 'Link',
               type: 'array',
               of: [
                 defineArrayMember({type: 'link'}),
                 defineArrayMember({
-                  title: 'Produit',
+                  title: 'Product',
                   type: 'reference',
                   to: [{type: 'product'}],
                 }),
@@ -85,7 +85,7 @@ export const heroType = defineType({
             }),
             defineField({
               name: 'link',
-              title: 'Lien',
+              title: 'Link',
               type: 'link',
               hidden: SITES?.isMavalaFrance,
             }),
