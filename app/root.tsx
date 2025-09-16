@@ -239,7 +239,7 @@ export default function App() {
     const d: Document = document;
     const s = 'script';
     const l = 'dataLayer';
-    const i = 'GTM-TFX9X589';
+    const i = 'GTM-WM26WWGT';
 
     w[l] = w[l] || [];
     w[l].push({'gtm.start': new Date().getTime(), event: 'gtm.js'});
