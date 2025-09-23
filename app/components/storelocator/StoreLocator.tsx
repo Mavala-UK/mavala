@@ -9,7 +9,7 @@ import {
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
-import { useLoaderData } from 'react-router';
+import {useLoaderData} from 'react-router';
 import type {Feature, Point} from 'geojson';
 import mapboxgl, {
   NavigationControl,
@@ -78,8 +78,8 @@ function StoreLocatorProvider({children}: {children: React.ReactNode}) {
       ({
         accessToken: mapboxAccessToken,
         style: 'mapbox://styles/mapbox/light-v11',
-        center: [2.331478030667968, 46.62779395314277],
-        zoom: 4,
+        center: [-2.5, 54.5], // UK center coordinates
+        zoom: 6,
         attributionControl: false,
         projection: {name: 'mercator'},
       }) satisfies Omit<MapOptions, 'container'>,
