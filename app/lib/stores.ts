@@ -2,12 +2,15 @@ import type {FeatureCollection} from 'geojson';
 import {v4 as uuidv4} from 'uuid';
 import {toTitleCase} from './utils';
 
-const GOOGLE_SHEET_ID = '1iQJyFoFUv0iOggilfT1X0bJfTa20zkRWG_7zMSz-YgI';
+const GOOGLE_SHEET_ID =
+  '2PACX-1vQuP4gwsSJdjvzKWZcAFkjRPm7Ky19utf2BtgVJJxa7I-0-oLINKpZYn83usdi-I0S0femJcKR689x3';
 
 export async function getStores() {
   const url = new URL('https://docs.google.com');
-  url.pathname = `/spreadsheets/d/${GOOGLE_SHEET_ID}/gviz/tq`;
-  url.searchParams.set('tqx', 'out:csv');
+  url.pathname = `/spreadsheets/d/e/${GOOGLE_SHEET_ID}/pub`;
+  url.searchParams.set('gid', '322517993');
+  url.searchParams.set('single', 'true');
+  url.searchParams.set('output', 'csv');
 
   try {
     const res = await fetch(url);
