@@ -23,10 +23,28 @@ export async function getStores() {
     const rows = data.split('\n').slice(1);
     const geojson = {
       type: 'FeatureCollection',
-      features: rows.map((row) => {
-        const columns = (
-          row.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g) ?? []
-        )?.map((column) => column.replace(/"/g, ''));
+      features: rows.map((row, index) => {
+        // Simple CSV parser that handles quoted fields
+        const columns: string[] = [];
+        let current = '';
+        let inQuotes = false;
+
+        for (let i = 0; i < row.length; i++) {
+          const char = row[i];
+
+          if (char === '"') {
+            inQuotes = !inQuotes;
+          } else if (char === ',' && !inQuotes) {
+            columns.push(current.trim());
+            current = '';
+          } else {
+            current += char;
+          }
+        }
+        // Don't forget the last column
+        if (current) {
+          columns.push(current.trim());
+        }
 
         return {
           type: 'Feature',
@@ -36,15 +54,15 @@ export async function getStores() {
           },
           properties: {
             id: uuidv4(),
-            name: toTitleCase(columns[1]),
-            address1: toTitleCase(columns[2]),
-            address2: toTitleCase(columns[3]),
-            address3: toTitleCase(columns[4]),
-            city: toTitleCase(columns[5]),
-            zip: columns[6],
-            country: toTitleCase(columns[7]),
-            phone: columns[10],
-            mail: columns[11],
+            name: toTitleCase(columns[1] || ''),
+            address1: toTitleCase(columns[2] || ''),
+            address2: toTitleCase(columns[3] || ''),
+            address3: toTitleCase(columns[4] || ''),
+            city: toTitleCase(columns[5] || ''),
+            zip: columns[6] || '',
+            country: toTitleCase(columns[7] || ''),
+            phone: columns[10] || '',
+            mail: columns[11] || '',
             distance: 0,
           },
         };
