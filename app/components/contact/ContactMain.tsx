@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import { useLoaderData, useRouteLoaderData } from 'react-router';
+import {useLoaderData, useRouteLoaderData} from 'react-router';
 import {RootLoader} from '~/root';
 import {type loader} from '~/routes/_store.($locale).contact';
 import {useForm} from '@formspree/react';
@@ -195,7 +195,7 @@ export function ContactMain() {
                   />
                 )}
                 <FormField
-                  label="Votre message"
+                  label="Your message"
                   name="message"
                   asChild
                   className={styles.field}
