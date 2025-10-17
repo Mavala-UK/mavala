@@ -47,6 +47,18 @@
   display: block;
   inline-size: clamp(110px, 15vw, 184px);
   color: var(--color-dark-red);
+  @media (width >= 64rem) {
+    svg {
+      inline-size: 18.4rem;
+      block-size: 4rem;
+    }
+  }
+  @media (width < 64rem) {
+    svg {
+      inline-size: 11rem;
+      block-size: 2.4rem;
+    }
+  }
 }
 
 .items {
