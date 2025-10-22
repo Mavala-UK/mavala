@@ -13,6 +13,7 @@ import {Reassurances} from './Reassurances';
 import {Ctas} from './Ctas';
 import {GoogleTagManager} from '~/lib/gtm';
 import {AxeptioConsent} from '~/lib/axeptio';
+import {OmnisendAnalytics} from '~/lib/omnisend';
 
 export function PageLayout({children}: {children?: React.ReactNode}) {
   const data = useRouteLoaderData<RootLoader>('root');
@@ -69,6 +70,7 @@ export function PageLayout({children}: {children?: React.ReactNode}) {
         </QueryClientProvider>
       </IntlProvider>
       <GoogleTagManager />
+      <OmnisendAnalytics />
       <AxeptioConsent />
     </Analytics.Provider>
   );

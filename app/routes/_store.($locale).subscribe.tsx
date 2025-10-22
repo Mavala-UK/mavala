@@ -8,13 +8,14 @@ import {data} from '@shopify/remix-oxygen';
 export async function action({request, context}: ActionFunctionArgs) {
   const formData = await request.formData();
   const {unstable_storefront} = context;
+  const email = formData.get('email') as string;
 
   try {
-    const {data, errors} = await unstable_storefront.request(
+    const {data: result, errors} = await unstable_storefront.request(
       NEWSLETTER_SUBSCRIPTION_MUTATION,
       {
         variables: {
-          email: formData.get('email') as string,
+          email,
         },
       },
     );
@@ -23,13 +24,14 @@ export async function action({request, context}: ActionFunctionArgs) {
       throw new Error(errors.graphQLErrors[0].message);
     }
 
-    if (data?.customerEmailMarketingSubscribe?.customerUserErrors?.length) {
+    if (result?.customerEmailMarketingSubscribe?.customerUserErrors?.length) {
       throw new Error(
-        data.customerEmailMarketingSubscribe.customerUserErrors[0].message,
+        result.customerEmailMarketingSubscribe.customerUserErrors[0].message,
       );
     }
 
-    return {error: null};
+    // Return success with email for client-side Omnisend tracking
+    return {error: null, email, subscribed: true};
   } catch (error) {
     if (error instanceof Error) {
       return data(

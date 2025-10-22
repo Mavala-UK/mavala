@@ -109,6 +109,9 @@ export async function loader(args: LoaderFunctionArgs) {
       preview: sanity.preview?.enabled,
       apiVersion: env.SANITY_API_VERSION,
     },
+    env: {
+      OMNISEND_BRAND_ID: env.OMNISEND_BRAND_ID,
+    },
     locales,
     selectedLocale: storefront.i18n ?? locales.default,
     sites,
@@ -225,7 +228,7 @@ export default function App() {
   const nonce = useNonce();
   const data = useRouteLoaderData<RootLoader>('root');
   const {pathname} = useLocation();
-  const {selectedLocale, global, sites, sanity} = data ?? {};
+  const {selectedLocale, global, sites, sanity, env} = data ?? {};
   const {isMavalaFrance} = sites ?? {};
   const announcements = global?.announcements?.references?.nodes ?? [];
   const isStudio = pathname.includes('studio');
@@ -281,6 +284,7 @@ export default function App() {
             __html: `
               window.SITES = ${JSON.stringify(sites)};
               window.SANITY = ${JSON.stringify(sanity)};
+              window.ENV = ${JSON.stringify(env)};
             `,
           }}
         />
@@ -290,6 +294,20 @@ export default function App() {
             src="https://forms-akamai.smsbump.com/853926/form_362417.js"
           />
         )}
+        {/* Omnisend Integration */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.omnisend = window.omnisend || [];
+              !function(){
+                var e=document.createElement("script");
+                e.type="text/javascript",e.async=!0,e.src="https://omnisnippet1.com/inshop/launcher-v2.js";
+                var t=document.getElementsByTagName("script")[0];
+                t.parentNode.insertBefore(e,t)
+              }();
+            `,
+          }}
+        />
       </head>
       <body>
         <noscript>

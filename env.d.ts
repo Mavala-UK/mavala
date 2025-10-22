@@ -17,6 +17,7 @@ declare global {
     PRIVATE_ADMIN_API_TOKEN?: string;
     PRIVATE_YOTPO_APP_KEY?: string;
     MAPBOX_ACCESS_TOKEN?: string;
+    OMNISEND_BRAND_ID?: string;
   }
 
   interface Window {
