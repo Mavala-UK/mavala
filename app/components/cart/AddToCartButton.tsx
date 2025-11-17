@@ -9,6 +9,16 @@ import {useDiscounts} from './DiscountsView';
 import {ProductPrice} from '../product/ProductPrice';
 import styles from './AddToCartButton.module.css';
 
+declare global {
+  interface Window {
+    dataLayer: {[key: string]: unknown; event: string}[];
+    TriplePixel?: (
+      event: string,
+      data: {item: string; q: number; v: string},
+    ) => void;
+  }
+}
+
 export function AddToCartButton({
   analytics,
   selectedVariant,
@@ -25,7 +35,55 @@ export function AddToCartButton({
     useProductViewDrawer();
   const {isGiftDrawerOpen, setIsGiftDrawerOpen} = useDiscounts();
 
-  const handleClick: React.MouseEventHandler<HTMLButtonElement> = () => {
+  const handleClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
+    // Trigger GTM tracking
+    if (window.dataLayer) {
+      const productId =
+        (selectedVariant as any).product?.id || selectedVariant.id;
+      const vendor = (selectedVariant as any).product?.vendor || '';
+
+      const gtmData: any = {
+        event: 'add_to_cart',
+        ecommerce: {
+          currency: selectedVariant.price.currencyCode,
+          value: selectedVariant.price.amount,
+          items: [
+            {
+              item_id: `shopify_ZZ_${productId.split('/').pop()}_${selectedVariant.id.split('/').pop()}`,
+              item_name: selectedVariant.product.title,
+              item_price: Number(selectedVariant.price.amount),
+              item_brand: vendor,
+              item_category: selectedVariant.product.productType,
+              item_variant:
+                selectedVariant.title === 'Default Title'
+                  ? selectedVariant.product.title
+                  : selectedVariant.title,
+              quantity: 1,
+            },
+          ],
+        },
+      };
+      console.log('[GTM] Pushing to dataLayer:', gtmData);
+      window.dataLayer.push(gtmData);
+      console.log('[GTM] ✅ Successfully pushed to dataLayer');
+    }
+
+    // Trigger Triple Whale tracking
+    if (window.TriplePixel) {
+      const productId =
+        (selectedVariant as any).product?.id || selectedVariant.id;
+
+      const tripleWhalePayload = {
+        item: productId,
+        q: 1,
+        v: selectedVariant.id,
+      };
+      console.log('[TripleWhale] Sending AddToCart event:', tripleWhalePayload);
+      window.TriplePixel('AddToCart', tripleWhalePayload);
+      console.log('[TripleWhale] ✅ Successfully sent AddToCart event');
+    }
+
+    // Handle drawer opening
     switch (true) {
       case isProductViewDrawerOpen:
         setIsProductViewDrawerOpen(false);

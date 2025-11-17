@@ -228,10 +228,12 @@ export function GtmProductData(
 /*  */
 /*  */
 /* Cart datas */
-function GtmCartData(
+export function GtmCartData(
   event: 'view_cart' | 'updated_cart' | 'add_to_cart' | 'remove_from_cart',
   data: CartUpdatePayload | CartViewPayload | CartLineUpdatePayload,
 ) {
+  console.log('[GTM] GtmCartData called:', {event, hasData: !!data});
+
   const {cart, shop} = data ?? {};
   const {currentLine, prevLine} = (data as CartLineUpdatePayload) ?? {};
 
@@ -288,5 +290,7 @@ function GtmCartData(
     },
   };
 
+  console.log('[GTM] Pushing to dataLayer:', datas);
   window.dataLayer.push(datas);
+  console.log('[GTM] ✅ Successfully pushed to dataLayer');
 }

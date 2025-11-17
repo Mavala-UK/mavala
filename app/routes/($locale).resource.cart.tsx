@@ -6,7 +6,7 @@ import type {
 } from '@shopify/remix-oxygen';
 
 export async function action({request, context}: ActionFunctionArgs) {
-  const {cart} = context;
+  const {cart, storefront} = context;
 
   const formData = await request.formData();
 
@@ -50,6 +50,9 @@ export async function action({request, context}: ActionFunctionArgs) {
       warnings,
       analytics: {
         cartId,
+      },
+      shop: {
+        currency: cartResult?.cost?.totalAmount?.currencyCode,
       },
     },
     {status, headers},

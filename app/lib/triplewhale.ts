@@ -10,20 +10,40 @@ declare global {
   }
 }
 
+export function trackAddToCartTripleWhale(data: CartLineUpdatePayload) {
+  console.log('[TripleWhale] trackAddToCartTripleWhale called:', {
+    hasWindow: typeof window !== 'undefined',
+    hasTriplePixel: !!window.TriplePixel,
+    hasCurrentLine: !!data.currentLine,
+    hasMerchandise: !!data.currentLine?.merchandise,
+  });
+
+  if (window.TriplePixel && data.currentLine?.merchandise) {
+    const payload = {
+      item: data.currentLine?.merchandise.product.id,
+      q: 1,
+      v: data.currentLine?.merchandise.id,
+    };
+
+    console.log('[TripleWhale] Sending AddToCart event:', payload);
+    window.TriplePixel('AddToCart', payload);
+    console.log('[TripleWhale] ✅ Successfully sent AddToCart event');
+  } else {
+    console.warn('[TripleWhale] ⚠️ Cannot send event:', {
+      hasTriplePixel: !!window.TriplePixel,
+      hasCurrentLine: !!data.currentLine,
+      hasMerchandise: !!data.currentLine?.merchandise,
+    });
+  }
+}
+
 const TripleWhale = () => {
   const {subscribe, register} = useAnalytics();
   const {ready} = register('TripleWhale');
 
   useEffect(() => {
     subscribe('product_added_to_cart', (data: CartLineUpdatePayload) => {
-      if (window.TriplePixel && data.currentLine?.merchandise) {
-        const payload = {
-          item: data.currentLine?.merchandise.product.id,
-          q: 1,
-          v: data.currentLine?.merchandise.id,
-        };
-        window.TriplePixel('AddToCart', payload);
-      }
+      trackAddToCartTripleWhale(data);
     });
     ready();
   }, []);
