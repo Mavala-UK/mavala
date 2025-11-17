@@ -1,6 +1,33 @@
+import {CartLineUpdatePayload, useAnalytics} from '@shopify/hydrogen';
 import {useEffect} from 'react';
 
+declare global {
+  interface Window {
+    TriplePixel?: (
+      event: string,
+      data: {item: string; q: number; v: string},
+    ) => void;
+  }
+}
+
 const TripleWhale = () => {
+  const {subscribe, register} = useAnalytics();
+  const {ready} = register('TripleWhale');
+
+  useEffect(() => {
+    subscribe('product_added_to_cart', (data: CartLineUpdatePayload) => {
+      if (window.TriplePixel && data.currentLine?.merchandise) {
+        const payload = {
+          item: data.currentLine?.merchandise.product.id,
+          q: 1,
+          v: data.currentLine?.merchandise.id,
+        };
+        window.TriplePixel('AddToCart', payload);
+      }
+    });
+    ready();
+  }, []);
+
   useEffect(() => {
     const script = document.createElement('script');
     script.innerHTML = `
