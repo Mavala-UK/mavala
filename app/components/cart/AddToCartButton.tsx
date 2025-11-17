@@ -63,9 +63,7 @@ export function AddToCartButton({
           ],
         },
       };
-      console.log('[GTM] Pushing to dataLayer:', gtmData);
       window.dataLayer.push(gtmData);
-      console.log('[GTM] ✅ Successfully pushed to dataLayer');
     }
 
     // Trigger Triple Whale tracking
@@ -78,9 +76,7 @@ export function AddToCartButton({
         q: 1,
         v: selectedVariant.id,
       };
-      console.log('[TripleWhale] Sending AddToCart event:', tripleWhalePayload);
       window.TriplePixel('AddToCart', tripleWhalePayload);
-      console.log('[TripleWhale] ✅ Successfully sent AddToCart event');
     }
 
     // Handle drawer opening
