@@ -14,6 +14,7 @@ import {Ctas} from './Ctas';
 import {GoogleTagManager} from '~/lib/gtm';
 import {AxeptioConsent} from '~/lib/axeptio';
 import {OmnisendAnalytics} from '~/lib/omnisend';
+import TripleWhale from '~/lib/triplewhale';
 
 export function PageLayout({children}: {children?: React.ReactNode}) {
   const data = useRouteLoaderData<RootLoader>('root');
@@ -72,6 +73,7 @@ export function PageLayout({children}: {children?: React.ReactNode}) {
       <GoogleTagManager />
       <OmnisendAnalytics />
       <AxeptioConsent />
+      <TripleWhale />
     </Analytics.Provider>
   );
 }
