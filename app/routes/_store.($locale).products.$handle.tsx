@@ -33,6 +33,11 @@ export async function loader(args: LoaderFunctionArgs) {
   // Await the critical data required to render initial state of the page
   const criticalData = await loadCriticalData(args);
 
+  // If criticalData is a redirect Response, return it directly
+  if (criticalData instanceof Response) {
+    return criticalData;
+  }
+
   return {...deferredData, ...criticalData};
 }
 
@@ -53,6 +58,58 @@ async function loadCriticalData({
 
   const {storefront, env} = context;
   const pathPrefix = storefront.i18n.pathPrefix;
+  const url = new URL(request.url);
+  const variantParam = url.searchParams.get('variant');
+
+  // Check if we have a Shopify-style numeric variant ID (not option name/value pairs)
+  if (variantParam && /^\d+$/.test(variantParam)) {
+    // Convert numeric ID to GraphQL ID format
+    const variantGid = `gid://shopify/ProductVariant/${variantParam}`;
+
+    try {
+      // Fetch product to get variant options
+      const {product: productForVariant} = await storefront.query(
+        PRODUCT_QUERY_FOR_VARIANT_LOOKUP,
+        {
+          variables: {handle},
+          cache: storefront.CacheShort(),
+        },
+      );
+
+      if (productForVariant) {
+        // Find the variant with this ID
+        const variant = productForVariant.variants.nodes.find(
+          (v: {id: string; selectedOptions: SelectedOption[]}) =>
+            v.id === variantGid,
+        );
+
+        if (variant) {
+          // Redirect to the proper Sanity URL format
+          const newSearchParams = new URLSearchParams(url.search);
+          newSearchParams.delete('variant');
+
+          return redirect(
+            getVariantUrl({
+              handle,
+              selectedOptions: variant.selectedOptions,
+              searchParams: newSearchParams,
+              pathPrefix,
+            }),
+            {status: 301},
+          );
+        }
+      }
+    } catch (error) {
+      console.error('Error looking up variant:', error);
+    }
+
+    // If we couldn't find the variant, redirect to product page without variant param
+    const newSearchParams = new URLSearchParams(url.search);
+    newSearchParams.delete('variant');
+    const cleanUrl = `${pathPrefix}/products/${handle}${newSearchParams.toString() ? `?${newSearchParams}` : ''}`;
+    return redirect(cleanUrl, {status: 301});
+  }
+
   const selectedOptions = getSelectedProductOptions(request);
   const queryClient = new QueryClient();
 
@@ -294,6 +351,28 @@ export default function Product() {
     </HydrationBoundary>
   );
 }
+
+const PRODUCT_QUERY_FOR_VARIANT_LOOKUP = `#graphql
+  query ProductVariantLookup(
+    $language: LanguageCode
+    $country: CountryCode
+    $handle: String!
+  ) @inContext(language: $language, country: $country) {
+    product(handle: $handle) {
+      id
+      handle
+      variants(first: 250) {
+        nodes {
+          id
+          selectedOptions {
+            name
+            value
+          }
+        }
+      }
+    }
+  }
+` as const;
 
 const PRODUCT_QUERY = `#graphql
   query Product(

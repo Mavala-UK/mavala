@@ -1,5 +1,10 @@
 import {use, Suspense} from 'react';
-import { useLoaderData, useParams, useRouteLoaderData, useSearchParams } from 'react-router';
+import {
+  useLoaderData,
+  useParams,
+  useRouteLoaderData,
+  useSearchParams,
+} from 'react-router';
 import {RootLoader} from '~/root';
 import {Analytics} from '@shopify/hydrogen';
 import type {loader} from '~/routes/_store.($locale).products.$handle';
@@ -31,7 +36,6 @@ export function ProductMain() {
   } = useLoaderData<typeof loader>();
   const {relatedArticles} = use(relatedArticlesPromise).data ?? {};
   const {productRecommendations} = use(relatedProducts);
-
   const {handle} = useParams();
   const [searchParams] = useSearchParams();
 
@@ -40,6 +44,7 @@ export function ProductMain() {
   );
 
   const {data: product} = useProduct(handle ?? '', selectedOptions);
+  console.log(product);
 
   if (!product) {
     return null;
