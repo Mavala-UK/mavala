@@ -208,6 +208,37 @@ export const PRODUCT_FRAGMENT = `#graphql
         }
       }
     }
+    featuresTitle: metafield(namespace: "custom", key: "features_title") {
+      value
+    }
+    features: metafield(namespace: "custom", key: "features") {
+      references(first: 10) {
+        nodes {
+          ... on Metaobject {
+            id
+            icon: field(key: "icon") {
+              reference {
+                ... on MediaImage {
+                  image {
+                    ...ImageProduct
+                  }
+                }
+              }
+            }
+            text: field(key: "text") {
+              value
+            }
+          }
+        }
+      }
+    }
+    bundleComponents: metafield(namespace: "custom", key: "bundle_components") {
+      references(first: 10) {
+        nodes {
+          ...ProductItem
+        }
+      }
+    }
     videoSection: metafield(namespace: "custom", key: "video_section") {
       reference {
         ...on Metaobject{

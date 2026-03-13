@@ -6,6 +6,7 @@ import type {
 } from 'sanity.generated';
 import {redirect, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {ProductMain} from '~/components/product/ProductMain';
+import {BundleMain} from '~/components/bundle/BundleMain';
 import {dehydrate, HydrationBoundary, QueryClient} from '@tanstack/react-query';
 import { useLoaderData, type MetaFunction } from 'react-router';
 import type {SeoConfig} from '@shopify/hydrogen';
@@ -270,6 +271,7 @@ async function loadCriticalData({
     breadcrumbItems,
     yotpoReviews,
     seo,
+    productType: product.productType,
   };
 }
 
@@ -343,11 +345,11 @@ function redirectToFirstVariant({
 }
 
 export default function Product() {
-  const {dehydratedState} = useLoaderData<typeof loader>();
+  const {dehydratedState, productType} = useLoaderData<typeof loader>();
 
   return (
     <HydrationBoundary state={dehydratedState}>
-      <ProductMain />
+      {productType === 'Bundle' ? <BundleMain /> : <ProductMain />}
     </HydrationBoundary>
   );
 }

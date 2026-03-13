@@ -22,12 +22,16 @@ export function CartLineItem({
   const {formatMessage} = useIntl();
   const {setIsCartDrawerOpen} = useCartDrawer();
   const submit = useSubmit();
-  const {id, merchandise, cost, quantity, isOptimistic, discountAllocations} =
+  const {id, merchandise, cost, quantity, isOptimistic, discountAllocations, attributes} =
     line ?? {};
   const {subtotalAmount, totalAmount} = cost ?? {};
   const {image, product, selectedOptions, quantityAvailable, price} =
     merchandise ?? {};
   const {handle, title, productType} = product ?? {};
+  const isBundle = productType === 'Bundle';
+  const bundleAttributes = (attributes ?? []).filter(
+    ({key}) => !key.startsWith('_'),
+  );
   const lineItemUrl = useVariantUrl(handle, selectedOptions);
   const isFree = price?.amount === '0.0';
   const hasDiscount =
@@ -94,6 +98,15 @@ export function CartLineItem({
           <Text weight="light" size="xs" color="medium">
             {selectedOptions[0].value}
           </Text>
+        )}
+        {isBundle && bundleAttributes.length > 0 && (
+          <div className={styles.bundleComponents}>
+            {bundleAttributes.map(({key, value}) => (
+              <Text key={key} size="2xs" color="medium" weight="light">
+                {key}: {value}
+              </Text>
+            ))}
+          </div>
         )}
         {discountAllocations?.map(({title}) => (
           <Text

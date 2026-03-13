@@ -2758,15 +2758,15 @@
             "of": [
               {
                 "type": "string",
-                "value": "actif"
+                "value": "active"
               },
               {
                 "type": "string",
-                "value": "archivé"
+                "value": "archived"
               },
               {
                 "type": "string",
-                "value": "brouillon"
+                "value": "draft"
               }
             ]
           },
@@ -4920,6 +4920,13 @@
           },
           "optional": true
         },
+        "sortOrder": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
         "imageUrl": {
           "type": "objectAttribute",
           "value": {
@@ -4953,13 +4960,6 @@
           "type": "objectAttribute",
           "value": {
             "type": "boolean"
-          },
-          "optional": true
-        },
-        "sortOrder": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string"
           },
           "optional": true
         }

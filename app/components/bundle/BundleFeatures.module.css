@@ -1,0 +1,30 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.6rem;
+}
+
+.title {
+  text-transform: uppercase;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.2rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.item {
+  display: flex;
+  align-items: flex-start;
+  column-gap: 1.2rem;
+}
+
+.icon {
+  width: 2.4rem;
+  height: 2.4rem;
+  flex-shrink: 0;
+}

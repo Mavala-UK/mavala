@@ -55,6 +55,10 @@ export const CART_QUERY_FRAGMENT = `#graphql
         }
       }
     }
+    attributes {
+      key
+      value
+    }
     discountAllocations {
       ... on CartAutomaticDiscountAllocation {
         title

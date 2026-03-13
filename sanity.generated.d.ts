@@ -478,7 +478,7 @@ export type ShopifyProduct = {
   _type: 'shopifyProduct';
   createdAt?: string;
   updatedAt?: string;
-  status?: 'actif' | 'archiv\xE9' | 'brouillon';
+  status?: 'active' | 'archived' | 'draft';
   isDeleted?: boolean;
   title?: string;
   id?: number;
@@ -889,6 +889,7 @@ export type ShopifyCollection = {
   gid?: string;
   slug?: Slug;
   descriptionHtml?: string;
+  sortOrder?: string;
   imageUrl?: string;
   rules?: Array<
     {
@@ -896,7 +897,6 @@ export type ShopifyCollection = {
     } & CollectionRule
   >;
   disjunctive?: boolean;
-  sortOrder?: string;
 };
 
 export type HotPicks = {
