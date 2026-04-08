@@ -42,7 +42,7 @@ export function CartDrawer() {
   );
 
   const areAllItemsAvailable = lines?.every(
-    (line) => (line?.merchandise?.quantityAvailable ?? 0) > 0,
+    (line) => line?.merchandise?.product?.productType === 'Bundle' || (line?.merchandise?.quantityAvailable ?? 0) > 0,
   );
 
   const isEmpty =
@@ -113,23 +113,40 @@ export function CartDrawer() {
         />
       </DrawerBody>
       <DrawerFooter className={styles.footer}>
-        <DialogClose onClick={handleSubmit} asChild>
-          <Button aria-busy={isFetchingCart}>
-            <ButtonEffect>
-              {isEmpty ? (
+        {isEmpty ? (
+          <DialogClose asChild>
+            <Button>
+              <ButtonEffect>
                 <FormattedMessage id="continue_shopping" />
-              ) : (
-                <>
-                  <FormattedMessage id="finalize_order" />
-                  <ProductPrice
-                    price={cost?.totalAmount as MoneyV2}
-                    compareAtPrice={cost?.subtotalAmount as MoneyV2}
-                  />
-                </>
-              )}
+              </ButtonEffect>
+            </Button>
+          </DialogClose>
+        ) : (
+          <Button
+            aria-busy={isFetchingCart}
+            onClick={() => {
+              console.log('checkout click', {
+                checkoutUrl,
+                areAllItemsAvailable,
+                lines: lines?.map((l) => ({
+                  title: l?.merchandise?.product?.title,
+                  quantityAvailable: l?.merchandise?.quantityAvailable,
+                  id: l?.merchandise?.id,
+                })),
+              });
+              if (!areAllItemsAvailable) return;
+              location.href = checkoutUrl ?? '/checkout';
+            }}
+          >
+            <ButtonEffect>
+              <FormattedMessage id="finalize_order" />
+              <ProductPrice
+                price={cost?.totalAmount as MoneyV2}
+                compareAtPrice={cost?.subtotalAmount as MoneyV2}
+              />
             </ButtonEffect>
           </Button>
-        </DialogClose>
+        )}
         <Text size="xs">
           <FormattedMessage id="calculation_delivery" />
         </Text>
