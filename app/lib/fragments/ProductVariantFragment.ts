@@ -118,6 +118,9 @@ export const PRODUCT_VARIANT_FRAGMENT = `#graphql
     protector: metafield(namespace: "custom", key: "protector") {
       value
     }
+    hideFromBundle: metafield(namespace: "custom", key: "hide_from_bundle") {
+      value
+    }
     accordion: metafield(namespace: "custom", key: "accordion") {
       reference {
         ... on Metaobject {

@@ -58,7 +58,7 @@ export async function createAppLoadContext(
 
   const admin = createAdminApiClient({
     storeDomain: env.PUBLIC_STORE_DOMAIN,
-    apiVersion: '2025-04',
+    apiVersion: '2026-04',
     accessToken: env.PRIVATE_ADMIN_API_TOKEN as string,
   });
 

@@ -45,7 +45,9 @@ function BundleComponentItemInner({
   };
 
   const {options, variants, featuredImage, title} = product ?? {};
-  const allVariants = variants?.nodes ?? [];
+  const allVariants = (variants?.nodes ?? []).filter(
+    (v) => v.hideFromBundle?.value !== 'true',
+  );
 
   if (!allVariants.length || allVariants[0].title === 'Default Title') {
     return null;
@@ -81,18 +83,23 @@ function BundleComponentItemInner({
             onValueChange={handleValueChange}
             className={styles.options}
           >
-            {option.values.map((optionValue) => {
-              const variant = optionValue.variant as ProductVariantFragment;
-              return (
-                <RadioGroup.Item
-                  key={option.name + optionValue.value}
-                  value={JSON.stringify({name: option.name, value: optionValue.value})}
-                  className={styles.shadeButton}
-                >
-                  <ShadeCircle tint={variant?.tint} size="xl" />
-                </RadioGroup.Item>
-              );
-            })}
+            {option.values
+              .filter((optionValue) => {
+                const variant = optionValue.variant as ProductVariantFragment;
+                return variant?.hideFromBundle?.value !== 'true';
+              })
+              .map((optionValue) => {
+                const variant = optionValue.variant as ProductVariantFragment;
+                return (
+                  <RadioGroup.Item
+                    key={option.name + optionValue.value}
+                    value={JSON.stringify({name: option.name, value: optionValue.value})}
+                    className={styles.shadeButton}
+                  >
+                    <ShadeCircle tint={variant?.tint} size="xl" />
+                  </RadioGroup.Item>
+                );
+              })}
           </RadioGroup.Root>
         )}
       </VariantSelector>
