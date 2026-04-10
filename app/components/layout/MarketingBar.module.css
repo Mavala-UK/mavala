@@ -1,0 +1,53 @@
+.root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  padding-block: 0.8rem;
+  padding-inline: var(--padding-global);
+  background-color: var(--color-dark);
+  color: var(--color-light);
+
+  a,
+  button {
+    color: var(--color-light);
+  }
+}
+
+.content {
+  text-align: center;
+  letter-spacing: 0.05em;
+}
+
+.signup {
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.close {
+  display: block;
+  inline-size: 1.4rem;
+  aspect-ratio: 1;
+  cursor: pointer;
+  background-color: currentcolor;
+  mask-image: var(--icon-close);
+  mask-size: contain;
+  flex-shrink: 0;
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition: transform 0.15s ease-in-out;
+  }
+
+  @media (any-hover: hover) {
+    &:hover {
+      animation: rotate 0.15s forwards;
+    }
+  }
+}
+
+@keyframes rotate {
+  to {
+    rotate: 90deg;
+  }
+}

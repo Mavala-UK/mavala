@@ -2,6 +2,7 @@ import {useEffect, useRef, useState} from 'react';
 import { useLocation } from 'react-router';
 import {HeaderMain} from './HeaderMain';
 import {AnnouncementBar} from './AnnouncementBar';
+import {MarketingBar} from './MarketingBar';
 import styles from './Header.module.css';
 
 export function Header() {
@@ -35,6 +36,7 @@ export function Header() {
 
   return (
     <>
+      <MarketingBar />
       <AnnouncementBar />
       <header className={styles.root} data-collapsed={isCollapsed} ref={ref}>
         <HeaderMain scrolled={hasScrolled} />

@@ -11,10 +11,12 @@ export function CompleteYourOrder({
   products,
   variant,
   className,
+  title,
 }: {
   products: ProductItemFragment[];
   variant?: 'page' | 'cart';
   className?: string;
+  title?: React.ReactNode;
 }) {
   const id = useId();
 
@@ -35,7 +37,7 @@ export function CompleteYourOrder({
         className={styles.title}
       >
         <h2>
-          <FormattedMessage id="complete_your_order" />
+          {title ?? <FormattedMessage id="complete_your_order" />}
         </h2>
       </Text>
       <CarouselNavigationButtons className={styles.buttons} id={id} size="sm" />

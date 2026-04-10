@@ -31,7 +31,7 @@ export function Newsletter({variant}: {variant?: 'mini'}) {
   }, [fetcher.data]);
 
   return (
-    <div className={styles.root} data-variant={variant}>
+    <div className={styles.root} data-variant={variant} id="newsletter">
       <div className={styles.titles}>
         {variant !== 'mini' ? (
           <>
