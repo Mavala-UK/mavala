@@ -7,21 +7,17 @@ import {Link} from '../ui/Link';
 import {ProductViewDrawer} from './drawer/ProductViewDrawer';
 import {VariantSelector} from '@shopify/hydrogen';
 import ShadeCircle from '../ui/ShadeCircle';
-import * as RadioGroup from '@radix-ui/react-radio-group';
-import { useNavigate, useSearchParams } from 'react-router';
+import {useSearchParams} from 'react-router';
 import {useProductView} from '../product/ProductView';
 import {Carousel, CarouselWrapperButton} from '../ui/Carousel';
-import type {SelectedOption} from '@shopify/hydrogen/storefront-api-types';
 import {ShadeOption} from '../ui/ShadeOption';
 import styles from './ProductVariants.module.css';
 
 export function ProductVariants({className}: {className?: string}) {
   const maxShadesShown = 6;
   const id = useId();
-  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const {product, setSelectedOptions, selectedVariant, selectedOptions} =
-    useProductView();
+  const {product, setSelectedOptions, selectedVariant} = useProductView();
   const {handle, options: initialOptions, favoriteShades} = product ?? {};
   const allVariants = product?.variants?.nodes;
   const favoriteVariants = favoriteShades?.references?.nodes ?? [];
@@ -53,33 +49,6 @@ export function ProductVariants({className}: {className?: string}) {
     })
     .filter((option) => option.optionValues.length > 0);
 
-  const handleValueChange = (value: string) => {
-    const option = JSON.parse(value) as SelectedOption;
-
-    const newSelectedOptions = [
-      ...selectedOptions.filter(
-        (selectedOption) => selectedOption.name !== option.name,
-      ),
-      option,
-    ];
-
-    if (searchParams.size > 0) {
-      const searchParams = new URLSearchParams(
-        newSelectedOptions?.map((option) => [option.name, option.value]),
-      );
-
-      setSelectedOptions(newSelectedOptions);
-
-      navigate(`?${searchParams.toString()}`, {
-        replace: true,
-        preventScrollReset: true,
-        viewTransition: true,
-      });
-
-      return;
-    }
-  };
-
   useEffect(() => {
     const newSelectedOptions = Array.from(searchParams.entries()).map(
       ([name, value]) => ({name, value}),
@@ -109,36 +78,25 @@ export function ProductVariants({className}: {className?: string}) {
         variants={variants}
       >
         {({option}) => (
-          <RadioGroup.Root
-            key={option.name}
-            value={JSON.stringify(
-              selectedOptions.find(
-                (selectedOption) => selectedOption.name === option.name,
-              ),
-            )}
-            onValueChange={handleValueChange}
-          >
-            <CarouselWrapperButton id={id}>
-              <Carousel
-                mousewheel
-                slidesPerView="auto"
-                spaceBetween={8}
-                navigation={{
-                  nextEl: `[id="swiper-button-next-${id}"]`,
-                }}
-              >
-                {option.values.map((optionValue) => {
-                  return (
-                    <ShadeOption
-                      option={option}
-                      value={optionValue}
-                      key={option.name + optionValue.value}
-                    />
-                  );
-                })}
-              </Carousel>
-            </CarouselWrapperButton>
-          </RadioGroup.Root>
+          <CarouselWrapperButton id={id} key={option.name}>
+            <Carousel
+              mousewheel
+              slidesPerView="auto"
+              spaceBetween={8}
+              navigation={{
+                nextEl: `[id="swiper-button-next-${id}"]`,
+              }}
+            >
+              {option.values.map((optionValue) => (
+                <ShadeOption
+                  option={option}
+                  value={optionValue}
+                  to={optionValue.to}
+                  key={option.name + optionValue.value}
+                />
+              ))}
+            </Carousel>
+          </CarouselWrapperButton>
         )}
       </VariantSelector>
       <ProductViewDrawer>

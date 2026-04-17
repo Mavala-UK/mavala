@@ -2,6 +2,7 @@ import * as RadioGroup from '@radix-ui/react-radio-group';
 import type {VariantOption, VariantOptionValue} from '@shopify/hydrogen';
 import type {ProductVariantFragment} from 'storefrontapi.generated';
 import {useProductViewDrawer} from '../product/drawer/ProductViewDrawer';
+import {Link} from '../common/Link';
 import ShadeCircle from './ShadeCircle';
 import {Text} from './Text';
 import styles from './ShadeOption.module.css';
@@ -9,19 +10,19 @@ import styles from './ShadeOption.module.css';
 export function ShadeOption({
   option,
   value,
+  to,
 }: {
   option: VariantOption;
   value: VariantOptionValue;
+  to?: string;
 }) {
   const {isProductViewDrawerOpen} = useProductViewDrawer();
   const {title, tint} = (value?.variant as ProductVariantFragment) ?? {};
+  const variant = isProductViewDrawerOpen ? 'row' : 'column';
+  const label = isProductViewDrawerOpen ? title : tint?.reference?.name?.value;
 
-  return (
-    <RadioGroup.Item
-      value={JSON.stringify({name: option.name, value: value.value})}
-      className={styles.button}
-      data-variant={isProductViewDrawerOpen ? 'row' : 'column'}
-    >
+  const content = (
+    <>
       <ShadeCircle
         tint={tint}
         size={isProductViewDrawerOpen ? 'lg' : 'xl'}
@@ -32,10 +33,34 @@ export function ShadeOption({
         className={styles.text}
         {...(isProductViewDrawerOpen ? {weight: 'light'} : {size: '4xs'})}
       >
-        <span>
-          {isProductViewDrawerOpen ? title : tint?.reference?.name?.value}
-        </span>
+        <span>{label}</span>
       </Text>
+    </>
+  );
+
+  if (to) {
+    return (
+      <Link
+        to={to}
+        replace
+        preventScrollReset
+        className={styles.button}
+        data-variant={variant}
+        data-active={value.isActive ? 'true' : undefined}
+        aria-label={typeof label === 'string' ? label : undefined}
+      >
+        {content}
+      </Link>
+    );
+  }
+
+  return (
+    <RadioGroup.Item
+      value={JSON.stringify({name: option.name, value: value.value})}
+      className={styles.button}
+      data-variant={variant}
+    >
+      {content}
     </RadioGroup.Item>
   );
 }

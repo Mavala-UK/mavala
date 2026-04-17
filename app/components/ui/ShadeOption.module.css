@@ -39,7 +39,7 @@
     }
   }
 
-  &:not([aria-checked='true']) {
+  &:where(:not([aria-checked='true'], [data-active='true'])) {
     --color-box-shadow: var(--color-gray-medium);
     --color-number: var(--color-gray-medium);
 
@@ -55,7 +55,7 @@
     }
   }
 
-  &[aria-checked='true'] {
+  &:is([aria-checked='true'], [data-active='true']) {
     --color-box-shadow: var(--color-dark);
     --color-number: var(--color-dark);
 
