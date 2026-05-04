@@ -18,7 +18,7 @@ export function ProductHeader() {
   const isDesktop = useMediaQuery('(min-width: 64rem)');
   const {product, selectedVariant} = useProductView();
   const {title, capacity} = product ?? {};
-  const {badges} = selectedVariant ?? {};
+  const badges = selectedVariant?.badges ?? product?.badges;
   const productCapacity = capacity?.value?.split('(');
   const {yotpoReviews} = useLoaderData<typeof loader>();
   const {bottomline} = yotpoReviews ?? {};
