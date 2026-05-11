@@ -10,3 +10,5 @@ node_modules
 .env.italia
 .shopify
 .react-router
+CLAUDE.md
+.claude/
