@@ -276,6 +276,7 @@ export default function App() {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <meta name="google-site-verification" content="dtwalNzYOoDRGhmvccF1jIUxPm5oct6qpXHSDDnmjI0" />
         <link rel="stylesheet" href={isStudio ? studioStyles : storeStyles} />
         <Meta />
         <Links />
