@@ -45,10 +45,17 @@
 .gallery-badges {
   position: absolute;
   z-index: 2;
-  inset-block-start: calc(var(--padding-block-start) + 1.6rem);
   inset-inline-start: 1.6rem;
 
+  @media (width < 64rem) {
+    /* ProductMedias has margin-block-start: var(--padding-block-start)
+       on mobile (on top of .root's own padding-top), so the image sits
+       2 * padding-block-start below .root's border-edge. */
+    inset-block-start: calc(var(--padding-block-start) * 2 + 1.6rem);
+  }
+
   @media (width >= 64rem) {
+    inset-block-start: calc(var(--padding-block-start) + 1.6rem);
     inset-inline-start: calc(var(--section-gutter) + 1.6rem);
   }
 }
