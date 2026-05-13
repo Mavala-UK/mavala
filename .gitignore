@@ -10,3 +10,7 @@ node_modules
 .env.italia
 .shopify
 .react-router
+
+# Local-only Claude configuration — never commit
+CLAUDE.md
+.claude/
