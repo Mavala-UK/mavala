@@ -9,6 +9,7 @@ import {
 } from '../ui/Accordion';
 import {Text} from '../ui/Text';
 import {RichText} from '../common/RichText';
+import {getAccordionIcon} from '../icons/accordion';
 import styles from './ProductAccordion.module.css';
 
 export function ProductAccordion({className}: {className?: string}) {
@@ -42,12 +43,18 @@ export function ProductAccordion({className}: {className?: string}) {
     <Accordion className={cn(styles.root, className)} type="multiple">
       {accordions?.map((accordion) => {
         const {title, text} = accordion ?? {};
+        const icon = getAccordionIcon(title?.value);
 
         return (
           <AccordionItem value={accordion?.id!} key={accordion?.id}>
             <AccordionHeader asChild>
               <h2>
-                <AccordionTrigger>{title?.value}</AccordionTrigger>
+                <AccordionTrigger>
+                  <span className={styles['trigger-inner']}>
+                    {icon && <span className={styles.icon}>{icon}</span>}
+                    {title?.value}
+                  </span>
+                </AccordionTrigger>
               </h2>
             </AccordionHeader>
             <AccordionContent>
