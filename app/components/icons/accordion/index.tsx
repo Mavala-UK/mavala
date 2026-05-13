@@ -5,12 +5,14 @@ import {Timer} from './Timer';
 import {Sparkles} from './Sparkles';
 import {FlaskConical} from './FlaskConical';
 import {Award} from './Award';
+import {BookOpen} from './BookOpen';
 
 const PREFIX_TO_ICON: ReadonlyArray<readonly [string, () => ReactNode]> = [
   ['award winning', Award],
   ['expert care', Atom],
   ['expert tip', Sparkles],
   ['featuring', Layers],
+  ['how to apply', BookOpen],
   ['ingredients', FlaskConical],
   ['ritual', Timer],
 ];
