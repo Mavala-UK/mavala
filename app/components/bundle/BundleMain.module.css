@@ -41,6 +41,21 @@
   }
 }
 
+.gallery {
+  position: relative;
+
+  @media (width >= 64rem) {
+    grid-column: gallery;
+  }
+}
+
+.gallery-badges {
+  position: absolute;
+  inset-block-start: 1.6rem;
+  inset-inline-start: 1.6rem;
+  z-index: 1;
+}
+
 .header {
   display: flex;
   flex-direction: column;

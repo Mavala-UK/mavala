@@ -10,15 +10,21 @@ export function Badges({
   items,
   className,
   size = 'md',
+  variant,
 }: {
   items: ProductItemFragment['badges'] | ProductFragment['badges'];
   size?: 'md' | 'lg';
+  variant?: 'outline';
   className?: string;
 }) {
   const badges = items?.references?.nodes;
 
   return (
-    <div className={cn(styles.root, className)} data-size={size}>
+    <div
+      className={cn(styles.root, className)}
+      data-size={size}
+      data-variant={variant}
+    >
       {badges?.map((badge) => (
         <Text
           uppercase
