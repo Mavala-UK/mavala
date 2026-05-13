@@ -85,6 +85,8 @@ export function BundleMain() {
                 )}
               </header>
 
+              <ProductInfos />
+
               <BundleFeatures
                 title={product.featuresTitle?.value}
                 features={product.features}
@@ -113,7 +115,6 @@ export function BundleMain() {
                 </>
               )}
 
-              <ProductInfos />
               <ProductAccordion />
             </div>
 
