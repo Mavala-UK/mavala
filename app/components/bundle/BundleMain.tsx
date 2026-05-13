@@ -119,15 +119,13 @@ export function BundleMain() {
               <ProductAccordion />
             </div>
 
-            <div className={styles.gallery}>
-              <Badges
-                items={product.badges}
-                size="lg"
-                variant="outline"
-                className={styles['gallery-badges']}
-              />
-              <ProductMedias />
-            </div>
+            <ProductMedias />
+            <Badges
+              items={product.badges}
+              size="lg"
+              variant="outline"
+              className={styles['gallery-badges']}
+            />
           </div>
         </ProductView>
       </BundleProvider>

@@ -1,6 +1,7 @@
 .root {
   --section-gutter: var(--padding-global-extend);
 
+  position: relative;
   display: grid;
   grid-auto-columns: 100%;
   align-items: start;
@@ -41,19 +42,15 @@
   }
 }
 
-.gallery {
-  position: relative;
-
-  @media (width >= 64rem) {
-    grid-column: gallery;
-  }
-}
-
 .gallery-badges {
   position: absolute;
-  inset-block-start: 1.6rem;
+  z-index: 2;
+  inset-block-start: calc(var(--padding-block-start) + 1.6rem);
   inset-inline-start: 1.6rem;
-  z-index: 1;
+
+  @media (width >= 64rem) {
+    inset-inline-start: calc(var(--section-gutter) + 1.6rem);
+  }
 }
 
 .header {
