@@ -69,7 +69,6 @@ export function BundleMain() {
           <div className={styles.root}>
             <div className={styles.content}>
               <header className={styles.header}>
-                <Badges items={product.badges} size="lg" />
                 <Heading asChild size="xl">
                   <h1>{product.title}</h1>
                 </Heading>
@@ -85,6 +84,8 @@ export function BundleMain() {
                   />
                 )}
               </header>
+
+              <ProductInfos />
 
               <BundleFeatures
                 title={product.featuresTitle?.value}
@@ -114,11 +115,16 @@ export function BundleMain() {
                 </>
               )}
 
-              <ProductInfos />
               <ProductAccordion />
             </div>
 
             <ProductMedias />
+            <Badges
+              items={product.badges}
+              size="lg"
+              variant="outline"
+              className={styles['gallery-badges']}
+            />
           </div>
         </ProductView>
       </BundleProvider>

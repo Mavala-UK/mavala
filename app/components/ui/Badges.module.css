@@ -25,3 +25,12 @@
   background-color: var(--bg-color);
   border-radius: calc(var(--border-radius) / 2);
 }
+
+.root[data-variant='outline'] {
+  --bg-color: var(--color-light);
+}
+
+.root[data-variant='outline'] .badge {
+  border: 1px solid var(--color-dark-red);
+  color: var(--color-dark-red);
+}

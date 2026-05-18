@@ -1,6 +1,7 @@
 .root {
   --section-gutter: var(--padding-global-extend);
 
+  position: relative;
   display: grid;
   grid-auto-columns: 100%;
   align-items: start;
@@ -26,7 +27,9 @@
   }
 
   @media (width >= 120rem) {
-    padding-inline: var(--max-size-container-extend);
+    --section-gutter: var(--max-size-container-extend);
+
+    padding-inline: var(--section-gutter);
   }
 }
 
@@ -41,10 +44,32 @@
   }
 }
 
+.gallery-badges {
+  position: absolute;
+  z-index: 2;
+  inset-inline-start: 1.6rem;
+
+  @media (width < 64rem) {
+    /* ProductMedias has margin-block-start: var(--padding-block-start)
+       on mobile (on top of .root's own padding-top), so the image sits
+       2 * padding-block-start below .root's border-edge. */
+    inset-block-start: calc(var(--padding-block-start) * 2 + 1.6rem);
+  }
+
+  @media (width >= 64rem) {
+    inset-block-start: calc(var(--padding-block-start) + 1.6rem);
+    inset-inline-start: calc(var(--section-gutter) + 1.6rem);
+  }
+}
+
 .header {
   display: flex;
   flex-direction: column;
   row-gap: 0.8rem;
+
+  @media (width < 64rem) {
+    margin-block-start: 2.4rem;
+  }
 }
 
 .productType {
