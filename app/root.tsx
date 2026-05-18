@@ -229,11 +229,8 @@ export default function App() {
   const data = useRouteLoaderData<RootLoader>('root');
   const {pathname} = useLocation();
   const {selectedLocale, global, sites, sanity, env} = data ?? {};
-  const {isMavalaFrance} = sites ?? {};
   const announcements = global?.announcements?.references?.nodes ?? [];
   const isStudio = pathname.includes('studio');
-  const showPopupNewsletter =
-    process.env.NODE_ENV !== 'development' && isMavalaFrance && !isStudio;
 
   useEffect(() => {
     window.dataLayer = window.dataLayer || [];
@@ -289,12 +286,6 @@ export default function App() {
             `,
           }}
         />
-        {showPopupNewsletter && (
-          <script
-            type="text/javascript"
-            src="https://forms-akamai.smsbump.com/853926/form_362417.js"
-          />
-        )}
         {/* Omnisend Integration */}
         <script
           dangerouslySetInnerHTML={{
@@ -313,7 +304,7 @@ export default function App() {
       <body>
         <noscript>
           <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-TFX9X589"
+            src="https://www.googletagmanager.com/ns.html?id=GTM-WM26WWGT"
             height="0"
             width="0"
             style={{
