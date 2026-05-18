@@ -41,8 +41,6 @@ export function BundleMain() {
     faqSection,
     relatedArticles: relatedArticlesPromise,
   } = useLoaderData<typeof loader>();
-  const {relatedArticles} = use(relatedArticlesPromise).data ?? {};
-  const {productRecommendations} = use(relatedProducts);
   const {handle} = useParams();
   const [searchParams] = useSearchParams();
   const selectedOptions = Array.from(searchParams.entries()).map(
@@ -126,11 +124,15 @@ export function BundleMain() {
       </BundleProvider>
       {videoSection && <VideoSection content={videoSection?.reference!} />}
       {!isMavalaCorporate && <ProductReviews product={product} />}
-      <RelatedProducts products={productRecommendations ?? []} />
+      <Suspense fallback={null}>
+        <RelatedProductsLoader relatedProductsPromise={relatedProducts} />
+      </Suspense>
       <FaqSection data={faqSection} />
       {isMavalaFrance && (
         <Suspense>
-          <FeaturedArticles relatedArticles={relatedArticles} />
+          <FeaturedArticlesLoader
+            relatedArticlesPromise={relatedArticlesPromise}
+          />
         </Suspense>
       )}
       <Analytics.ProductView
@@ -151,4 +153,22 @@ export function BundleMain() {
       />
     </>
   );
+}
+
+function RelatedProductsLoader({
+  relatedProductsPromise,
+}: {
+  relatedProductsPromise: Promise<any>;
+}) {
+  const {productRecommendations} = use(relatedProductsPromise);
+  return <RelatedProducts products={(productRecommendations as any[]) ?? []} />;
+}
+
+function FeaturedArticlesLoader({
+  relatedArticlesPromise,
+}: {
+  relatedArticlesPromise: Promise<any>;
+}) {
+  const {relatedArticles} = use(relatedArticlesPromise).data ?? {};
+  return <FeaturedArticles relatedArticles={relatedArticles} />;
 }

@@ -187,17 +187,27 @@ function loadDeferredData({context, params}: LoaderFunctionArgs) {
 export default function Article() {
   const {breadcrumbItems, relatedArticles: relatedArticlesPromise} =
     useLoaderData<typeof loader>();
-  const relatedArticles = use(relatedArticlesPromise).data ?? {};
 
   return (
     <>
       <Breadcrumb items={breadcrumbItems} />
       <ArticleMain />
       <Suspense>
-        <FeaturedArticles relatedArticles={relatedArticles} />
+        <FeaturedArticlesLoader
+          relatedArticlesPromise={relatedArticlesPromise}
+        />
       </Suspense>
     </>
   );
+}
+
+function FeaturedArticlesLoader({
+  relatedArticlesPromise,
+}: {
+  relatedArticlesPromise: Promise<any>;
+}) {
+  const relatedArticles = use(relatedArticlesPromise).data ?? {};
+  return <FeaturedArticles relatedArticles={relatedArticles} />;
 }
 
 const articleBlogQuery = groq`

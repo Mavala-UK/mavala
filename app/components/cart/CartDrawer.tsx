@@ -173,15 +173,79 @@ const CartDrawerContext = createContext<{
 });
 
 export function CartDrawerProvider({children}: {children: React.ReactNode}) {
-  const data = useRouteLoaderData<RootLoader>('root');
-  const cart = use(data?.cart!);
-  const optimisticCart = useOptimisticCart(cart);
-  const subtotalCart = optimisticCart?.cost?.subtotalAmount as MoneyV2;
-  const isHydrated = useIsHydrated();
   const [searchParams] = useSearchParams();
   const [isCartDrawerOpen, setIsCartDrawerOpen] = useState(
     searchParams.has('cart'),
   );
+  const isHydrated = useIsHydrated();
+
+  // During SSR, render a minimal Drawer shell with default context values.
+  // This gives CartDrawerButton (in Header) the <Dialog> context it needs
+  // without unwrapping any deferred promises.
+  if (!isHydrated) {
+    return (
+      <CartDrawerContext
+        value={{
+          isCartDrawerOpen: false,
+          setIsCartDrawerOpen: () => {},
+          optimisticCart: null,
+          subtotalCart: undefined,
+        }}
+      >
+        <Drawer open={false} onOpenChange={() => {}}>
+          {children}
+        </Drawer>
+      </CartDrawerContext>
+    );
+  }
+
+  // Client-side: unwrap the cart promise inside Suspense so it does not
+  // abort the render.
+  const data = useRouteLoaderData<RootLoader>('root');
+  const cartPromise = data?.cart!;
+
+  return (
+    <Suspense
+      fallback={
+        <CartDrawerContext
+          value={{
+            isCartDrawerOpen: false,
+            setIsCartDrawerOpen: () => {},
+            optimisticCart: null,
+            subtotalCart: undefined,
+          }}
+        >
+          <Drawer open={false} onOpenChange={() => {}}>
+            {children}
+          </Drawer>
+        </CartDrawerContext>
+      }
+    >
+      <CartDataLoader
+        cartPromise={cartPromise}
+        isCartDrawerOpen={isCartDrawerOpen}
+        setIsCartDrawerOpen={setIsCartDrawerOpen}
+      >
+        {children}
+      </CartDataLoader>
+    </Suspense>
+  );
+}
+
+function CartDataLoader({
+  cartPromise,
+  children,
+  isCartDrawerOpen,
+  setIsCartDrawerOpen,
+}: {
+  cartPromise: Promise<any>;
+  children: React.ReactNode;
+  isCartDrawerOpen: boolean;
+  setIsCartDrawerOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
+  const cart = use(cartPromise);
+  const optimisticCart = useOptimisticCart(cart);
+  const subtotalCart = optimisticCart?.cost?.subtotalAmount as MoneyV2;
 
   const value = {
     isCartDrawerOpen,
@@ -191,17 +255,15 @@ export function CartDrawerProvider({children}: {children: React.ReactNode}) {
   };
 
   return (
-    isHydrated && (
-      <CartDrawerContext value={value}>
-        <DiscountsView>
-          <Drawer open={isCartDrawerOpen} onOpenChange={setIsCartDrawerOpen}>
-            {children}
-            <Suspense>
-              <CartDrawer />
-            </Suspense>
-          </Drawer>
-        </DiscountsView>
-      </CartDrawerContext>
-    )
+    <CartDrawerContext value={value}>
+      <DiscountsView>
+        <Drawer open={isCartDrawerOpen} onOpenChange={setIsCartDrawerOpen}>
+          {children}
+          <Suspense>
+            <CartDrawer />
+          </Suspense>
+        </Drawer>
+      </DiscountsView>
+    </CartDrawerContext>
   );
 }
