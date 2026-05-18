@@ -15,6 +15,7 @@ export async function getYotpoReviews(productId: string, appKey: string) {
     const res = await fetch(url, options);
 
     if (!res.ok) {
+      if (res.status === 404) return undefined;
       throw new Error(res.statusText);
     }
 
