@@ -31,7 +31,7 @@ export function ProductReviews({product}: {product: ProductFragment}) {
   );
 
   return (
-    <section className={styles.root} id="reviews">
+    <section data-testid="product-reviews-section" className={styles.root} id="reviews">
       <div className={styles.header}>
         <Heading className={styles.title} size={isDesktop ? '2xl' : 'xl'}>
           <FormattedMessage id="reviews_title" />

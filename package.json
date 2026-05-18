@@ -11,7 +11,11 @@
     "lint": "eslint --no-error-on-unmatched-pattern --ext .js,.ts,.jsx,.tsx .; stylelint **/*.css",
     "typecheck": "tsc --noEmit",
     "codegen": "shopify hydrogen codegen & sanity schema extract --path sanity.schema.json && sanity typegen generate",
-    "deploy": "wrangler deploy --keep-vars"
+    "deploy": "wrangler deploy --keep-vars",
+    "test:e2e": "./node_modules/.bin/playwright test --reporter=list",
+    "test:e2e:smoke": "./node_modules/.bin/playwright test e2e/smoke --reporter=list",
+    "test:e2e:prod": "PLAYWRIGHT_BASE_URL=https://mavala.co.uk ./node_modules/.bin/playwright test --reporter=list",
+    "test:e2e:headed": "./node_modules/.bin/playwright test --headed --reporter=list"
   },
   "prettier": "@shopify/prettier-config",
   "dependencies": {
@@ -48,8 +52,8 @@
     "@tanstack/eslint-plugin-query": "^5.81.2",
     "@tanstack/react-query": "^5.81.2",
     "@types/geojson": "^7946.0.16",
-    "@types/mapbox__mapbox-gl-geocoder": "^5.0.0",
     "@types/mapbox-gl": "^3.4.1",
+    "@types/mapbox__mapbox-gl-geocoder": "^5.0.0",
     "@types/uuid": "^10.0.0",
     "babel-plugin-react-compiler": "19.1.0-rc.2",
     "eslint-plugin-react-compiler": "19.1.0-rc.2",
@@ -86,6 +90,7 @@
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^5.0.7",
+    "@playwright/test": "^1.60.0",
     "@react-router/dev": "^7.6.2",
     "@remix-run/eslint-config": "^2.16.8",
     "@shopify/cli": "3.81.2",

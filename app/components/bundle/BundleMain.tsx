@@ -120,6 +120,7 @@ export function BundleMain() {
 
             <ProductMedias />
             <Badges
+              data-testid="bundle-badges-overlay"
               items={product.badges}
               size="lg"
               variant="outline"
