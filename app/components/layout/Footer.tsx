@@ -6,7 +6,6 @@ import {useMenu} from '~/hooks/useMenu';
 import {useMediaQuery} from '~/hooks/useMediaQuery';
 import {LinksList} from './LinksList';
 import {Text} from '../ui/Text';
-import {Newsletter} from './Newsletter';
 import {Link} from '../ui/Link';
 import {Heading} from '../ui/Heading';
 import {Youtube} from '../icons/Youtube';
@@ -39,7 +38,9 @@ export function Footer({footer}: {footer: FooterQuery}) {
   return (
     <footer className={styles.footer}>
       <div className={styles['footer-infos-section']}>
-        {isMavalaFrance && <Newsletter />}
+        {isMavalaFrance && (
+          <div id="omnisend-embedded-v2-6a0afe5bd1194eac97043333"></div>
+        )}
         {isMavalaCorporate && (
           <Heading size={isDesktop ? 'xl' : 'lg'} asChild>
             <p>{labelFooter?.value}</p>
