@@ -1,0 +1,6 @@
+.helper {
+  display: block;
+  padding-block: 1.2rem;
+  text-align: center;
+  color: var(--color-text-secondary, #6b6b6b);
+}
