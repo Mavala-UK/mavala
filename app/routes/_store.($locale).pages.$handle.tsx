@@ -136,7 +136,6 @@ export default function Page() {
   const {isMavalaFrance} = data?.sites ?? {};
   const {page, relatedArticles: relatedArticlesPromise} =
     useLoaderData<typeof loader>();
-  const {relatedArticles} = use(relatedArticlesPromise).data ?? {};
 
   console.log(page);
   return (
@@ -145,11 +144,22 @@ export default function Page() {
       <PageContent page={page.data} />
       {isMavalaFrance && (
         <Suspense>
-          <FeaturedArticles relatedArticles={relatedArticles} />
+          <FeaturedArticlesLoader
+            relatedArticlesPromise={relatedArticlesPromise}
+          />
         </Suspense>
       )}
     </>
   );
+}
+
+function FeaturedArticlesLoader({
+  relatedArticlesPromise,
+}: {
+  relatedArticlesPromise: Promise<any>;
+}) {
+  const {relatedArticles} = use(relatedArticlesPromise).data ?? {};
+  return <FeaturedArticles relatedArticles={relatedArticles} />;
 }
 
 const pageQuery = groq`
