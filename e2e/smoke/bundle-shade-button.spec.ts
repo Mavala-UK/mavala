@@ -1,59 +1,56 @@
-import {test, expect} from '@playwright/test';
+import {test, expect, type Page} from '@playwright/test';
 
-// lip-shine is the known bundle product in the UK catalogue.
-// It has bundleComponents metafield populated but productType is "Make-Up"
-// not "Bundle", so the PDP route gate `productType === 'Bundle'` never
-// activates BundleMain. The bundle code path is dormant.
-const BUNDLE_PRODUCT_HANDLE = 'lip-shine';
+const BUNDLE_CANDIDATES = ['lip-shine'];
 
-test.beforeAll(async ({browser}) => {
-  const page = await browser.newPage();
-  const response = await page.goto(
-    `/products/${BUNDLE_PRODUCT_HANDLE}`,
-    {timeout: 20000},
-  );
-
-  if (!response || response.status() >= 400) {
-    await page.close();
-    test.skip(
-      true,
-      `bundle product ${BUNDLE_PRODUCT_HANDLE} not reachable, bundles may be dormant`,
-    );
-    return;
+async function findActiveBundle(page: Page): Promise<string | null> {
+  for (const handle of BUNDLE_CANDIDATES) {
+    const response = await page.goto(`/products/${handle}`, {
+      waitUntil: 'domcontentloaded',
+      timeout: 20000,
+    });
+    if (!response || response.status() >= 400) continue;
+    const isBundle = await page
+      .getByTestId('bundle-helper-text')
+      .or(page.getByTestId('bundle-atc'))
+      .first()
+      .isVisible()
+      .catch(() => false);
+    if (isBundle) return handle;
   }
+  return null;
+}
 
-  // Check whether BundleMain rendered (look for its data-testid markers).
-  // Both bundle-helper-text and bundle-atc are exclusive to BundleAddToCart
-  // which only renders inside BundleMain.
-  const hasBundleMarker =
-    (await page.getByTestId('bundle-helper-text').count()) > 0 ||
-    (await page.getByTestId('bundle-atc').count()) > 0;
+test.describe('bundle shade button', () => {
+  let activeBundle: string | null = null;
 
-  await page.close();
+  test.beforeAll(async ({browser}) => {
+    const context = await browser.newContext();
+    const page = await context.newPage();
+    activeBundle = await findActiveBundle(page);
+    await context.close();
+  });
 
-  if (!hasBundleMarker) {
+  test.beforeEach(async () => {
     test.skip(
-      true,
-      `bundles dormant on storefront: no product renders BundleMain ` +
-        `(productType gate requires 'Bundle' but ${BUNDLE_PRODUCT_HANDLE} ` +
-        `has productType 'Make-Up')`,
+      activeBundle === null,
+      'bundles dormant on storefront: no product currently renders BundleMain. ' +
+        'Per backlog "Bundle code dormant on production": the route gate uses ' +
+        'productType === "Bundle" but no product has that productType set. ' +
+        'Test will auto-activate once any product renders BundleMain.',
     );
-  }
-});
+  });
 
-test('bundle shade gate: helper text when incomplete, ATC when all selected', async ({
-  page,
-}) => {
-  await page.goto(`/products/${BUNDLE_PRODUCT_HANDLE}`);
+  test('helper text or ATC visible on bundle PDP', async ({page}) => {
+    await page.goto(`/products/${activeBundle}`);
 
-  // Either helper text or ATC button should be visible (not both)
-  const helperText = page.getByTestId('bundle-helper-text');
-  const atcButton = page.getByTestId('bundle-atc');
+    const helper = page.getByTestId('bundle-helper-text');
+    const atc = page.getByTestId('bundle-atc');
 
-  const helperVisible = await helperText.isVisible().catch(() => false);
-  const atcVisible = await atcButton.isVisible().catch(() => false);
+    const helperVisible = await helper.isVisible().catch(() => false);
+    const atcVisible = await atc.isVisible().catch(() => false);
 
-  // At least one state is visible; they are mutually exclusive
-  expect(helperVisible || atcVisible).toBe(true);
-  expect(helperVisible && atcVisible).toBe(false);
+    // Either helper text or ATC must be visible (mutually exclusive states)
+    expect(helperVisible || atcVisible).toBe(true);
+    expect(helperVisible && atcVisible).toBe(false);
+  });
 });
