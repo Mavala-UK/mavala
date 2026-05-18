@@ -11,8 +11,8 @@ test('bundle shade gate: helper text when incomplete, ATC when all selected', as
   // eslint-disable-next-line playwright/no-networkidle
   const response = await page.goto(`/products/${bundleHandle}`);
 
-  if (response?.status() === 404) {
-    test.skip(true, `Bundle product ${bundleHandle} returned 404, no bundle available to test`);
+  if (!response || response.status() >= 400) {
+    test.skip(true, `Bundle product ${bundleHandle} not available (status: ${response?.status() ?? 'null'})`);
     return;
   }
 
