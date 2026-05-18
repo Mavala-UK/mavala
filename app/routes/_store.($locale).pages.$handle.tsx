@@ -137,7 +137,6 @@ export default function Page() {
   const {page, relatedArticles: relatedArticlesPromise} =
     useLoaderData<typeof loader>();
 
-  console.log(page);
   return (
     <>
       <Breadcrumb items={[{title: page.data?.title ?? ''}]} />

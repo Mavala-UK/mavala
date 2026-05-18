@@ -42,8 +42,6 @@ export function ProductMain() {
   );
 
   const {data: product} = useProduct(handle ?? '', selectedOptions);
-  console.log(product);
-
   if (!product) {
     return null;
   }
