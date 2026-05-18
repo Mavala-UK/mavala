@@ -39,7 +39,7 @@ export function Footer({footer}: {footer: FooterQuery}) {
     <footer className={styles.footer}>
       <div className={styles['footer-infos-section']}>
         {isMavalaFrance && (
-          <div id="omnisend-embedded-v2-6a0afe5bd1194eac97043333"></div>
+          <div data-testid="omnisend-embed" id="omnisend-embedded-v2-6a0afe5bd1194eac97043333"></div>
         )}
         {isMavalaCorporate && (
           <Heading size={isDesktop ? 'xl' : 'lg'} asChild>

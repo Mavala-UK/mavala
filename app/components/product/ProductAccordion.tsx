@@ -51,7 +51,7 @@ export function ProductAccordion({className}: {className?: string}) {
               <h2>
                 <AccordionTrigger>
                   <span className={styles['trigger-inner']}>
-                    {icon && <span className={styles.icon}>{icon}</span>}
+                    {icon && <span data-testid="accordion-icon" className={styles.icon}>{icon}</span>}
                     {title?.value}
                   </span>
                 </AccordionTrigger>

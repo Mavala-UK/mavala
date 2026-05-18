@@ -257,7 +257,7 @@ function CartDataLoader({
   return (
     <CartDrawerContext value={value}>
       <DiscountsView>
-        <Drawer open={isCartDrawerOpen} onOpenChange={setIsCartDrawerOpen}>
+        <Drawer data-testid="cart-drawer-dialog" open={isCartDrawerOpen} onOpenChange={setIsCartDrawerOpen}>
           {children}
           <Suspense>
             <CartDrawer />

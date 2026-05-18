@@ -24,7 +24,7 @@ export function BundleAddToCart({
 
   if (!allSelected || !bundleVariant) {
     return (
-      <Text size="sm" className={styles.helper}>
+      <Text data-testid="bundle-helper-text" size="sm" className={styles.helper}>
         <FormattedMessage
           id="bundle_pick_shade_helper"
           defaultMessage="Pick a shade for each item to add to cart."
@@ -60,7 +60,7 @@ export function BundleAddToCart({
       inputs={{lines}}
       action={CartForm.ACTIONS.LinesAdd}
     >
-      <Button type="submit" onClick={handleClick}>
+      <Button data-testid="bundle-atc" type="submit" onClick={handleClick}>
         <ButtonEffect>
           <FormattedMessage id="add" />
           <ProductPrice
