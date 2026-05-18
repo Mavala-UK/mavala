@@ -19,6 +19,8 @@ export function ProductReviews({product}: {product: ProductFragment}) {
   const {bottomline, reviews} = yotpoReviews ?? {};
   const {featuredImage} = product;
 
+  if (!bottomline?.total_review) return null;
+
   const groupedReviews = reviews?.reduce(
     (acc: YotpoReview[][], review, index) => {
       if (index % 3 === 0) acc.push([]);
