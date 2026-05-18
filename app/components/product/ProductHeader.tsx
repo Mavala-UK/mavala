@@ -39,7 +39,7 @@ export function ProductHeader() {
           )}
         </div>
       )}
-      {!isMavalaCorporate && (
+      {!isMavalaCorporate && bottomline?.total_review ? (
         <Text size="sm" className={capacity ? styles.right : styles.left}>
           <StarBold />
           <Link to={`#reviews`}>
@@ -47,7 +47,7 @@ export function ProductHeader() {
             {` ${formatMessage({id: 'reviews'})}`}
           </Link>
         </Text>
-      )}
+      ) : null}
     </header>)
   );
 }
