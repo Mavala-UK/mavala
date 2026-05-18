@@ -1,4 +1,4 @@
-import {useState, use} from 'react';
+import {useState, use, Suspense} from 'react';
 import {useRouteLoaderData, useRouteError, useLocation} from 'react-router';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {VisualEditing} from 'hydrogen-sanity/visual-editing';
@@ -84,7 +84,6 @@ function Layout({children}: {children?: React.ReactNode}) {
   const {footer: footerPromise, sites, sanity} = data ?? {};
   const {isMavalaFrance} = sites ?? {};
   const {preview} = sanity ?? {};
-  const footer = use(footerPromise!);
   const isError = Boolean(useRouteError());
   const showCtas =
     isMavalaFrance &&
@@ -99,8 +98,15 @@ function Layout({children}: {children?: React.ReactNode}) {
       <main>{children}</main>
       {showCtas && <Ctas />}
       <Reassurances />
-      <Footer footer={footer!} />
+      <Suspense fallback={null}>
+        <FooterContent footerPromise={footerPromise!} />
+      </Suspense>
       {preview && <VisualEditing />}
     </>
   );
+}
+
+function FooterContent({footerPromise}: {footerPromise: Promise<any>}) {
+  const footer = use(footerPromise);
+  return <Footer footer={footer!} />;
 }

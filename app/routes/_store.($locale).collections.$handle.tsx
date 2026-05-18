@@ -240,19 +240,68 @@ export default function Collection() {
     relatedArticles: relatedArticlesPromise,
     additionalSections: additionalSectionsPromise,
   } = useLoaderData<typeof loader>();
-  const additionalSections = use(additionalSectionsPromise);
-  const {additionalBlocks} = additionalSections?.data ?? {};
-  const {relatedArticles} = use(relatedArticlesPromise).data ?? {};
 
   return (
     <>
       <Breadcrumb items={breadcrumbItems} />
+      <Suspense
+        fallback={
+          <>
+            <CollectionHeader showCategories={true} />
+            <ProductsList insert={insert} connection={collection?.products} />
+          </>
+        }
+      >
+        <AdditionalSectionsLoader
+          additionalSectionsPromise={additionalSectionsPromise}
+          insert={insert}
+          collection={collection}
+        />
+      </Suspense>
+      <SeoSection data={seoSection} />
+      <FaqSection data={faqSection} />
+      {isMavalaFrance && (
+        <Suspense>
+          <FeaturedArticlesLoader
+            relatedArticlesPromise={relatedArticlesPromise}
+          />
+        </Suspense>
+      )}
+      <Analytics.CollectionView
+        data={{
+          collection: {
+            id: collection.id,
+            handle: collection.handle,
+          },
+        }}
+        customData={{
+          products: collection.products.nodes,
+        }}
+      />
+    </>
+  );
+}
+
+function AdditionalSectionsLoader({
+  additionalSectionsPromise,
+  insert,
+  collection,
+}: {
+  additionalSectionsPromise: Promise<any>;
+  insert?: any;
+  collection: any;
+}) {
+  const additionalSections = use(additionalSectionsPromise);
+  const {additionalBlocks} = additionalSections?.data ?? {};
+
+  return (
+    <>
       <CollectionHeader showCategories={Boolean(!additionalBlocks)} />
       {!additionalBlocks ? (
         <ProductsList insert={insert} connection={collection?.products} />
       ) : (
         <>
-          {additionalBlocks?.map((block) => {
+          {additionalBlocks?.map((block: any) => {
             return (() => {
               switch (block._type) {
                 case 'featuredCollections':
@@ -281,26 +330,17 @@ export default function Collection() {
           })}
         </>
       )}
-      <SeoSection data={seoSection} />
-      <FaqSection data={faqSection} />
-      {isMavalaFrance && (
-        <Suspense>
-          <FeaturedArticles relatedArticles={relatedArticles} />
-        </Suspense>
-      )}
-      <Analytics.CollectionView
-        data={{
-          collection: {
-            id: collection.id,
-            handle: collection.handle,
-          },
-        }}
-        customData={{
-          products: collection.products.nodes,
-        }}
-      />
     </>
   );
+}
+
+function FeaturedArticlesLoader({
+  relatedArticlesPromise,
+}: {
+  relatedArticlesPromise: Promise<any>;
+}) {
+  const {relatedArticles} = use(relatedArticlesPromise).data ?? {};
+  return <FeaturedArticles relatedArticles={relatedArticles} />;
 }
 
 // NOTE: https://shopify.dev/docs/api/storefront/2022-04/objects/collection
