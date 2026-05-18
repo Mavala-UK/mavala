@@ -22,7 +22,7 @@ export default defineConfig({
       name: 'chromium-mobile',
       testDir: './e2e',
       use: {
-        ...devices['iPhone SE'],
+        browserName: 'chromium',
         viewport: {width: 375, height: 667},
       },
     },
@@ -30,7 +30,7 @@ export default defineConfig({
       name: 'chromium-tablet',
       testDir: './e2e',
       use: {
-        ...devices['iPad Mini'],
+        browserName: 'chromium',
         viewport: {width: 768, height: 1024},
       },
     },
@@ -38,7 +38,7 @@ export default defineConfig({
       name: 'chromium-desktop',
       testDir: './e2e',
       use: {
-        ...devices['Desktop Chrome'],
+        browserName: 'chromium',
         viewport: {width: 1440, height: 900},
       },
     },
@@ -46,7 +46,7 @@ export default defineConfig({
       name: 'chromium-wide',
       testDir: './e2e',
       use: {
-        ...devices['Desktop Chrome'],
+        browserName: 'chromium',
         viewport: {width: 2560, height: 1440},
       },
     },

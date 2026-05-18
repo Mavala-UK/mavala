@@ -14,3 +14,4 @@ node_modules
 # Local-only Claude configuration: never commit
 CLAUDE.md
 .claude/
+test-results/

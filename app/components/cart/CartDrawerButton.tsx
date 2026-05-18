@@ -23,6 +23,7 @@ function CartDrawerButtonFallback() {
 
   return (
     <DrawerCartTrigger
+      data-testid="cart-drawer-trigger"
       className={styles.root}
       title={`${formatMessage({
         id: 'my_basket',
