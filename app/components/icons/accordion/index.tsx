@@ -17,9 +17,9 @@ const PREFIX_TO_ICON: ReadonlyArray<readonly [string, IconFn]> = [
   ['expert tip', Sparkles],
   ['featuring', Layers],
   ['how to apply', BookOpen],
-  ['ingredients', FlaskConical],
+  ['active ingredient', FlaskConical],
+  ['ingredient', FlaskConical],
   ['ritual', Timer],
-  ['active ingredients', FlaskConical],
   ['how to use', BookOpen],
   ['precautions of use', Atom],
   ['results', Award],
@@ -83,10 +83,15 @@ export function assignIcons(
     }
   }
 
-  // Pass 2: FAQ titles ending with "?"
+  // Pass 2: FAQ detection. Question-mark titles always get HelpCircle.
+  // Long-statement titles (5+ words, never prefix-matched) also get
+  // HelpCircle since they are FAQ/statement entries, not product-data
+  // accordion titles which are typically 1-4 words.
   for (const [original, normalised] of entries) {
     if (assignments.has(original)) continue;
-    if (normalised.endsWith('?')) {
+    const isQuestion = normalised.endsWith('?');
+    const wordCount = normalised.split(/\s+/).filter(Boolean).length;
+    if (isQuestion || wordCount >= 5) {
       assignments.set(original, <HelpCircle />);
       usedIcons.add(HelpCircle);
     }
