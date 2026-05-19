@@ -9,7 +9,7 @@ import {
 } from '../ui/Accordion';
 import {Text} from '../ui/Text';
 import {RichText} from '../common/RichText';
-import {getAccordionIcon} from '../icons/accordion';
+import {assignIcons} from '../icons/accordion';
 import styles from './ProductAccordion.module.css';
 
 export function ProductAccordion({className}: {className?: string}) {
@@ -39,11 +39,15 @@ export function ProductAccordion({className}: {className?: string}) {
     return null;
   }
 
+  const iconMap = assignIcons(
+    accordions?.map((a) => a?.title?.value) ?? [],
+  );
+
   return (
     <Accordion className={cn(styles.root, className)} type="multiple">
       {accordions?.map((accordion) => {
         const {title, text} = accordion ?? {};
-        const icon = getAccordionIcon(title?.value);
+        const icon = iconMap.get(title?.value ?? '') ?? null;
 
         return (
           <AccordionItem value={accordion?.id!} key={accordion?.id}>
