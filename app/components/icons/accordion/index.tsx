@@ -6,6 +6,7 @@ import {Sparkles} from './Sparkles';
 import {FlaskConical} from './FlaskConical';
 import {Award} from './Award';
 import {BookOpen} from './BookOpen';
+import {HelpCircle} from './HelpCircle';
 
 const PREFIX_TO_ICON: ReadonlyArray<readonly [string, () => ReactNode]> = [
   ['award winning', Award],
@@ -20,6 +21,10 @@ const PREFIX_TO_ICON: ReadonlyArray<readonly [string, () => ReactNode]> = [
   ['precautions of use', Atom],
   ['results', Award],
   ['texture', Layers],
+  ['result', Award],
+  ['usage tips', BookOpen],
+  ['benefits', Award],
+  ['important', Atom],
 ];
 
 const FALLBACK_ICONS: ReadonlyArray<() => ReactNode> = [
@@ -30,6 +35,7 @@ const FALLBACK_ICONS: ReadonlyArray<() => ReactNode> = [
   FlaskConical,
   Award,
   BookOpen,
+  HelpCircle,
 ];
 
 function hashString(input: string): number {
@@ -48,6 +54,8 @@ export function getAccordionIcon(
   for (const [prefix, Icon] of PREFIX_TO_ICON) {
     if (normalised.startsWith(prefix)) return <Icon />;
   }
+  // FAQ-style question titles (end with ?) get the Q&A icon
+  if (normalised.endsWith('?')) return <HelpCircle />;
   const Icon = FALLBACK_ICONS[hashString(normalised) % FALLBACK_ICONS.length];
   return <Icon />;
 }
