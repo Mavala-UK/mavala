@@ -15,6 +15,11 @@ const PREFIX_TO_ICON: ReadonlyArray<readonly [string, () => ReactNode]> = [
   ['how to apply', BookOpen],
   ['ingredients', FlaskConical],
   ['ritual', Timer],
+  ['active ingredients', FlaskConical],
+  ['how to use', BookOpen],
+  ['precautions of use', Atom],
+  ['results', Award],
+  ['texture', Layers],
 ];
 
 const FALLBACK_ICONS: ReadonlyArray<() => ReactNode> = [
