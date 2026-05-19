@@ -38,7 +38,6 @@ const FALLBACK_ICONS: ReadonlyArray<IconFn> = [
   FlaskConical,
   Award,
   BookOpen,
-  HelpCircle,
 ];
 
 function hashString(input: string): number {
