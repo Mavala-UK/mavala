@@ -7,6 +7,7 @@ import {FlaskConical} from './FlaskConical';
 import {Award} from './Award';
 import {BookOpen} from './BookOpen';
 import {HelpCircle} from './HelpCircle';
+import {Molecule} from './Molecule';
 
 /** Icon component type used for Set-based de-dup by function reference. */
 type IconFn = () => ReactNode;
@@ -17,7 +18,7 @@ const PREFIX_TO_ICON: ReadonlyArray<readonly [string, IconFn]> = [
   ['expert tip', Sparkles],
   ['featuring', Layers],
   ['how to apply', BookOpen],
-  ['active ingredient', FlaskConical],
+  ['active ingredient', Molecule],
   ['ingredient', FlaskConical],
   ['ritual', Timer],
   ['how to use', BookOpen],
@@ -38,6 +39,7 @@ const FALLBACK_ICONS: ReadonlyArray<IconFn> = [
   FlaskConical,
   Award,
   BookOpen,
+  Molecule,
 ];
 
 function hashString(input: string): number {
