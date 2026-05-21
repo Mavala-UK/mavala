@@ -12,6 +12,7 @@
     "typecheck": "tsc --noEmit",
     "codegen": "shopify hydrogen codegen & sanity schema extract --path sanity.schema.json && sanity typegen generate",
     "deploy": "wrangler deploy --keep-vars",
+    "preview-url": "./scripts/preview-url.sh",
     "test:e2e": "./node_modules/.bin/playwright test --reporter=list",
     "test:e2e:smoke": "./node_modules/.bin/playwright test e2e/smoke --reporter=list",
     "test:e2e:prod": "PLAYWRIGHT_BASE_URL=https://mavala.co.uk ./node_modules/.bin/playwright test --reporter=list",
