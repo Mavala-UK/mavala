@@ -29,6 +29,7 @@ import {BundleProvider, useBundleContext} from './BundleContext';
 import {BundleComponentItem} from './BundleComponentItem';
 import {BundleFeatures} from './BundleFeatures';
 import {BundleAddToCart} from './BundleAddToCart';
+import {BundleFreeItems} from './BundleFreeItems';
 import {ProductPrice} from '../product/ProductPrice';
 import {Accordion} from '../ui/Accordion';
 import type {ProductItemFragment} from 'storefrontapi.generated';
@@ -92,6 +93,12 @@ export function BundleMain() {
               <BundleFeatures
                 title={product.featuresTitle?.value}
                 features={product.features}
+              />
+
+              <BundleFreeItems
+                items={
+                  ((product as any).freeItems?.references?.nodes as any[]) ?? []
+                }
               />
 
               <BundleComponentsPicker components={components} />

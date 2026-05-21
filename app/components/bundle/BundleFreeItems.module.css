@@ -1,0 +1,53 @@
+.root {
+  border: 2px solid var(--color-accent, #dc2626);
+  border-radius: var(--border-radius);
+  padding: 1.6rem;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  column-gap: 0.6rem;
+  margin-block-end: 1.2rem;
+}
+
+.icon {
+  color: var(--color-accent, #dc2626);
+  display: flex;
+  align-items: center;
+}
+
+.title {
+  color: var(--color-accent, #dc2626);
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  column-gap: 0.8rem;
+  min-inline-size: 0;
+  flex: 1 1 auto;
+  min-width: 12rem;
+}
+
+.thumbnail {
+  width: 4rem;
+  height: 4rem;
+  object-fit: cover;
+  flex-shrink: 0;
+  border-radius: var(--border-radius);
+}
+
+.itemName {
+  min-inline-size: 0;
+  line-height: 1.3;
+}
