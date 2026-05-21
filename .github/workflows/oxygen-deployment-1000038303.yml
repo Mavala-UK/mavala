@@ -37,3 +37,12 @@ jobs:
         run: npx shopify hydrogen deploy
         env:
           SHOPIFY_HYDROGEN_DEPLOYMENT_TOKEN: ${{ secrets.OXYGEN_DEPLOYMENT_TOKEN_1000038303 }}
+
+      - name: Upload Hydrogen deploy log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: h2-deploy-log
+          path: '**/h2_deploy_log.json'
+          if-no-files-found: warn
+          retention-days: 30
