@@ -134,13 +134,6 @@ function BundleComponentItemInner({
                     <span>{pickedVariant.title}</span>
                   </Text>
                 )}
-                {!isActive && !isSelected && (
-                  <Text size="3xs" color="light" className={styles.lockedLabel}>
-                    {index === 0
-                      ? 'Pick a shade above first'
-                      : `Pick a shade for step ${index + 1}`}
-                  </Text>
-                )}
               </span>
             </span>
           </AccordionTrigger>

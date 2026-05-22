@@ -252,6 +252,12 @@ export const PRODUCT_FRAGMENT = `#graphql
               width
               height
             }
+            priceRange {
+              minVariantPrice {
+                amount
+                currencyCode
+              }
+            }
           }
         }
       }
