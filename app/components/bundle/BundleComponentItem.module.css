@@ -61,9 +61,6 @@
   align-items: center;
 }
 
-.lockedLabel {
-  font-style: italic;
-}
 
 .pickerBody {
   padding: 0 2rem 2rem;
