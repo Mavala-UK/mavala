@@ -239,6 +239,23 @@ export const PRODUCT_FRAGMENT = `#graphql
         }
       }
     }
+    freeItems: metafield(namespace: "custom", key: "free_items_in_bundle") {
+      references(first: 10) {
+        nodes {
+          ... on Product {
+            id
+            handle
+            title
+            featuredImage {
+              url
+              altText
+              width
+              height
+            }
+          }
+        }
+      }
+    }
     videoSection: metafield(namespace: "custom", key: "video_section") {
       reference {
         ...on Metaobject{
