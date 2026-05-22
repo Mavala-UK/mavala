@@ -10,7 +10,6 @@
 
 .itemLocked {
   border-color: var(--color-border);
-  opacity: 0.5;
 }
 
 .trigger {
@@ -29,7 +28,6 @@
 
 .triggerLocked {
   cursor: default;
-  color: var(--color-gray-medium);
 }
 
 .triggerInner {
@@ -55,7 +53,6 @@
 }
 
 .lockedText {
-  color: var(--color-gray-medium);
 }
 
 .shadeName {
