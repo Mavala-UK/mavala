@@ -152,6 +152,8 @@ async function loadCriticalData({context, request}: LoaderFunctionArgs) {
     ? (await customerAccount.query(CUSTOMER_DETAILS_QUERY)).data?.customer
     : null;
 
+  const canonicalUrl = request.url.split('?')[0].replace(/\/$/, '');
+
   const seo = {
     title: '404',
     titleTemplate: `%s | ${shop.name}`,
@@ -164,6 +166,10 @@ async function loadCriticalData({context, request}: LoaderFunctionArgs) {
       noFollow: false,
     },
     url: request.url,
+    alternates: [
+      {language: 'en-GB', url: canonicalUrl},
+      {language: 'x-default', url: canonicalUrl},
+    ],
     jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'Organization',
