@@ -210,14 +210,14 @@ export function SummarySections({
                       }}
                     >
                       {isArticleSection && (
-                        <>
+                        <div className={styles.articleSection}>
                           {title && (
                             <Heading size={isDesktop ? 'xl' : 'md'}>
                               {title}
                             </Heading>
                           )}
                           <PortableText value={content!} />
-                        </>
+                        </div>
                       )}
                       {isFaqSection && (
                         <>
