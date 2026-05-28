@@ -209,7 +209,16 @@ export function SummarySections({
                         sectionRefs.current[getAnchorId(id)] = el;
                       }}
                     >
-                      {isArticleSection && <PortableText value={content!} />}
+                      {isArticleSection && (
+                        <>
+                          {title && (
+                            <Heading size={isDesktop ? 'xl' : 'md'}>
+                              {title}
+                            </Heading>
+                          )}
+                          <PortableText value={content!} />
+                        </>
+                      )}
                       {isFaqSection && (
                         <>
                           <Heading size={isDesktop ? 'xl' : 'md'}>

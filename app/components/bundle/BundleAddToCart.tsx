@@ -4,9 +4,7 @@ import {useBundleContext} from './BundleContext';
 import {useCartDrawer} from '../cart/CartDrawer';
 import {Button, ButtonEffect} from '../ui/Button';
 import {ProductPrice} from '../product/ProductPrice';
-import {Text} from '../ui/Text';
 import type {ProductItemFragment} from 'storefrontapi.generated';
-import styles from './BundleAddToCart.module.css';
 
 export function BundleAddToCart({
   components,
@@ -23,14 +21,7 @@ export function BundleAddToCart({
   );
 
   if (!allSelected || !bundleVariant) {
-    return (
-      <Text data-testid="bundle-helper-text" size="sm" className={styles.helper}>
-        <FormattedMessage
-          id="bundle_pick_shade_helper"
-          defaultMessage="Pick a shade for each item to add to cart."
-        />
-      </Text>
-    );
+    return null;
   }
 
   const lines = [

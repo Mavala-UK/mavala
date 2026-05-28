@@ -24,11 +24,14 @@ import {RelatedProducts} from '../product/RelatedProducts';
 import {CompleteYourOrder} from '../ui/CompleteYourOrder';
 import {FaqSection} from '../common/FaqSection';
 import {FeaturedArticles} from '../blog/FeaturedArticles';
-import {BundleProvider} from './BundleContext';
+import {useCallback, useEffect, useMemo, useState} from 'react';
+import {BundleProvider, useBundleContext} from './BundleContext';
 import {BundleComponentItem} from './BundleComponentItem';
 import {BundleFeatures} from './BundleFeatures';
 import {BundleAddToCart} from './BundleAddToCart';
+import {BundleFreeItems} from './BundleFreeItems';
 import {ProductPrice} from '../product/ProductPrice';
+import {Accordion} from '../ui/Accordion';
 import type {ProductItemFragment} from 'storefrontapi.generated';
 import styles from './BundleMain.module.css';
 
@@ -92,14 +95,13 @@ export function BundleMain() {
                 features={product.features}
               />
 
-              <div className={styles.components}>
-                {components.map((component) => (
-                  <BundleComponentItem
-                    key={component.handle}
-                    component={component}
-                  />
-                ))}
-              </div>
+              <BundleFreeItems
+                items={
+                  ((product as any).freeItems?.references?.nodes as any[]) ?? []
+                }
+              />
+
+              <BundleComponentsPicker components={components} />
 
               <BundleAddToCart components={components} />
 
@@ -159,6 +161,72 @@ export function BundleMain() {
         }}
       />
     </>
+  );
+}
+
+function BundleComponentsPicker({
+  components,
+}: {
+  components: ProductItemFragment[];
+}) {
+  const {selectedVariants} = useBundleContext();
+
+  // Active component: first unselected one, or null if all selected
+  const activeHandle = useMemo(() => {
+    for (const c of components) {
+      if (!selectedVariants[c.handle]) return c.handle;
+    }
+    return null;
+  }, [components, selectedVariants]);
+
+  // When the user clicks a previously-selected component to re-edit,
+  // we override the auto-advance and open that specific item. Once
+  // selections change, we reset back to auto-advance mode.
+  const [explicitOpenHandle, setExplicitOpenHandle] = useState<string | null>(
+    null,
+  );
+
+  useEffect(() => {
+    setExplicitOpenHandle(null);
+  }, [selectedVariants]);
+
+  const handleValueChange = useCallback(
+    (value: string) => {
+      if (value && selectedVariants[value]) {
+        // User clicked a selected item, open it for re-editing
+        setExplicitOpenHandle(value);
+      } else {
+        setExplicitOpenHandle(null);
+      }
+    },
+    [selectedVariants],
+  );
+
+  const accordionValue = explicitOpenHandle ?? activeHandle ?? '';
+
+  return (
+    <Accordion
+      type="single"
+      collapsible
+      value={accordionValue}
+      onValueChange={handleValueChange}
+      className={styles.components}
+    >
+      {components.map((component, index) => {
+        const isSelected = !!selectedVariants[component.handle];
+        const isActive = activeHandle === component.handle;
+        return (
+          <BundleComponentItem
+            key={component.handle}
+            component={component}
+            isActive={isActive}
+            isSelected={isSelected}
+            isAnySelected={activeHandle === null}
+            index={index}
+          />
+        );
+      })}
+    </Accordion>
   );
 }
 

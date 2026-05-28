@@ -200,6 +200,20 @@ export type CollectionItemFragment = Pick<
             >;
           }>;
         }>;
+        freeItems?: StorefrontAPI.Maybe<{
+          references?: StorefrontAPI.Maybe<{
+            nodes: Array<
+              Pick<StorefrontAPI.Product, 'id' | 'handle' | 'title'> & {
+                featuredImage?: StorefrontAPI.Maybe<
+                  Pick<
+                    StorefrontAPI.Image,
+                    'id' | 'url' | 'altText' | 'width' | 'height'
+                  >
+                >;
+              }
+            >;
+          }>;
+        }>;
       }
     >;
   };
@@ -1463,6 +1477,20 @@ export type ProductFragment = Pick<
                 >;
               }>;
             }>;
+            freeItems?: StorefrontAPI.Maybe<{
+              references?: StorefrontAPI.Maybe<{
+                nodes: Array<
+                  Pick<StorefrontAPI.Product, 'id' | 'handle' | 'title'> & {
+                    featuredImage?: StorefrontAPI.Maybe<
+                      Pick<
+                        StorefrontAPI.Image,
+                        'id' | 'url' | 'altText' | 'width' | 'height'
+                      >
+                    >;
+                  }
+                >;
+              }>;
+            }>;
           }
         >;
       }>;
@@ -1565,6 +1593,37 @@ export type ProductFragment = Pick<
               >;
             }>;
           }>;
+          freeItems?: StorefrontAPI.Maybe<{
+            references?: StorefrontAPI.Maybe<{
+              nodes: Array<
+                Pick<StorefrontAPI.Product, 'id' | 'handle' | 'title'> & {
+                  featuredImage?: StorefrontAPI.Maybe<
+                    Pick<
+                      StorefrontAPI.Image,
+                      'id' | 'url' | 'altText' | 'width' | 'height'
+                    >
+                  >;
+                }
+              >;
+            }>;
+          }>;
+        }
+      >;
+    }>;
+  }>;
+  freeItems?: StorefrontAPI.Maybe<{
+    references?: StorefrontAPI.Maybe<{
+      nodes: Array<
+        Pick<StorefrontAPI.Product, 'id' | 'handle' | 'title'> & {
+          featuredImage?: StorefrontAPI.Maybe<
+            Pick<StorefrontAPI.Image, 'url' | 'altText' | 'width' | 'height'>
+          >;
+          priceRange: {
+            minVariantPrice: Pick<
+              StorefrontAPI.MoneyV2,
+              'amount' | 'currencyCode'
+            >;
+          };
         }
       >;
     }>;
@@ -1672,6 +1731,20 @@ export type ProductItemFragment = Pick<
         Pick<StorefrontAPI.Metaobject, 'id'> & {
           text?: StorefrontAPI.Maybe<
             Pick<StorefrontAPI.MetaobjectField, 'value'>
+          >;
+        }
+      >;
+    }>;
+  }>;
+  freeItems?: StorefrontAPI.Maybe<{
+    references?: StorefrontAPI.Maybe<{
+      nodes: Array<
+        Pick<StorefrontAPI.Product, 'id' | 'handle' | 'title'> & {
+          featuredImage?: StorefrontAPI.Maybe<
+            Pick<
+              StorefrontAPI.Image,
+              'id' | 'url' | 'altText' | 'width' | 'height'
+            >
           >;
         }
       >;
@@ -1976,6 +2049,20 @@ export type LauncherItemFragment = Pick<
                   >;
                 }>;
               }>;
+              freeItems?: StorefrontAPI.Maybe<{
+                references?: StorefrontAPI.Maybe<{
+                  nodes: Array<
+                    Pick<StorefrontAPI.Product, 'id' | 'handle' | 'title'> & {
+                      featuredImage?: StorefrontAPI.Maybe<
+                        Pick<
+                          StorefrontAPI.Image,
+                          'id' | 'url' | 'altText' | 'width' | 'height'
+                        >
+                      >;
+                    }
+                  >;
+                }>;
+              }>;
             }
           >;
         };
@@ -2035,6 +2122,20 @@ export type LauncherItemFragment = Pick<
               Pick<StorefrontAPI.Metaobject, 'id'> & {
                 text?: StorefrontAPI.Maybe<
                   Pick<StorefrontAPI.MetaobjectField, 'value'>
+                >;
+              }
+            >;
+          }>;
+        }>;
+        freeItems?: StorefrontAPI.Maybe<{
+          references?: StorefrontAPI.Maybe<{
+            nodes: Array<
+              Pick<StorefrontAPI.Product, 'id' | 'handle' | 'title'> & {
+                featuredImage?: StorefrontAPI.Maybe<
+                  Pick<
+                    StorefrontAPI.Image,
+                    'id' | 'url' | 'altText' | 'width' | 'height'
+                  >
                 >;
               }
             >;
@@ -2143,6 +2244,20 @@ export type CollectionMenuFragment = Pick<
                     >;
                   }>;
                 }>;
+                freeItems?: StorefrontAPI.Maybe<{
+                  references?: StorefrontAPI.Maybe<{
+                    nodes: Array<
+                      Pick<StorefrontAPI.Product, 'id' | 'handle' | 'title'> & {
+                        featuredImage?: StorefrontAPI.Maybe<
+                          Pick<
+                            StorefrontAPI.Image,
+                            'id' | 'url' | 'altText' | 'width' | 'height'
+                          >
+                        >;
+                      }
+                    >;
+                  }>;
+                }>;
               }
             >;
           };
@@ -2236,6 +2351,20 @@ export type CollectionMenuFragment = Pick<
                       Pick<StorefrontAPI.Metaobject, 'id'> & {
                         text?: StorefrontAPI.Maybe<
                           Pick<StorefrontAPI.MetaobjectField, 'value'>
+                        >;
+                      }
+                    >;
+                  }>;
+                }>;
+                freeItems?: StorefrontAPI.Maybe<{
+                  references?: StorefrontAPI.Maybe<{
+                    nodes: Array<
+                      Pick<StorefrontAPI.Product, 'id' | 'handle' | 'title'> & {
+                        featuredImage?: StorefrontAPI.Maybe<
+                          Pick<
+                            StorefrontAPI.Image,
+                            'id' | 'url' | 'altText' | 'width' | 'height'
+                          >
                         >;
                       }
                     >;
@@ -2348,6 +2477,23 @@ export type CollectionMenuFragment = Pick<
                           >;
                         }>;
                       }>;
+                      freeItems?: StorefrontAPI.Maybe<{
+                        references?: StorefrontAPI.Maybe<{
+                          nodes: Array<
+                            Pick<
+                              StorefrontAPI.Product,
+                              'id' | 'handle' | 'title'
+                            > & {
+                              featuredImage?: StorefrontAPI.Maybe<
+                                Pick<
+                                  StorefrontAPI.Image,
+                                  'id' | 'url' | 'altText' | 'width' | 'height'
+                                >
+                              >;
+                            }
+                          >;
+                        }>;
+                      }>;
                     }
                   >;
                 };
@@ -2412,6 +2558,20 @@ export type CollectionMenuFragment = Pick<
                       Pick<StorefrontAPI.Metaobject, 'id'> & {
                         text?: StorefrontAPI.Maybe<
                           Pick<StorefrontAPI.MetaobjectField, 'value'>
+                        >;
+                      }
+                    >;
+                  }>;
+                }>;
+                freeItems?: StorefrontAPI.Maybe<{
+                  references?: StorefrontAPI.Maybe<{
+                    nodes: Array<
+                      Pick<StorefrontAPI.Product, 'id' | 'handle' | 'title'> & {
+                        featuredImage?: StorefrontAPI.Maybe<
+                          Pick<
+                            StorefrontAPI.Image,
+                            'id' | 'url' | 'altText' | 'width' | 'height'
+                          >
                         >;
                       }
                     >;
@@ -2626,6 +2786,27 @@ export type HeaderQuery = {
                               >;
                             }>;
                           }>;
+                          freeItems?: StorefrontAPI.Maybe<{
+                            references?: StorefrontAPI.Maybe<{
+                              nodes: Array<
+                                Pick<
+                                  StorefrontAPI.Product,
+                                  'id' | 'handle' | 'title'
+                                > & {
+                                  featuredImage?: StorefrontAPI.Maybe<
+                                    Pick<
+                                      StorefrontAPI.Image,
+                                      | 'id'
+                                      | 'url'
+                                      | 'altText'
+                                      | 'width'
+                                      | 'height'
+                                    >
+                                  >;
+                                }
+                              >;
+                            }>;
+                          }>;
                         }
                       >;
                     };
@@ -2732,6 +2913,27 @@ export type HeaderQuery = {
                                 Pick<StorefrontAPI.Metaobject, 'id'> & {
                                   text?: StorefrontAPI.Maybe<
                                     Pick<StorefrontAPI.MetaobjectField, 'value'>
+                                  >;
+                                }
+                              >;
+                            }>;
+                          }>;
+                          freeItems?: StorefrontAPI.Maybe<{
+                            references?: StorefrontAPI.Maybe<{
+                              nodes: Array<
+                                Pick<
+                                  StorefrontAPI.Product,
+                                  'id' | 'handle' | 'title'
+                                > & {
+                                  featuredImage?: StorefrontAPI.Maybe<
+                                    Pick<
+                                      StorefrontAPI.Image,
+                                      | 'id'
+                                      | 'url'
+                                      | 'altText'
+                                      | 'width'
+                                      | 'height'
+                                    >
                                   >;
                                 }
                               >;
@@ -2873,6 +3075,27 @@ export type HeaderQuery = {
                                     >;
                                   }>;
                                 }>;
+                                freeItems?: StorefrontAPI.Maybe<{
+                                  references?: StorefrontAPI.Maybe<{
+                                    nodes: Array<
+                                      Pick<
+                                        StorefrontAPI.Product,
+                                        'id' | 'handle' | 'title'
+                                      > & {
+                                        featuredImage?: StorefrontAPI.Maybe<
+                                          Pick<
+                                            StorefrontAPI.Image,
+                                            | 'id'
+                                            | 'url'
+                                            | 'altText'
+                                            | 'width'
+                                            | 'height'
+                                          >
+                                        >;
+                                      }
+                                    >;
+                                  }>;
+                                }>;
                               }
                             >;
                           };
@@ -2950,6 +3173,27 @@ export type HeaderQuery = {
                                 Pick<StorefrontAPI.Metaobject, 'id'> & {
                                   text?: StorefrontAPI.Maybe<
                                     Pick<StorefrontAPI.MetaobjectField, 'value'>
+                                  >;
+                                }
+                              >;
+                            }>;
+                          }>;
+                          freeItems?: StorefrontAPI.Maybe<{
+                            references?: StorefrontAPI.Maybe<{
+                              nodes: Array<
+                                Pick<
+                                  StorefrontAPI.Product,
+                                  'id' | 'handle' | 'title'
+                                > & {
+                                  featuredImage?: StorefrontAPI.Maybe<
+                                    Pick<
+                                      StorefrontAPI.Image,
+                                      | 'id'
+                                      | 'url'
+                                      | 'altText'
+                                      | 'width'
+                                      | 'height'
+                                    >
                                   >;
                                 }
                               >;
@@ -3061,6 +3305,23 @@ export type HeaderQuery = {
                         Pick<StorefrontAPI.Metaobject, 'id'> & {
                           text?: StorefrontAPI.Maybe<
                             Pick<StorefrontAPI.MetaobjectField, 'value'>
+                          >;
+                        }
+                      >;
+                    }>;
+                  }>;
+                  freeItems?: StorefrontAPI.Maybe<{
+                    references?: StorefrontAPI.Maybe<{
+                      nodes: Array<
+                        Pick<
+                          StorefrontAPI.Product,
+                          'id' | 'handle' | 'title'
+                        > & {
+                          featuredImage?: StorefrontAPI.Maybe<
+                            Pick<
+                              StorefrontAPI.Image,
+                              'id' | 'url' | 'altText' | 'width' | 'height'
+                            >
                           >;
                         }
                       >;
@@ -3249,6 +3510,20 @@ export type GlobalQuery = {
                 >;
               }>;
             }>;
+            freeItems?: StorefrontAPI.Maybe<{
+              references?: StorefrontAPI.Maybe<{
+                nodes: Array<
+                  Pick<StorefrontAPI.Product, 'id' | 'handle' | 'title'> & {
+                    featuredImage?: StorefrontAPI.Maybe<
+                      Pick<
+                        StorefrontAPI.Image,
+                        'id' | 'url' | 'altText' | 'width' | 'height'
+                      >
+                    >;
+                  }
+                >;
+              }>;
+            }>;
           }
         >;
       }>;
@@ -3309,6 +3584,20 @@ export type GlobalQuery = {
                   Pick<StorefrontAPI.Metaobject, 'id'> & {
                     text?: StorefrontAPI.Maybe<
                       Pick<StorefrontAPI.MetaobjectField, 'value'>
+                    >;
+                  }
+                >;
+              }>;
+            }>;
+            freeItems?: StorefrontAPI.Maybe<{
+              references?: StorefrontAPI.Maybe<{
+                nodes: Array<
+                  Pick<StorefrontAPI.Product, 'id' | 'handle' | 'title'> & {
+                    featuredImage?: StorefrontAPI.Maybe<
+                      Pick<
+                        StorefrontAPI.Image,
+                        'id' | 'url' | 'altText' | 'width' | 'height'
+                      >
                     >;
                   }
                 >;
@@ -3413,6 +3702,20 @@ export type CollectionItemResourceQuery = {
                 >;
               }>;
             }>;
+            freeItems?: StorefrontAPI.Maybe<{
+              references?: StorefrontAPI.Maybe<{
+                nodes: Array<
+                  Pick<StorefrontAPI.Product, 'id' | 'handle' | 'title'> & {
+                    featuredImage?: StorefrontAPI.Maybe<
+                      Pick<
+                        StorefrontAPI.Image,
+                        'id' | 'url' | 'altText' | 'width' | 'height'
+                      >
+                    >;
+                  }
+                >;
+              }>;
+            }>;
           }
         >;
       };
@@ -3476,6 +3779,20 @@ export type ProductItemResourceQuery = {
             Pick<StorefrontAPI.Metaobject, 'id'> & {
               text?: StorefrontAPI.Maybe<
                 Pick<StorefrontAPI.MetaobjectField, 'value'>
+              >;
+            }
+          >;
+        }>;
+      }>;
+      freeItems?: StorefrontAPI.Maybe<{
+        references?: StorefrontAPI.Maybe<{
+          nodes: Array<
+            Pick<StorefrontAPI.Product, 'id' | 'handle' | 'title'> & {
+              featuredImage?: StorefrontAPI.Maybe<
+                Pick<
+                  StorefrontAPI.Image,
+                  'id' | 'url' | 'altText' | 'width' | 'height'
+                >
               >;
             }
           >;
@@ -3545,6 +3862,20 @@ export type ProductRecommendationsQuery = {
               Pick<StorefrontAPI.Metaobject, 'id'> & {
                 text?: StorefrontAPI.Maybe<
                   Pick<StorefrontAPI.MetaobjectField, 'value'>
+                >;
+              }
+            >;
+          }>;
+        }>;
+        freeItems?: StorefrontAPI.Maybe<{
+          references?: StorefrontAPI.Maybe<{
+            nodes: Array<
+              Pick<StorefrontAPI.Product, 'id' | 'handle' | 'title'> & {
+                featuredImage?: StorefrontAPI.Maybe<
+                  Pick<
+                    StorefrontAPI.Image,
+                    'id' | 'url' | 'altText' | 'width' | 'height'
+                  >
                 >;
               }
             >;
@@ -4540,6 +4871,20 @@ export type ProductResourceQuery = {
                     >;
                   }>;
                 }>;
+                freeItems?: StorefrontAPI.Maybe<{
+                  references?: StorefrontAPI.Maybe<{
+                    nodes: Array<
+                      Pick<StorefrontAPI.Product, 'id' | 'handle' | 'title'> & {
+                        featuredImage?: StorefrontAPI.Maybe<
+                          Pick<
+                            StorefrontAPI.Image,
+                            'id' | 'url' | 'altText' | 'width' | 'height'
+                          >
+                        >;
+                      }
+                    >;
+                  }>;
+                }>;
               }
             >;
           }>;
@@ -4647,6 +4992,40 @@ export type ProductResourceQuery = {
                   >;
                 }>;
               }>;
+              freeItems?: StorefrontAPI.Maybe<{
+                references?: StorefrontAPI.Maybe<{
+                  nodes: Array<
+                    Pick<StorefrontAPI.Product, 'id' | 'handle' | 'title'> & {
+                      featuredImage?: StorefrontAPI.Maybe<
+                        Pick<
+                          StorefrontAPI.Image,
+                          'id' | 'url' | 'altText' | 'width' | 'height'
+                        >
+                      >;
+                    }
+                  >;
+                }>;
+              }>;
+            }
+          >;
+        }>;
+      }>;
+      freeItems?: StorefrontAPI.Maybe<{
+        references?: StorefrontAPI.Maybe<{
+          nodes: Array<
+            Pick<StorefrontAPI.Product, 'id' | 'handle' | 'title'> & {
+              featuredImage?: StorefrontAPI.Maybe<
+                Pick<
+                  StorefrontAPI.Image,
+                  'url' | 'altText' | 'width' | 'height'
+                >
+              >;
+              priceRange: {
+                minVariantPrice: Pick<
+                  StorefrontAPI.MoneyV2,
+                  'amount' | 'currencyCode'
+                >;
+              };
             }
           >;
         }>;
@@ -4777,6 +5156,20 @@ export type CollectionQuery = {
                   Pick<StorefrontAPI.Metaobject, 'id'> & {
                     text?: StorefrontAPI.Maybe<
                       Pick<StorefrontAPI.MetaobjectField, 'value'>
+                    >;
+                  }
+                >;
+              }>;
+            }>;
+            freeItems?: StorefrontAPI.Maybe<{
+              references?: StorefrontAPI.Maybe<{
+                nodes: Array<
+                  Pick<StorefrontAPI.Product, 'id' | 'handle' | 'title'> & {
+                    featuredImage?: StorefrontAPI.Maybe<
+                      Pick<
+                        StorefrontAPI.Image,
+                        'id' | 'url' | 'altText' | 'width' | 'height'
+                      >
                     >;
                   }
                 >;
@@ -5901,6 +6294,20 @@ export type ProductQuery = {
                     >;
                   }>;
                 }>;
+                freeItems?: StorefrontAPI.Maybe<{
+                  references?: StorefrontAPI.Maybe<{
+                    nodes: Array<
+                      Pick<StorefrontAPI.Product, 'id' | 'handle' | 'title'> & {
+                        featuredImage?: StorefrontAPI.Maybe<
+                          Pick<
+                            StorefrontAPI.Image,
+                            'id' | 'url' | 'altText' | 'width' | 'height'
+                          >
+                        >;
+                      }
+                    >;
+                  }>;
+                }>;
               }
             >;
           }>;
@@ -6008,6 +6415,40 @@ export type ProductQuery = {
                   >;
                 }>;
               }>;
+              freeItems?: StorefrontAPI.Maybe<{
+                references?: StorefrontAPI.Maybe<{
+                  nodes: Array<
+                    Pick<StorefrontAPI.Product, 'id' | 'handle' | 'title'> & {
+                      featuredImage?: StorefrontAPI.Maybe<
+                        Pick<
+                          StorefrontAPI.Image,
+                          'id' | 'url' | 'altText' | 'width' | 'height'
+                        >
+                      >;
+                    }
+                  >;
+                }>;
+              }>;
+            }
+          >;
+        }>;
+      }>;
+      freeItems?: StorefrontAPI.Maybe<{
+        references?: StorefrontAPI.Maybe<{
+          nodes: Array<
+            Pick<StorefrontAPI.Product, 'id' | 'handle' | 'title'> & {
+              featuredImage?: StorefrontAPI.Maybe<
+                Pick<
+                  StorefrontAPI.Image,
+                  'url' | 'altText' | 'width' | 'height'
+                >
+              >;
+              priceRange: {
+                minVariantPrice: Pick<
+                  StorefrontAPI.MoneyV2,
+                  'amount' | 'currencyCode'
+                >;
+              };
             }
           >;
         }>;
@@ -6120,6 +6561,20 @@ export type RegularSearchQuery = {
             >;
           }>;
         }>;
+        freeItems?: StorefrontAPI.Maybe<{
+          references?: StorefrontAPI.Maybe<{
+            nodes: Array<
+              Pick<StorefrontAPI.Product, 'id' | 'handle' | 'title'> & {
+                featuredImage?: StorefrontAPI.Maybe<
+                  Pick<
+                    StorefrontAPI.Image,
+                    'id' | 'url' | 'altText' | 'width' | 'height'
+                  >
+                >;
+              }
+            >;
+          }>;
+        }>;
       }
     >;
     pageInfo: Pick<
@@ -6155,7 +6610,7 @@ interface GeneratedQueryTypes {
     return: FooterQuery;
     variables: FooterQueryVariables;
   };
-  '#graphql\n  fragment LauncherItem on Metaobject {\n    id\n    type\n    handle\n    collection: field(key: "collection") {\n      reference {\n        ... CollectionItem\n      }\n    }\n    product: field(key: "product") {\n      reference {\n        ...ProductItem\n      }\n    }\n  }\n  fragment CollectionMenu on Collection {\n      id\n      handle\n      title\n      highlightCollection: metafield(namespace: "custom", key: "highlight_collection") {\n        value\n      }\n      relatedCollections: metafield(namespace: "custom", key: "related_collections") {\n        references(first: 20) {\n          nodes {\n            ... CollectionItem\n          }\n        }\n      }\n      concernsCollections: metafield(namespace: "custom", key: "concerns") {\n        references(first: 20) {\n          nodes {\n            ... CollectionItem\n          }\n        }\n      }\n      highlightItems: metafield(namespace: "custom", key: "highlight_items"){\n        references(first: 2) {\n          nodes {\n            ... LauncherItem\n          }\n        }\n      }\n  }\n  query Header(\n    $language: LanguageCode\n    $country: CountryCode\n    $mainMenuHandle: String!\n    $secondaryMenuHandle: String!\n    $secondaryMenuMobileHandle: String!\n    $menuHandle: MetaobjectHandleInput!\n    $first: Int,\n    $priceMin: Float = 0.1\n  ) @inContext(language: $language, country: $country) {\n    mainMenu : menu(handle: $mainMenuHandle) {\n      ...Menu\n    }\n    secondaryMenu: menu(handle: $secondaryMenuHandle) {\n      ...Menu\n    }\n    secondaryMenuMobile: menu(handle: $secondaryMenuMobileHandle) {\n      ...Menu\n    }\n    menu: metaobject(handle: $menuHandle) {\n      title: field(key: "title") {\n        value\n      }\n      labelCategories: field(key: "label_categories") {\n        value\n      }\n      categories: field(key: "categories") {\n        references(first: 10) {\n          nodes {\n            ... CollectionMenu\n          }\n        }\n      }\n      labelSeeAll: field(key: "label_see_all") {\n        value\n      }\n      labelConcerns: field(key: "label_concerns") {\n        value\n      }\n      labelLaunchers: field(key: "label_launchers") {\n        value\n      }\n      collectionsHighlight: field(key: "collections_highlight") {\n        references(first: 2) {\n          nodes {\n            ... CollectionItem\n          }\n        }\n      }\n    }\n  }\n  #graphql\n  fragment MenuItem on MenuItem {\n    id\n    resourceId\n    tags\n    title\n    type\n    url\n  }\n  fragment ChildMenuItem on MenuItem {\n    ...MenuItem\n  }\n  fragment SubMenuItem on MenuItem {\n    ...MenuItem\n    items {\n      ...ChildMenuItem\n    }\n  }\n  fragment ParentMenuItem on MenuItem {\n    ...MenuItem\n    items {\n      ...SubMenuItem\n    }\n  }\n  fragment Menu on Menu {\n    id\n    items {\n      ...ParentMenuItem\n    }\n  }\n\n  #graphql\n  fragment ImageCollectionItem on Image {\n    id\n    url\n    altText\n    width\n    height\n  }\n  fragment VideoSource on VideoSource {\n    url\n    mimeType\n    width\n    format\n    height\n  }\n  fragment CollectionItem on Collection {\n    id\n    handle\n    title\n    image {\n      ...ImageCollectionItem\n    }\n    posterVideo: metafield(namespace: "custom", key: "poster_video") {\n      reference{\n        ... on Video {\n          alt\n          previewImage{\n            ...ImageCollectionItem\n          }\n          sources {\n            ...VideoSource\n          }\n        }\n      }\n    }\n    products(first: $first, filters: {price: {min: $priceMin}}) {\n      nodes {\n        ...ProductItem\n      }\n    }\n  }\n  #graphql\n  fragment Image on Image {\n    id\n    url\n    altText\n    width\n    height\n  }\n  fragment ProductVariantItem on ProductVariant {\n    id\n    title\n    image {\n      ...Image\n    }\n    price {\n      amount\n      currencyCode\n    }\n    compareAtPrice {\n      amount\n      currencyCode\n    }\n    availableForSale\n    selectedOptions {\n      name\n      value\n    }\n    tint: metafield(namespace: "custom", key: "tint") {\n      reference {\n        ...on Metaobject{\n          color: field(key: "color") {\n            value\n          }\n        }\n      }\n    }\n  }\n  fragment ProductItem on Product {\n    id\n    handle\n    title\n    vendor\n    productType\n    featuredImage {\n      ...Image\n    }\n    variants(first: 250) {\n      nodes {\n        ...ProductVariantItem\n      }\n    }\n    defaultVariant: metafield(namespace: "custom", key: "default_variant") {\n      reference {\n        ... on ProductVariant {\n          id\n        }\n      }\n    }\n    capacity: metafield(namespace: "custom", key: "capacity") {\n      value\n    }\n    badges: metafield(namespace: "custom", key: "badges") {\n      references(first: 2) {\n        nodes {\n          ...on Metaobject{\n            id\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n  }\n\n\n': {
+  '#graphql\n  fragment LauncherItem on Metaobject {\n    id\n    type\n    handle\n    collection: field(key: "collection") {\n      reference {\n        ... CollectionItem\n      }\n    }\n    product: field(key: "product") {\n      reference {\n        ...ProductItem\n      }\n    }\n  }\n  fragment CollectionMenu on Collection {\n      id\n      handle\n      title\n      highlightCollection: metafield(namespace: "custom", key: "highlight_collection") {\n        value\n      }\n      relatedCollections: metafield(namespace: "custom", key: "related_collections") {\n        references(first: 20) {\n          nodes {\n            ... CollectionItem\n          }\n        }\n      }\n      concernsCollections: metafield(namespace: "custom", key: "concerns") {\n        references(first: 20) {\n          nodes {\n            ... CollectionItem\n          }\n        }\n      }\n      highlightItems: metafield(namespace: "custom", key: "highlight_items"){\n        references(first: 2) {\n          nodes {\n            ... LauncherItem\n          }\n        }\n      }\n  }\n  query Header(\n    $language: LanguageCode\n    $country: CountryCode\n    $mainMenuHandle: String!\n    $secondaryMenuHandle: String!\n    $secondaryMenuMobileHandle: String!\n    $menuHandle: MetaobjectHandleInput!\n    $first: Int,\n    $priceMin: Float = 0.1\n  ) @inContext(language: $language, country: $country) {\n    mainMenu : menu(handle: $mainMenuHandle) {\n      ...Menu\n    }\n    secondaryMenu: menu(handle: $secondaryMenuHandle) {\n      ...Menu\n    }\n    secondaryMenuMobile: menu(handle: $secondaryMenuMobileHandle) {\n      ...Menu\n    }\n    menu: metaobject(handle: $menuHandle) {\n      title: field(key: "title") {\n        value\n      }\n      labelCategories: field(key: "label_categories") {\n        value\n      }\n      categories: field(key: "categories") {\n        references(first: 10) {\n          nodes {\n            ... CollectionMenu\n          }\n        }\n      }\n      labelSeeAll: field(key: "label_see_all") {\n        value\n      }\n      labelConcerns: field(key: "label_concerns") {\n        value\n      }\n      labelLaunchers: field(key: "label_launchers") {\n        value\n      }\n      collectionsHighlight: field(key: "collections_highlight") {\n        references(first: 2) {\n          nodes {\n            ... CollectionItem\n          }\n        }\n      }\n    }\n  }\n  #graphql\n  fragment MenuItem on MenuItem {\n    id\n    resourceId\n    tags\n    title\n    type\n    url\n  }\n  fragment ChildMenuItem on MenuItem {\n    ...MenuItem\n  }\n  fragment SubMenuItem on MenuItem {\n    ...MenuItem\n    items {\n      ...ChildMenuItem\n    }\n  }\n  fragment ParentMenuItem on MenuItem {\n    ...MenuItem\n    items {\n      ...SubMenuItem\n    }\n  }\n  fragment Menu on Menu {\n    id\n    items {\n      ...ParentMenuItem\n    }\n  }\n\n  #graphql\n  fragment ImageCollectionItem on Image {\n    id\n    url\n    altText\n    width\n    height\n  }\n  fragment VideoSource on VideoSource {\n    url\n    mimeType\n    width\n    format\n    height\n  }\n  fragment CollectionItem on Collection {\n    id\n    handle\n    title\n    image {\n      ...ImageCollectionItem\n    }\n    posterVideo: metafield(namespace: "custom", key: "poster_video") {\n      reference{\n        ... on Video {\n          alt\n          previewImage{\n            ...ImageCollectionItem\n          }\n          sources {\n            ...VideoSource\n          }\n        }\n      }\n    }\n    products(first: $first, filters: {price: {min: $priceMin}}) {\n      nodes {\n        ...ProductItem\n      }\n    }\n  }\n  #graphql\n  fragment Image on Image {\n    id\n    url\n    altText\n    width\n    height\n  }\n  fragment ProductVariantItem on ProductVariant {\n    id\n    title\n    image {\n      ...Image\n    }\n    price {\n      amount\n      currencyCode\n    }\n    compareAtPrice {\n      amount\n      currencyCode\n    }\n    availableForSale\n    selectedOptions {\n      name\n      value\n    }\n    tint: metafield(namespace: "custom", key: "tint") {\n      reference {\n        ...on Metaobject{\n          color: field(key: "color") {\n            value\n          }\n        }\n      }\n    }\n  }\n  fragment ProductItem on Product {\n    id\n    handle\n    title\n    vendor\n    productType\n    featuredImage {\n      ...Image\n    }\n    variants(first: 250) {\n      nodes {\n        ...ProductVariantItem\n      }\n    }\n    defaultVariant: metafield(namespace: "custom", key: "default_variant") {\n      reference {\n        ... on ProductVariant {\n          id\n        }\n      }\n    }\n    capacity: metafield(namespace: "custom", key: "capacity") {\n      value\n    }\n    badges: metafield(namespace: "custom", key: "badges") {\n      references(first: 2) {\n        nodes {\n          ...on Metaobject{\n            id\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n    freeItems: metafield(namespace: "custom", key: "free_items_in_bundle") {\n      references(first: 10) {\n        nodes {\n          ...on Product {\n            id\n            handle\n            title\n            featuredImage {\n              ...Image\n            }\n          }\n        }\n      }\n    }\n  }\n\n\n': {
     return: HeaderQuery;
     variables: HeaderQueryVariables;
   };
@@ -6163,23 +6618,23 @@ interface GeneratedQueryTypes {
     return: ShopQuery;
     variables: ShopQueryVariables;
   };
-  '#graphql\n  query Global(\n    $language: LanguageCode\n    $country: CountryCode\n    $handle: MetaobjectHandleInput!\n  ) @inContext(language: $language, country: $country) {\n    global: metaobject(handle: $handle) {\n      announcements: field(key: "announcements") {\n        references(first: 10) {\n          nodes {\n            ... on Metaobject {\n              id\n              title: field(key: "title") {\n                value\n              }\n              link: field(key: "link") {\n                value\n              }\n            }\n          }\n        }\n      }\n      ctas: field(key: "ctas") {\n        references(first: 2) {\n          nodes {\n            ... on Metaobject {\n              id\n              picto: field(key: "picto") {\n                reference {\n                  ... on MediaImage {\n                    image {\n                      id\n                      url\n                      altText\n                      width\n                      height\n                    }\n                  }\n                }\n              }\n              title: field(key: "title") {\n                value\n              }\n              text: field(key: "text") {\n                value\n              }\n              link: field(key: "link") {\n                reference {\n                  ... on Metaobject {\n                    text: field(key: "text") {\n                        value\n                    }\n                    url: field(key: "url") {\n                      value\n                    }\n                  }\n                }\n              }\n            }\n          }\n        }\n      }\n      reassurances: field(key: "reassurances") {\n        references(first: 3) {\n          nodes {\n            ... on Metaobject {\n              id\n              title: field(key: "title") {\n                value\n              }\n              text: field(key: "text") {\n                value\n              }\n            }\n          }\n        }\n      }\n      newsletter: field(key: "newsletter") {\n        reference {\n          ... on Metaobject {\n            title: field(key: "title") {\n              value\n            }\n            subtitle: field(key: "subtitle") {\n              value\n            }\n          }\n        }\n      }\n      relatedProductsEmptyCard: field(key: "related_products_empty_card") {\n        references(first: 10) {\n          nodes{\n            ...ProductItem\n          }\n        }\n      }\n      relatedProductsAccount: field(key: "related_products_account") {\n        references(first: 10) {\n          nodes{\n            ...ProductItem\n          }\n        }\n      }\n    }\n  }\n  #graphql\n  fragment Image on Image {\n    id\n    url\n    altText\n    width\n    height\n  }\n  fragment ProductVariantItem on ProductVariant {\n    id\n    title\n    image {\n      ...Image\n    }\n    price {\n      amount\n      currencyCode\n    }\n    compareAtPrice {\n      amount\n      currencyCode\n    }\n    availableForSale\n    selectedOptions {\n      name\n      value\n    }\n    tint: metafield(namespace: "custom", key: "tint") {\n      reference {\n        ...on Metaobject{\n          color: field(key: "color") {\n            value\n          }\n        }\n      }\n    }\n  }\n  fragment ProductItem on Product {\n    id\n    handle\n    title\n    vendor\n    productType\n    featuredImage {\n      ...Image\n    }\n    variants(first: 250) {\n      nodes {\n        ...ProductVariantItem\n      }\n    }\n    defaultVariant: metafield(namespace: "custom", key: "default_variant") {\n      reference {\n        ... on ProductVariant {\n          id\n        }\n      }\n    }\n    capacity: metafield(namespace: "custom", key: "capacity") {\n      value\n    }\n    badges: metafield(namespace: "custom", key: "badges") {\n      references(first: 2) {\n        nodes {\n          ...on Metaobject{\n            id\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n  }\n\n': {
+  '#graphql\n  query Global(\n    $language: LanguageCode\n    $country: CountryCode\n    $handle: MetaobjectHandleInput!\n  ) @inContext(language: $language, country: $country) {\n    global: metaobject(handle: $handle) {\n      announcements: field(key: "announcements") {\n        references(first: 10) {\n          nodes {\n            ... on Metaobject {\n              id\n              title: field(key: "title") {\n                value\n              }\n              link: field(key: "link") {\n                value\n              }\n            }\n          }\n        }\n      }\n      ctas: field(key: "ctas") {\n        references(first: 2) {\n          nodes {\n            ... on Metaobject {\n              id\n              picto: field(key: "picto") {\n                reference {\n                  ... on MediaImage {\n                    image {\n                      id\n                      url\n                      altText\n                      width\n                      height\n                    }\n                  }\n                }\n              }\n              title: field(key: "title") {\n                value\n              }\n              text: field(key: "text") {\n                value\n              }\n              link: field(key: "link") {\n                reference {\n                  ... on Metaobject {\n                    text: field(key: "text") {\n                        value\n                    }\n                    url: field(key: "url") {\n                      value\n                    }\n                  }\n                }\n              }\n            }\n          }\n        }\n      }\n      reassurances: field(key: "reassurances") {\n        references(first: 3) {\n          nodes {\n            ... on Metaobject {\n              id\n              title: field(key: "title") {\n                value\n              }\n              text: field(key: "text") {\n                value\n              }\n            }\n          }\n        }\n      }\n      newsletter: field(key: "newsletter") {\n        reference {\n          ... on Metaobject {\n            title: field(key: "title") {\n              value\n            }\n            subtitle: field(key: "subtitle") {\n              value\n            }\n          }\n        }\n      }\n      relatedProductsEmptyCard: field(key: "related_products_empty_card") {\n        references(first: 10) {\n          nodes{\n            ...ProductItem\n          }\n        }\n      }\n      relatedProductsAccount: field(key: "related_products_account") {\n        references(first: 10) {\n          nodes{\n            ...ProductItem\n          }\n        }\n      }\n    }\n  }\n  #graphql\n  fragment Image on Image {\n    id\n    url\n    altText\n    width\n    height\n  }\n  fragment ProductVariantItem on ProductVariant {\n    id\n    title\n    image {\n      ...Image\n    }\n    price {\n      amount\n      currencyCode\n    }\n    compareAtPrice {\n      amount\n      currencyCode\n    }\n    availableForSale\n    selectedOptions {\n      name\n      value\n    }\n    tint: metafield(namespace: "custom", key: "tint") {\n      reference {\n        ...on Metaobject{\n          color: field(key: "color") {\n            value\n          }\n        }\n      }\n    }\n  }\n  fragment ProductItem on Product {\n    id\n    handle\n    title\n    vendor\n    productType\n    featuredImage {\n      ...Image\n    }\n    variants(first: 250) {\n      nodes {\n        ...ProductVariantItem\n      }\n    }\n    defaultVariant: metafield(namespace: "custom", key: "default_variant") {\n      reference {\n        ... on ProductVariant {\n          id\n        }\n      }\n    }\n    capacity: metafield(namespace: "custom", key: "capacity") {\n      value\n    }\n    badges: metafield(namespace: "custom", key: "badges") {\n      references(first: 2) {\n        nodes {\n          ...on Metaobject{\n            id\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n    freeItems: metafield(namespace: "custom", key: "free_items_in_bundle") {\n      references(first: 10) {\n        nodes {\n          ...on Product {\n            id\n            handle\n            title\n            featuredImage {\n              ...Image\n            }\n          }\n        }\n      }\n    }\n  }\n\n': {
     return: GlobalQuery;
     variables: GlobalQueryVariables;
   };
-  '#graphql\n  query CollectionItemResource(\n    $country: CountryCode\n    $handle: String!\n    $language: LanguageCode\n    $first: Int,\n    $priceMin: Float\n  ) @inContext(country: $country, language: $language) {\n    collection(handle: $handle) {\n      ...CollectionItem\n    }\n  }\n  #graphql\n  fragment ImageCollectionItem on Image {\n    id\n    url\n    altText\n    width\n    height\n  }\n  fragment VideoSource on VideoSource {\n    url\n    mimeType\n    width\n    format\n    height\n  }\n  fragment CollectionItem on Collection {\n    id\n    handle\n    title\n    image {\n      ...ImageCollectionItem\n    }\n    posterVideo: metafield(namespace: "custom", key: "poster_video") {\n      reference{\n        ... on Video {\n          alt\n          previewImage{\n            ...ImageCollectionItem\n          }\n          sources {\n            ...VideoSource\n          }\n        }\n      }\n    }\n    products(first: $first, filters: {price: {min: $priceMin}}) {\n      nodes {\n        ...ProductItem\n      }\n    }\n  }\n  #graphql\n  fragment Image on Image {\n    id\n    url\n    altText\n    width\n    height\n  }\n  fragment ProductVariantItem on ProductVariant {\n    id\n    title\n    image {\n      ...Image\n    }\n    price {\n      amount\n      currencyCode\n    }\n    compareAtPrice {\n      amount\n      currencyCode\n    }\n    availableForSale\n    selectedOptions {\n      name\n      value\n    }\n    tint: metafield(namespace: "custom", key: "tint") {\n      reference {\n        ...on Metaobject{\n          color: field(key: "color") {\n            value\n          }\n        }\n      }\n    }\n  }\n  fragment ProductItem on Product {\n    id\n    handle\n    title\n    vendor\n    productType\n    featuredImage {\n      ...Image\n    }\n    variants(first: 250) {\n      nodes {\n        ...ProductVariantItem\n      }\n    }\n    defaultVariant: metafield(namespace: "custom", key: "default_variant") {\n      reference {\n        ... on ProductVariant {\n          id\n        }\n      }\n    }\n    capacity: metafield(namespace: "custom", key: "capacity") {\n      value\n    }\n    badges: metafield(namespace: "custom", key: "badges") {\n      references(first: 2) {\n        nodes {\n          ...on Metaobject{\n            id\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n  }\n\n\n': {
+  '#graphql\n  query CollectionItemResource(\n    $country: CountryCode\n    $handle: String!\n    $language: LanguageCode\n    $first: Int,\n    $priceMin: Float\n  ) @inContext(country: $country, language: $language) {\n    collection(handle: $handle) {\n      ...CollectionItem\n    }\n  }\n  #graphql\n  fragment ImageCollectionItem on Image {\n    id\n    url\n    altText\n    width\n    height\n  }\n  fragment VideoSource on VideoSource {\n    url\n    mimeType\n    width\n    format\n    height\n  }\n  fragment CollectionItem on Collection {\n    id\n    handle\n    title\n    image {\n      ...ImageCollectionItem\n    }\n    posterVideo: metafield(namespace: "custom", key: "poster_video") {\n      reference{\n        ... on Video {\n          alt\n          previewImage{\n            ...ImageCollectionItem\n          }\n          sources {\n            ...VideoSource\n          }\n        }\n      }\n    }\n    products(first: $first, filters: {price: {min: $priceMin}}) {\n      nodes {\n        ...ProductItem\n      }\n    }\n  }\n  #graphql\n  fragment Image on Image {\n    id\n    url\n    altText\n    width\n    height\n  }\n  fragment ProductVariantItem on ProductVariant {\n    id\n    title\n    image {\n      ...Image\n    }\n    price {\n      amount\n      currencyCode\n    }\n    compareAtPrice {\n      amount\n      currencyCode\n    }\n    availableForSale\n    selectedOptions {\n      name\n      value\n    }\n    tint: metafield(namespace: "custom", key: "tint") {\n      reference {\n        ...on Metaobject{\n          color: field(key: "color") {\n            value\n          }\n        }\n      }\n    }\n  }\n  fragment ProductItem on Product {\n    id\n    handle\n    title\n    vendor\n    productType\n    featuredImage {\n      ...Image\n    }\n    variants(first: 250) {\n      nodes {\n        ...ProductVariantItem\n      }\n    }\n    defaultVariant: metafield(namespace: "custom", key: "default_variant") {\n      reference {\n        ... on ProductVariant {\n          id\n        }\n      }\n    }\n    capacity: metafield(namespace: "custom", key: "capacity") {\n      value\n    }\n    badges: metafield(namespace: "custom", key: "badges") {\n      references(first: 2) {\n        nodes {\n          ...on Metaobject{\n            id\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n    freeItems: metafield(namespace: "custom", key: "free_items_in_bundle") {\n      references(first: 10) {\n        nodes {\n          ...on Product {\n            id\n            handle\n            title\n            featuredImage {\n              ...Image\n            }\n          }\n        }\n      }\n    }\n  }\n\n\n': {
     return: CollectionItemResourceQuery;
     variables: CollectionItemResourceQueryVariables;
   };
-  '#graphql\n  query ProductItemResource(\n    $language: LanguageCode\n    $country: CountryCode\n    $handle: String!\n  ) @inContext(language: $language, country: $country) {\n    product(handle: $handle) {\n      ...ProductItem\n    }\n  }\n  #graphql\n  fragment Image on Image {\n    id\n    url\n    altText\n    width\n    height\n  }\n  fragment ProductVariantItem on ProductVariant {\n    id\n    title\n    image {\n      ...Image\n    }\n    price {\n      amount\n      currencyCode\n    }\n    compareAtPrice {\n      amount\n      currencyCode\n    }\n    availableForSale\n    selectedOptions {\n      name\n      value\n    }\n    tint: metafield(namespace: "custom", key: "tint") {\n      reference {\n        ...on Metaobject{\n          color: field(key: "color") {\n            value\n          }\n        }\n      }\n    }\n  }\n  fragment ProductItem on Product {\n    id\n    handle\n    title\n    vendor\n    productType\n    featuredImage {\n      ...Image\n    }\n    variants(first: 250) {\n      nodes {\n        ...ProductVariantItem\n      }\n    }\n    defaultVariant: metafield(namespace: "custom", key: "default_variant") {\n      reference {\n        ... on ProductVariant {\n          id\n        }\n      }\n    }\n    capacity: metafield(namespace: "custom", key: "capacity") {\n      value\n    }\n    badges: metafield(namespace: "custom", key: "badges") {\n      references(first: 2) {\n        nodes {\n          ...on Metaobject{\n            id\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n  }\n\n': {
+  '#graphql\n  query ProductItemResource(\n    $language: LanguageCode\n    $country: CountryCode\n    $handle: String!\n  ) @inContext(language: $language, country: $country) {\n    product(handle: $handle) {\n      ...ProductItem\n    }\n  }\n  #graphql\n  fragment Image on Image {\n    id\n    url\n    altText\n    width\n    height\n  }\n  fragment ProductVariantItem on ProductVariant {\n    id\n    title\n    image {\n      ...Image\n    }\n    price {\n      amount\n      currencyCode\n    }\n    compareAtPrice {\n      amount\n      currencyCode\n    }\n    availableForSale\n    selectedOptions {\n      name\n      value\n    }\n    tint: metafield(namespace: "custom", key: "tint") {\n      reference {\n        ...on Metaobject{\n          color: field(key: "color") {\n            value\n          }\n        }\n      }\n    }\n  }\n  fragment ProductItem on Product {\n    id\n    handle\n    title\n    vendor\n    productType\n    featuredImage {\n      ...Image\n    }\n    variants(first: 250) {\n      nodes {\n        ...ProductVariantItem\n      }\n    }\n    defaultVariant: metafield(namespace: "custom", key: "default_variant") {\n      reference {\n        ... on ProductVariant {\n          id\n        }\n      }\n    }\n    capacity: metafield(namespace: "custom", key: "capacity") {\n      value\n    }\n    badges: metafield(namespace: "custom", key: "badges") {\n      references(first: 2) {\n        nodes {\n          ...on Metaobject{\n            id\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n    freeItems: metafield(namespace: "custom", key: "free_items_in_bundle") {\n      references(first: 10) {\n        nodes {\n          ...on Product {\n            id\n            handle\n            title\n            featuredImage {\n              ...Image\n            }\n          }\n        }\n      }\n    }\n  }\n\n': {
     return: ProductItemResourceQuery;
     variables: ProductItemResourceQueryVariables;
   };
-  '#graphql\n  query ProductRecommendations(\n    $productHandle: String!\n    $language: LanguageCode\n    $country: CountryCode\n  ) @inContext(language: $language, country: $country) {\n    productRecommendations(productHandle: $productHandle) {\n      ...ProductItem\n    }\n  }\n  #graphql\n  fragment Image on Image {\n    id\n    url\n    altText\n    width\n    height\n  }\n  fragment ProductVariantItem on ProductVariant {\n    id\n    title\n    image {\n      ...Image\n    }\n    price {\n      amount\n      currencyCode\n    }\n    compareAtPrice {\n      amount\n      currencyCode\n    }\n    availableForSale\n    selectedOptions {\n      name\n      value\n    }\n    tint: metafield(namespace: "custom", key: "tint") {\n      reference {\n        ...on Metaobject{\n          color: field(key: "color") {\n            value\n          }\n        }\n      }\n    }\n  }\n  fragment ProductItem on Product {\n    id\n    handle\n    title\n    vendor\n    productType\n    featuredImage {\n      ...Image\n    }\n    variants(first: 250) {\n      nodes {\n        ...ProductVariantItem\n      }\n    }\n    defaultVariant: metafield(namespace: "custom", key: "default_variant") {\n      reference {\n        ... on ProductVariant {\n          id\n        }\n      }\n    }\n    capacity: metafield(namespace: "custom", key: "capacity") {\n      value\n    }\n    badges: metafield(namespace: "custom", key: "badges") {\n      references(first: 2) {\n        nodes {\n          ...on Metaobject{\n            id\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n  }\n\n': {
+  '#graphql\n  query ProductRecommendations(\n    $productHandle: String!\n    $language: LanguageCode\n    $country: CountryCode\n  ) @inContext(language: $language, country: $country) {\n    productRecommendations(productHandle: $productHandle) {\n      ...ProductItem\n    }\n  }\n  #graphql\n  fragment Image on Image {\n    id\n    url\n    altText\n    width\n    height\n  }\n  fragment ProductVariantItem on ProductVariant {\n    id\n    title\n    image {\n      ...Image\n    }\n    price {\n      amount\n      currencyCode\n    }\n    compareAtPrice {\n      amount\n      currencyCode\n    }\n    availableForSale\n    selectedOptions {\n      name\n      value\n    }\n    tint: metafield(namespace: "custom", key: "tint") {\n      reference {\n        ...on Metaobject{\n          color: field(key: "color") {\n            value\n          }\n        }\n      }\n    }\n  }\n  fragment ProductItem on Product {\n    id\n    handle\n    title\n    vendor\n    productType\n    featuredImage {\n      ...Image\n    }\n    variants(first: 250) {\n      nodes {\n        ...ProductVariantItem\n      }\n    }\n    defaultVariant: metafield(namespace: "custom", key: "default_variant") {\n      reference {\n        ... on ProductVariant {\n          id\n        }\n      }\n    }\n    capacity: metafield(namespace: "custom", key: "capacity") {\n      value\n    }\n    badges: metafield(namespace: "custom", key: "badges") {\n      references(first: 2) {\n        nodes {\n          ...on Metaobject{\n            id\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n    freeItems: metafield(namespace: "custom", key: "free_items_in_bundle") {\n      references(first: 10) {\n        nodes {\n          ...on Product {\n            id\n            handle\n            title\n            featuredImage {\n              ...Image\n            }\n          }\n        }\n      }\n    }\n  }\n\n': {
     return: ProductRecommendationsQuery;
     variables: ProductRecommendationsQueryVariables;
   };
-  '#graphql\n  query ProductResource(\n    $language: LanguageCode\n    $country: CountryCode\n    $handle: String!\n    $selectedOptions: [SelectedOptionInput!]!\n  ) @inContext(language: $language, country: $country) {\n    product(handle: $handle) {\n      ...Product\n    }\n  }\n  #graphql\n  fragment ImageProduct on Image {\n    id\n    url\n    altText\n    width\n    height\n  }\n  fragment Video on Video {\n    alt\n    previewImage{\n      ...ImageProduct\n    }\n    sources {\n      ...VideoSource\n    }\n  }\n  fragment VideoSource on VideoSource {\n    url\n    mimeType\n    width\n    format\n    height\n  }\n  fragment MainColor on Product{\n    id\n    title\n    handle\n    variants(first: 1) {\n      nodes {\n        ...ProductVariant\n      }\n    }\n    mainColor: metafield(namespace: "custom", key: "maincolor") {\n      reference {\n        ...on Metaobject{\n          id\n          name: field(key: "name") {\n            value\n          }\n          code: field(key: "code") {\n            value\n          }\n        }\n      }\n    }\n    defaultVariant: metafield(namespace: "custom", key: "default_variant") {\n      reference {\n        ...ProductVariant\n      }\n    }\n  }\n  fragment Product on Product {\n    id\n    title\n    productType\n    vendor\n    handle\n    description\n    featuredImage {\n      ...ImageProduct\n    }\n    media(first: 100) {\n      nodes {\n        id\n        mediaContentType\n        ... on MediaImage {\n          image {\n            ...ImageProduct\n          }\n        }\n        ...Video\n      }\n    }\n    options {\n      name\n      optionValues {\n        name\n      }\n    }\n    variants(first: 250) {\n      nodes {\n        ...ProductVariant\n      }\n    }\n    selectedVariant: variantBySelectedOptions(selectedOptions: $selectedOptions, ignoreUnknownOptions: true, caseInsensitiveMatch: true) {\n      ...ProductVariant\n    }\n    canonicalCollection: metafield(namespace: "custom", key: "canonical_collection") {\n      reference {\n        ... on Collection {\n          handle\n          title\n          parentCollection: metafield(namespace: "custom", key: "parent_collection") {\n            reference {\n              ... on Collection {\n                handle\n                title\n                parentCollection: metafield(namespace: "custom", key: "parent_collection") {\n                  reference {\n                    ... on Collection {\n                      handle\n                      title\n                    }\n                  }\n                }\n              }\n            }\n          }\n        }\n      }\n    }\n    canonicalProduct: metafield(namespace: "custom", key: "canonical_product") {\n      reference {\n        ... on Product {\n          handle\n          title\n        }\n      }\n    }\n    defaultVariant: metafield(namespace: "custom", key: "default_variant") {\n      reference {\n        ...ProductVariant\n      }\n    }\n    badges: metafield(namespace: "custom", key: "badges") {\n      references(first: 2) {\n        nodes {\n          ...on Metaobject{\n            id\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n    capacity: metafield(namespace: "custom", key: "capacity") {\n      value\n    }\n    reassurances: metafield(namespace: "custom", key: "reassurances") {\n      references(first: 3) {\n        nodes {\n          ...on Metaobject {\n            id\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n    mainColor: metafield(namespace: "custom", key: "maincolor") {\n      reference {\n        ...on Metaobject{\n          id\n          name: field(key: "name") {\n            value\n          }\n          code: field(key: "code") {\n            value\n          }\n        }\n      }\n    }\n    associatedProducts: metafield(namespace: "custom", key: "associated_products") {\n      references(first: 20) {\n        nodes {\n          ...on Product{\n            ...MainColor\n          }\n        }\n      }\n    }\n    favoriteShades: metafield(namespace: "custom", key: "favorite_shades") {\n      references(first: 6) {\n        nodes {\n          ...ProductVariant\n        }\n      }\n    }\n    complementaryProducts: metafield(\n      namespace: "shopify--discovery--product_recommendation"\n      key: "complementary_products"\n    ) {\n      value\n      references(first: 10) {\n        nodes {\n          ...ProductItem\n        }\n      }\n    }\n    accordions: metafield(namespace: "custom", key: "accordions") {\n      references(first: 10) {\n        nodes {\n          ... on Metaobject {\n            id\n            title: field(key: "title") {\n              value\n            }\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n    featuresTitle: metafield(namespace: "custom", key: "features_title") {\n      value\n    }\n    features: metafield(namespace: "custom", key: "features") {\n      references(first: 10) {\n        nodes {\n          ... on Metaobject {\n            id\n            icon: field(key: "icon") {\n              reference {\n                ... on MediaImage {\n                  image {\n                    ...ImageProduct\n                  }\n                }\n              }\n            }\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n    bundleComponents: metafield(namespace: "custom", key: "bundle_components") {\n      references(first: 10) {\n        nodes {\n          ...ProductItem\n        }\n      }\n    }\n    videoSection: metafield(namespace: "custom", key: "video_section") {\n      reference {\n        ...on Metaobject{\n          id\n          type\n          title: field(key: "title") {\n            value\n          }\n          text: field(key: "text") {\n            value\n          }\n          file: field(key: "file") {\n            reference{\n              ...Video\n            }\n          }\n        }\n      }\n    }\n    seo {\n      description\n      title\n    }\n  }\n  #graphql\n  fragment ImageProductVariant on Image{\n    id\n    url\n    altText\n    width\n    height\n  }\n  fragment VideoSourceVariant on VideoSource {\n    url\n    mimeType\n    width\n    format\n    height\n  }\n  fragment ProductVariant on ProductVariant {\n    availableForSale\n    compareAtPrice {\n      amount\n      currencyCode\n    }\n    id\n    image {\n      ...ImageProductVariant\n    }\n    price {\n      amount\n      currencyCode\n    }\n    product {\n      title\n      productType\n      handle\n    }\n    selectedOptions {\n      name\n      value\n    }\n    sku\n    barcode\n    title\n    unitPrice {\n      amount\n      currencyCode\n    }\n    tint: metafield(namespace: "custom", key: "tint") {\n      reference {\n        ...on Metaobject{\n          name: field(key: "name") {\n            value\n          }\n          color: field(key: "color") {\n            value\n          }\n          image: field(key: "image") {\n            reference{\n              ... on MediaImage{\n                id\n                mediaContentType\n                image{\n                  ...ImageProductVariant\n                }\n              }\n            }\n          }\n        }\n      }\n    }\n    textureImg: metafield(namespace: "custom", key: "texture_img") {\n      reference{\n        ... on MediaImage {\n          id\n          mediaContentType\n          image {\n            ...ImageProductVariant\n          }\n        }\n      }\n    }\n    galleryMedias: metafield(namespace: "custom", key: "gallery_medias") {\n      references(first: 100) {\n        nodes {\n          ... on MediaImage {\n            id\n            mediaContentType\n            image {\n              ...ImageProductVariant\n            }\n          }\n          ... on Video {\n            alt\n            mediaContentType\n            previewImage{\n              ...ImageProductVariant\n            }\n            sources {\n              ...VideoSourceVariant\n            }\n          }\n        }\n      }\n    }\n    badges: metafield(namespace: "custom", key: "badges") {\n      references(first: 2) {\n        nodes {\n          ...on Metaobject{\n            id\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n    finish: metafield(namespace: "custom", key: "finish") {\n      value\n    }\n    protector: metafield(namespace: "custom", key: "protector") {\n      value\n    }\n    hideFromBundle: metafield(namespace: "custom", key: "hide_from_bundle") {\n      value\n    }\n    accordion: metafield(namespace: "custom", key: "accordion") {\n      reference {\n        ... on Metaobject {\n          id\n          title: field(key: "title") {\n            value\n          }\n          text: field(key: "text") {\n            value\n          }\n        }\n      }\n    }\n  }\n\n  #graphql\n  fragment Image on Image {\n    id\n    url\n    altText\n    width\n    height\n  }\n  fragment ProductVariantItem on ProductVariant {\n    id\n    title\n    image {\n      ...Image\n    }\n    price {\n      amount\n      currencyCode\n    }\n    compareAtPrice {\n      amount\n      currencyCode\n    }\n    availableForSale\n    selectedOptions {\n      name\n      value\n    }\n    tint: metafield(namespace: "custom", key: "tint") {\n      reference {\n        ...on Metaobject{\n          color: field(key: "color") {\n            value\n          }\n        }\n      }\n    }\n  }\n  fragment ProductItem on Product {\n    id\n    handle\n    title\n    vendor\n    productType\n    featuredImage {\n      ...Image\n    }\n    variants(first: 250) {\n      nodes {\n        ...ProductVariantItem\n      }\n    }\n    defaultVariant: metafield(namespace: "custom", key: "default_variant") {\n      reference {\n        ... on ProductVariant {\n          id\n        }\n      }\n    }\n    capacity: metafield(namespace: "custom", key: "capacity") {\n      value\n    }\n    badges: metafield(namespace: "custom", key: "badges") {\n      references(first: 2) {\n        nodes {\n          ...on Metaobject{\n            id\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n  }\n\n\n': {
+  '#graphql\n  query ProductResource(\n    $language: LanguageCode\n    $country: CountryCode\n    $handle: String!\n    $selectedOptions: [SelectedOptionInput!]!\n  ) @inContext(language: $language, country: $country) {\n    product(handle: $handle) {\n      ...Product\n    }\n  }\n  #graphql\n  fragment ImageProduct on Image {\n    id\n    url\n    altText\n    width\n    height\n  }\n  fragment Video on Video {\n    alt\n    previewImage{\n      ...ImageProduct\n    }\n    sources {\n      ...VideoSource\n    }\n  }\n  fragment VideoSource on VideoSource {\n    url\n    mimeType\n    width\n    format\n    height\n  }\n  fragment MainColor on Product{\n    id\n    title\n    handle\n    variants(first: 1) {\n      nodes {\n        ...ProductVariant\n      }\n    }\n    mainColor: metafield(namespace: "custom", key: "maincolor") {\n      reference {\n        ...on Metaobject{\n          id\n          name: field(key: "name") {\n            value\n          }\n          code: field(key: "code") {\n            value\n          }\n        }\n      }\n    }\n    defaultVariant: metafield(namespace: "custom", key: "default_variant") {\n      reference {\n        ...ProductVariant\n      }\n    }\n  }\n  fragment Product on Product {\n    id\n    title\n    productType\n    vendor\n    handle\n    description\n    featuredImage {\n      ...ImageProduct\n    }\n    media(first: 100) {\n      nodes {\n        id\n        mediaContentType\n        ... on MediaImage {\n          image {\n            ...ImageProduct\n          }\n        }\n        ...Video\n      }\n    }\n    options {\n      name\n      optionValues {\n        name\n      }\n    }\n    variants(first: 250) {\n      nodes {\n        ...ProductVariant\n      }\n    }\n    selectedVariant: variantBySelectedOptions(selectedOptions: $selectedOptions, ignoreUnknownOptions: true, caseInsensitiveMatch: true) {\n      ...ProductVariant\n    }\n    canonicalCollection: metafield(namespace: "custom", key: "canonical_collection") {\n      reference {\n        ... on Collection {\n          handle\n          title\n          parentCollection: metafield(namespace: "custom", key: "parent_collection") {\n            reference {\n              ... on Collection {\n                handle\n                title\n                parentCollection: metafield(namespace: "custom", key: "parent_collection") {\n                  reference {\n                    ... on Collection {\n                      handle\n                      title\n                    }\n                  }\n                }\n              }\n            }\n          }\n        }\n      }\n    }\n    canonicalProduct: metafield(namespace: "custom", key: "canonical_product") {\n      reference {\n        ... on Product {\n          handle\n          title\n        }\n      }\n    }\n    defaultVariant: metafield(namespace: "custom", key: "default_variant") {\n      reference {\n        ...ProductVariant\n      }\n    }\n    badges: metafield(namespace: "custom", key: "badges") {\n      references(first: 2) {\n        nodes {\n          ...on Metaobject{\n            id\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n    capacity: metafield(namespace: "custom", key: "capacity") {\n      value\n    }\n    reassurances: metafield(namespace: "custom", key: "reassurances") {\n      references(first: 3) {\n        nodes {\n          ...on Metaobject {\n            id\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n    mainColor: metafield(namespace: "custom", key: "maincolor") {\n      reference {\n        ...on Metaobject{\n          id\n          name: field(key: "name") {\n            value\n          }\n          code: field(key: "code") {\n            value\n          }\n        }\n      }\n    }\n    associatedProducts: metafield(namespace: "custom", key: "associated_products") {\n      references(first: 20) {\n        nodes {\n          ...on Product{\n            ...MainColor\n          }\n        }\n      }\n    }\n    favoriteShades: metafield(namespace: "custom", key: "favorite_shades") {\n      references(first: 6) {\n        nodes {\n          ...ProductVariant\n        }\n      }\n    }\n    complementaryProducts: metafield(\n      namespace: "shopify--discovery--product_recommendation"\n      key: "complementary_products"\n    ) {\n      value\n      references(first: 10) {\n        nodes {\n          ...ProductItem\n        }\n      }\n    }\n    accordions: metafield(namespace: "custom", key: "accordions") {\n      references(first: 10) {\n        nodes {\n          ... on Metaobject {\n            id\n            title: field(key: "title") {\n              value\n            }\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n    featuresTitle: metafield(namespace: "custom", key: "features_title") {\n      value\n    }\n    features: metafield(namespace: "custom", key: "features") {\n      references(first: 10) {\n        nodes {\n          ... on Metaobject {\n            id\n            icon: field(key: "icon") {\n              reference {\n                ... on MediaImage {\n                  image {\n                    ...ImageProduct\n                  }\n                }\n              }\n            }\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n    bundleComponents: metafield(namespace: "custom", key: "bundle_components") {\n      references(first: 10) {\n        nodes {\n          ...ProductItem\n        }\n      }\n    }\n    freeItems: metafield(namespace: "custom", key: "free_items_in_bundle") {\n      references(first: 10) {\n        nodes {\n          ... on Product {\n            id\n            handle\n            title\n            featuredImage {\n              url\n              altText\n              width\n              height\n            }\n            priceRange {\n              minVariantPrice {\n                amount\n                currencyCode\n              }\n            }\n          }\n        }\n      }\n    }\n    videoSection: metafield(namespace: "custom", key: "video_section") {\n      reference {\n        ...on Metaobject{\n          id\n          type\n          title: field(key: "title") {\n            value\n          }\n          text: field(key: "text") {\n            value\n          }\n          file: field(key: "file") {\n            reference{\n              ...Video\n            }\n          }\n        }\n      }\n    }\n    seo {\n      description\n      title\n    }\n  }\n  #graphql\n  fragment ImageProductVariant on Image{\n    id\n    url\n    altText\n    width\n    height\n  }\n  fragment VideoSourceVariant on VideoSource {\n    url\n    mimeType\n    width\n    format\n    height\n  }\n  fragment ProductVariant on ProductVariant {\n    availableForSale\n    compareAtPrice {\n      amount\n      currencyCode\n    }\n    id\n    image {\n      ...ImageProductVariant\n    }\n    price {\n      amount\n      currencyCode\n    }\n    product {\n      title\n      productType\n      handle\n    }\n    selectedOptions {\n      name\n      value\n    }\n    sku\n    barcode\n    title\n    unitPrice {\n      amount\n      currencyCode\n    }\n    tint: metafield(namespace: "custom", key: "tint") {\n      reference {\n        ...on Metaobject{\n          name: field(key: "name") {\n            value\n          }\n          color: field(key: "color") {\n            value\n          }\n          image: field(key: "image") {\n            reference{\n              ... on MediaImage{\n                id\n                mediaContentType\n                image{\n                  ...ImageProductVariant\n                }\n              }\n            }\n          }\n        }\n      }\n    }\n    textureImg: metafield(namespace: "custom", key: "texture_img") {\n      reference{\n        ... on MediaImage {\n          id\n          mediaContentType\n          image {\n            ...ImageProductVariant\n          }\n        }\n      }\n    }\n    galleryMedias: metafield(namespace: "custom", key: "gallery_medias") {\n      references(first: 100) {\n        nodes {\n          ... on MediaImage {\n            id\n            mediaContentType\n            image {\n              ...ImageProductVariant\n            }\n          }\n          ... on Video {\n            alt\n            mediaContentType\n            previewImage{\n              ...ImageProductVariant\n            }\n            sources {\n              ...VideoSourceVariant\n            }\n          }\n        }\n      }\n    }\n    badges: metafield(namespace: "custom", key: "badges") {\n      references(first: 2) {\n        nodes {\n          ...on Metaobject{\n            id\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n    finish: metafield(namespace: "custom", key: "finish") {\n      value\n    }\n    protector: metafield(namespace: "custom", key: "protector") {\n      value\n    }\n    hideFromBundle: metafield(namespace: "custom", key: "hide_from_bundle") {\n      value\n    }\n    accordion: metafield(namespace: "custom", key: "accordion") {\n      reference {\n        ... on Metaobject {\n          id\n          title: field(key: "title") {\n            value\n          }\n          text: field(key: "text") {\n            value\n          }\n        }\n      }\n    }\n  }\n\n  #graphql\n  fragment Image on Image {\n    id\n    url\n    altText\n    width\n    height\n  }\n  fragment ProductVariantItem on ProductVariant {\n    id\n    title\n    image {\n      ...Image\n    }\n    price {\n      amount\n      currencyCode\n    }\n    compareAtPrice {\n      amount\n      currencyCode\n    }\n    availableForSale\n    selectedOptions {\n      name\n      value\n    }\n    tint: metafield(namespace: "custom", key: "tint") {\n      reference {\n        ...on Metaobject{\n          color: field(key: "color") {\n            value\n          }\n        }\n      }\n    }\n  }\n  fragment ProductItem on Product {\n    id\n    handle\n    title\n    vendor\n    productType\n    featuredImage {\n      ...Image\n    }\n    variants(first: 250) {\n      nodes {\n        ...ProductVariantItem\n      }\n    }\n    defaultVariant: metafield(namespace: "custom", key: "default_variant") {\n      reference {\n        ... on ProductVariant {\n          id\n        }\n      }\n    }\n    capacity: metafield(namespace: "custom", key: "capacity") {\n      value\n    }\n    badges: metafield(namespace: "custom", key: "badges") {\n      references(first: 2) {\n        nodes {\n          ...on Metaobject{\n            id\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n    freeItems: metafield(namespace: "custom", key: "free_items_in_bundle") {\n      references(first: 10) {\n        nodes {\n          ...on Product {\n            id\n            handle\n            title\n            featuredImage {\n              ...Image\n            }\n          }\n        }\n      }\n    }\n  }\n\n\n': {
     return: ProductResourceQuery;
     variables: ProductResourceQueryVariables;
   };
@@ -6191,7 +6646,7 @@ interface GeneratedQueryTypes {
     return: StoreRobotsQuery;
     variables: StoreRobotsQueryVariables;
   };
-  '#graphql\n  query Collection(\n    $handle: String!\n    $language: LanguageCode\n    $country: CountryCode\n    $first: Int\n    $last: Int\n    $startCursor: String\n    $endCursor: String\n  ) @inContext(language: $language, country: $country) {\n    collection(handle: $handle) {\n      id\n      handle\n      title\n      description\n      image {\n        id\n        url\n        altText\n        width\n        height\n      }\n      products(\n        first: $first,\n        last: $last,\n        before: $startCursor,\n        after: $endCursor,\n        sortKey: COLLECTION_DEFAULT,\n        filters: {price: {min: 0.1}}\n      ) {\n        nodes {\n          ...ProductItem\n        }\n        pageInfo {\n          hasPreviousPage\n          hasNextPage\n          endCursor\n          startCursor\n        }\n      }\n      parentCollection: metafield(namespace: "custom", key: "parent_collection") {\n        reference {\n          ... on Collection {\n            handle\n            title\n            parentCollection: metafield(namespace: "custom", key: "parent_collection") {\n              reference {\n                ... on Collection {\n                  handle\n                  title\n                }\n              }\n            }\n          }\n        }\n      }\n      seo {\n        title\n        description\n      }\n    }\n    collections(first: 100, sortKey: RELEVANCE) {\n      nodes {\n        handle\n        title\n        order: metafield(namespace: "custom", key: "order") {\n          value\n        }\n        parentCollection: metafield(namespace: "custom", key: "parent_collection") {\n          reference {\n            ... on Collection {\n              handle\n              title\n            }\n          }\n        }\n      }\n    }\n  }\n  #graphql\n  fragment Image on Image {\n    id\n    url\n    altText\n    width\n    height\n  }\n  fragment ProductVariantItem on ProductVariant {\n    id\n    title\n    image {\n      ...Image\n    }\n    price {\n      amount\n      currencyCode\n    }\n    compareAtPrice {\n      amount\n      currencyCode\n    }\n    availableForSale\n    selectedOptions {\n      name\n      value\n    }\n    tint: metafield(namespace: "custom", key: "tint") {\n      reference {\n        ...on Metaobject{\n          color: field(key: "color") {\n            value\n          }\n        }\n      }\n    }\n  }\n  fragment ProductItem on Product {\n    id\n    handle\n    title\n    vendor\n    productType\n    featuredImage {\n      ...Image\n    }\n    variants(first: 250) {\n      nodes {\n        ...ProductVariantItem\n      }\n    }\n    defaultVariant: metafield(namespace: "custom", key: "default_variant") {\n      reference {\n        ... on ProductVariant {\n          id\n        }\n      }\n    }\n    capacity: metafield(namespace: "custom", key: "capacity") {\n      value\n    }\n    badges: metafield(namespace: "custom", key: "badges") {\n      references(first: 2) {\n        nodes {\n          ...on Metaobject{\n            id\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n  }\n\n': {
+  '#graphql\n  query Collection(\n    $handle: String!\n    $language: LanguageCode\n    $country: CountryCode\n    $first: Int\n    $last: Int\n    $startCursor: String\n    $endCursor: String\n  ) @inContext(language: $language, country: $country) {\n    collection(handle: $handle) {\n      id\n      handle\n      title\n      description\n      image {\n        id\n        url\n        altText\n        width\n        height\n      }\n      products(\n        first: $first,\n        last: $last,\n        before: $startCursor,\n        after: $endCursor,\n        sortKey: COLLECTION_DEFAULT,\n        filters: {price: {min: 0.1}}\n      ) {\n        nodes {\n          ...ProductItem\n        }\n        pageInfo {\n          hasPreviousPage\n          hasNextPage\n          endCursor\n          startCursor\n        }\n      }\n      parentCollection: metafield(namespace: "custom", key: "parent_collection") {\n        reference {\n          ... on Collection {\n            handle\n            title\n            parentCollection: metafield(namespace: "custom", key: "parent_collection") {\n              reference {\n                ... on Collection {\n                  handle\n                  title\n                }\n              }\n            }\n          }\n        }\n      }\n      seo {\n        title\n        description\n      }\n    }\n    collections(first: 100, sortKey: RELEVANCE) {\n      nodes {\n        handle\n        title\n        order: metafield(namespace: "custom", key: "order") {\n          value\n        }\n        parentCollection: metafield(namespace: "custom", key: "parent_collection") {\n          reference {\n            ... on Collection {\n              handle\n              title\n            }\n          }\n        }\n      }\n    }\n  }\n  #graphql\n  fragment Image on Image {\n    id\n    url\n    altText\n    width\n    height\n  }\n  fragment ProductVariantItem on ProductVariant {\n    id\n    title\n    image {\n      ...Image\n    }\n    price {\n      amount\n      currencyCode\n    }\n    compareAtPrice {\n      amount\n      currencyCode\n    }\n    availableForSale\n    selectedOptions {\n      name\n      value\n    }\n    tint: metafield(namespace: "custom", key: "tint") {\n      reference {\n        ...on Metaobject{\n          color: field(key: "color") {\n            value\n          }\n        }\n      }\n    }\n  }\n  fragment ProductItem on Product {\n    id\n    handle\n    title\n    vendor\n    productType\n    featuredImage {\n      ...Image\n    }\n    variants(first: 250) {\n      nodes {\n        ...ProductVariantItem\n      }\n    }\n    defaultVariant: metafield(namespace: "custom", key: "default_variant") {\n      reference {\n        ... on ProductVariant {\n          id\n        }\n      }\n    }\n    capacity: metafield(namespace: "custom", key: "capacity") {\n      value\n    }\n    badges: metafield(namespace: "custom", key: "badges") {\n      references(first: 2) {\n        nodes {\n          ...on Metaobject{\n            id\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n    freeItems: metafield(namespace: "custom", key: "free_items_in_bundle") {\n      references(first: 10) {\n        nodes {\n          ...on Product {\n            id\n            handle\n            title\n            featuredImage {\n              ...Image\n            }\n          }\n        }\n      }\n    }\n  }\n\n': {
     return: CollectionQuery;
     variables: CollectionQueryVariables;
   };
@@ -6207,11 +6662,11 @@ interface GeneratedQueryTypes {
     return: ProductVariantLookupQuery;
     variables: ProductVariantLookupQueryVariables;
   };
-  '#graphql\n  query Product(\n    $language: LanguageCode\n    $country: CountryCode\n    $handle: String!\n    $selectedOptions: [SelectedOptionInput!]!\n  ) @inContext(language: $language, country: $country) {\n    product(handle: $handle) {\n      ...Product\n    }\n  }\n  #graphql\n  fragment ImageProduct on Image {\n    id\n    url\n    altText\n    width\n    height\n  }\n  fragment Video on Video {\n    alt\n    previewImage{\n      ...ImageProduct\n    }\n    sources {\n      ...VideoSource\n    }\n  }\n  fragment VideoSource on VideoSource {\n    url\n    mimeType\n    width\n    format\n    height\n  }\n  fragment MainColor on Product{\n    id\n    title\n    handle\n    variants(first: 1) {\n      nodes {\n        ...ProductVariant\n      }\n    }\n    mainColor: metafield(namespace: "custom", key: "maincolor") {\n      reference {\n        ...on Metaobject{\n          id\n          name: field(key: "name") {\n            value\n          }\n          code: field(key: "code") {\n            value\n          }\n        }\n      }\n    }\n    defaultVariant: metafield(namespace: "custom", key: "default_variant") {\n      reference {\n        ...ProductVariant\n      }\n    }\n  }\n  fragment Product on Product {\n    id\n    title\n    productType\n    vendor\n    handle\n    description\n    featuredImage {\n      ...ImageProduct\n    }\n    media(first: 100) {\n      nodes {\n        id\n        mediaContentType\n        ... on MediaImage {\n          image {\n            ...ImageProduct\n          }\n        }\n        ...Video\n      }\n    }\n    options {\n      name\n      optionValues {\n        name\n      }\n    }\n    variants(first: 250) {\n      nodes {\n        ...ProductVariant\n      }\n    }\n    selectedVariant: variantBySelectedOptions(selectedOptions: $selectedOptions, ignoreUnknownOptions: true, caseInsensitiveMatch: true) {\n      ...ProductVariant\n    }\n    canonicalCollection: metafield(namespace: "custom", key: "canonical_collection") {\n      reference {\n        ... on Collection {\n          handle\n          title\n          parentCollection: metafield(namespace: "custom", key: "parent_collection") {\n            reference {\n              ... on Collection {\n                handle\n                title\n                parentCollection: metafield(namespace: "custom", key: "parent_collection") {\n                  reference {\n                    ... on Collection {\n                      handle\n                      title\n                    }\n                  }\n                }\n              }\n            }\n          }\n        }\n      }\n    }\n    canonicalProduct: metafield(namespace: "custom", key: "canonical_product") {\n      reference {\n        ... on Product {\n          handle\n          title\n        }\n      }\n    }\n    defaultVariant: metafield(namespace: "custom", key: "default_variant") {\n      reference {\n        ...ProductVariant\n      }\n    }\n    badges: metafield(namespace: "custom", key: "badges") {\n      references(first: 2) {\n        nodes {\n          ...on Metaobject{\n            id\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n    capacity: metafield(namespace: "custom", key: "capacity") {\n      value\n    }\n    reassurances: metafield(namespace: "custom", key: "reassurances") {\n      references(first: 3) {\n        nodes {\n          ...on Metaobject {\n            id\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n    mainColor: metafield(namespace: "custom", key: "maincolor") {\n      reference {\n        ...on Metaobject{\n          id\n          name: field(key: "name") {\n            value\n          }\n          code: field(key: "code") {\n            value\n          }\n        }\n      }\n    }\n    associatedProducts: metafield(namespace: "custom", key: "associated_products") {\n      references(first: 20) {\n        nodes {\n          ...on Product{\n            ...MainColor\n          }\n        }\n      }\n    }\n    favoriteShades: metafield(namespace: "custom", key: "favorite_shades") {\n      references(first: 6) {\n        nodes {\n          ...ProductVariant\n        }\n      }\n    }\n    complementaryProducts: metafield(\n      namespace: "shopify--discovery--product_recommendation"\n      key: "complementary_products"\n    ) {\n      value\n      references(first: 10) {\n        nodes {\n          ...ProductItem\n        }\n      }\n    }\n    accordions: metafield(namespace: "custom", key: "accordions") {\n      references(first: 10) {\n        nodes {\n          ... on Metaobject {\n            id\n            title: field(key: "title") {\n              value\n            }\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n    featuresTitle: metafield(namespace: "custom", key: "features_title") {\n      value\n    }\n    features: metafield(namespace: "custom", key: "features") {\n      references(first: 10) {\n        nodes {\n          ... on Metaobject {\n            id\n            icon: field(key: "icon") {\n              reference {\n                ... on MediaImage {\n                  image {\n                    ...ImageProduct\n                  }\n                }\n              }\n            }\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n    bundleComponents: metafield(namespace: "custom", key: "bundle_components") {\n      references(first: 10) {\n        nodes {\n          ...ProductItem\n        }\n      }\n    }\n    videoSection: metafield(namespace: "custom", key: "video_section") {\n      reference {\n        ...on Metaobject{\n          id\n          type\n          title: field(key: "title") {\n            value\n          }\n          text: field(key: "text") {\n            value\n          }\n          file: field(key: "file") {\n            reference{\n              ...Video\n            }\n          }\n        }\n      }\n    }\n    seo {\n      description\n      title\n    }\n  }\n  #graphql\n  fragment ImageProductVariant on Image{\n    id\n    url\n    altText\n    width\n    height\n  }\n  fragment VideoSourceVariant on VideoSource {\n    url\n    mimeType\n    width\n    format\n    height\n  }\n  fragment ProductVariant on ProductVariant {\n    availableForSale\n    compareAtPrice {\n      amount\n      currencyCode\n    }\n    id\n    image {\n      ...ImageProductVariant\n    }\n    price {\n      amount\n      currencyCode\n    }\n    product {\n      title\n      productType\n      handle\n    }\n    selectedOptions {\n      name\n      value\n    }\n    sku\n    barcode\n    title\n    unitPrice {\n      amount\n      currencyCode\n    }\n    tint: metafield(namespace: "custom", key: "tint") {\n      reference {\n        ...on Metaobject{\n          name: field(key: "name") {\n            value\n          }\n          color: field(key: "color") {\n            value\n          }\n          image: field(key: "image") {\n            reference{\n              ... on MediaImage{\n                id\n                mediaContentType\n                image{\n                  ...ImageProductVariant\n                }\n              }\n            }\n          }\n        }\n      }\n    }\n    textureImg: metafield(namespace: "custom", key: "texture_img") {\n      reference{\n        ... on MediaImage {\n          id\n          mediaContentType\n          image {\n            ...ImageProductVariant\n          }\n        }\n      }\n    }\n    galleryMedias: metafield(namespace: "custom", key: "gallery_medias") {\n      references(first: 100) {\n        nodes {\n          ... on MediaImage {\n            id\n            mediaContentType\n            image {\n              ...ImageProductVariant\n            }\n          }\n          ... on Video {\n            alt\n            mediaContentType\n            previewImage{\n              ...ImageProductVariant\n            }\n            sources {\n              ...VideoSourceVariant\n            }\n          }\n        }\n      }\n    }\n    badges: metafield(namespace: "custom", key: "badges") {\n      references(first: 2) {\n        nodes {\n          ...on Metaobject{\n            id\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n    finish: metafield(namespace: "custom", key: "finish") {\n      value\n    }\n    protector: metafield(namespace: "custom", key: "protector") {\n      value\n    }\n    hideFromBundle: metafield(namespace: "custom", key: "hide_from_bundle") {\n      value\n    }\n    accordion: metafield(namespace: "custom", key: "accordion") {\n      reference {\n        ... on Metaobject {\n          id\n          title: field(key: "title") {\n            value\n          }\n          text: field(key: "text") {\n            value\n          }\n        }\n      }\n    }\n  }\n\n  #graphql\n  fragment Image on Image {\n    id\n    url\n    altText\n    width\n    height\n  }\n  fragment ProductVariantItem on ProductVariant {\n    id\n    title\n    image {\n      ...Image\n    }\n    price {\n      amount\n      currencyCode\n    }\n    compareAtPrice {\n      amount\n      currencyCode\n    }\n    availableForSale\n    selectedOptions {\n      name\n      value\n    }\n    tint: metafield(namespace: "custom", key: "tint") {\n      reference {\n        ...on Metaobject{\n          color: field(key: "color") {\n            value\n          }\n        }\n      }\n    }\n  }\n  fragment ProductItem on Product {\n    id\n    handle\n    title\n    vendor\n    productType\n    featuredImage {\n      ...Image\n    }\n    variants(first: 250) {\n      nodes {\n        ...ProductVariantItem\n      }\n    }\n    defaultVariant: metafield(namespace: "custom", key: "default_variant") {\n      reference {\n        ... on ProductVariant {\n          id\n        }\n      }\n    }\n    capacity: metafield(namespace: "custom", key: "capacity") {\n      value\n    }\n    badges: metafield(namespace: "custom", key: "badges") {\n      references(first: 2) {\n        nodes {\n          ...on Metaobject{\n            id\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n  }\n\n\n': {
+  '#graphql\n  query Product(\n    $language: LanguageCode\n    $country: CountryCode\n    $handle: String!\n    $selectedOptions: [SelectedOptionInput!]!\n  ) @inContext(language: $language, country: $country) {\n    product(handle: $handle) {\n      ...Product\n    }\n  }\n  #graphql\n  fragment ImageProduct on Image {\n    id\n    url\n    altText\n    width\n    height\n  }\n  fragment Video on Video {\n    alt\n    previewImage{\n      ...ImageProduct\n    }\n    sources {\n      ...VideoSource\n    }\n  }\n  fragment VideoSource on VideoSource {\n    url\n    mimeType\n    width\n    format\n    height\n  }\n  fragment MainColor on Product{\n    id\n    title\n    handle\n    variants(first: 1) {\n      nodes {\n        ...ProductVariant\n      }\n    }\n    mainColor: metafield(namespace: "custom", key: "maincolor") {\n      reference {\n        ...on Metaobject{\n          id\n          name: field(key: "name") {\n            value\n          }\n          code: field(key: "code") {\n            value\n          }\n        }\n      }\n    }\n    defaultVariant: metafield(namespace: "custom", key: "default_variant") {\n      reference {\n        ...ProductVariant\n      }\n    }\n  }\n  fragment Product on Product {\n    id\n    title\n    productType\n    vendor\n    handle\n    description\n    featuredImage {\n      ...ImageProduct\n    }\n    media(first: 100) {\n      nodes {\n        id\n        mediaContentType\n        ... on MediaImage {\n          image {\n            ...ImageProduct\n          }\n        }\n        ...Video\n      }\n    }\n    options {\n      name\n      optionValues {\n        name\n      }\n    }\n    variants(first: 250) {\n      nodes {\n        ...ProductVariant\n      }\n    }\n    selectedVariant: variantBySelectedOptions(selectedOptions: $selectedOptions, ignoreUnknownOptions: true, caseInsensitiveMatch: true) {\n      ...ProductVariant\n    }\n    canonicalCollection: metafield(namespace: "custom", key: "canonical_collection") {\n      reference {\n        ... on Collection {\n          handle\n          title\n          parentCollection: metafield(namespace: "custom", key: "parent_collection") {\n            reference {\n              ... on Collection {\n                handle\n                title\n                parentCollection: metafield(namespace: "custom", key: "parent_collection") {\n                  reference {\n                    ... on Collection {\n                      handle\n                      title\n                    }\n                  }\n                }\n              }\n            }\n          }\n        }\n      }\n    }\n    canonicalProduct: metafield(namespace: "custom", key: "canonical_product") {\n      reference {\n        ... on Product {\n          handle\n          title\n        }\n      }\n    }\n    defaultVariant: metafield(namespace: "custom", key: "default_variant") {\n      reference {\n        ...ProductVariant\n      }\n    }\n    badges: metafield(namespace: "custom", key: "badges") {\n      references(first: 2) {\n        nodes {\n          ...on Metaobject{\n            id\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n    capacity: metafield(namespace: "custom", key: "capacity") {\n      value\n    }\n    reassurances: metafield(namespace: "custom", key: "reassurances") {\n      references(first: 3) {\n        nodes {\n          ...on Metaobject {\n            id\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n    mainColor: metafield(namespace: "custom", key: "maincolor") {\n      reference {\n        ...on Metaobject{\n          id\n          name: field(key: "name") {\n            value\n          }\n          code: field(key: "code") {\n            value\n          }\n        }\n      }\n    }\n    associatedProducts: metafield(namespace: "custom", key: "associated_products") {\n      references(first: 20) {\n        nodes {\n          ...on Product{\n            ...MainColor\n          }\n        }\n      }\n    }\n    favoriteShades: metafield(namespace: "custom", key: "favorite_shades") {\n      references(first: 6) {\n        nodes {\n          ...ProductVariant\n        }\n      }\n    }\n    complementaryProducts: metafield(\n      namespace: "shopify--discovery--product_recommendation"\n      key: "complementary_products"\n    ) {\n      value\n      references(first: 10) {\n        nodes {\n          ...ProductItem\n        }\n      }\n    }\n    accordions: metafield(namespace: "custom", key: "accordions") {\n      references(first: 10) {\n        nodes {\n          ... on Metaobject {\n            id\n            title: field(key: "title") {\n              value\n            }\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n    featuresTitle: metafield(namespace: "custom", key: "features_title") {\n      value\n    }\n    features: metafield(namespace: "custom", key: "features") {\n      references(first: 10) {\n        nodes {\n          ... on Metaobject {\n            id\n            icon: field(key: "icon") {\n              reference {\n                ... on MediaImage {\n                  image {\n                    ...ImageProduct\n                  }\n                }\n              }\n            }\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n    bundleComponents: metafield(namespace: "custom", key: "bundle_components") {\n      references(first: 10) {\n        nodes {\n          ...ProductItem\n        }\n      }\n    }\n    freeItems: metafield(namespace: "custom", key: "free_items_in_bundle") {\n      references(first: 10) {\n        nodes {\n          ... on Product {\n            id\n            handle\n            title\n            featuredImage {\n              url\n              altText\n              width\n              height\n            }\n            priceRange {\n              minVariantPrice {\n                amount\n                currencyCode\n              }\n            }\n          }\n        }\n      }\n    }\n    videoSection: metafield(namespace: "custom", key: "video_section") {\n      reference {\n        ...on Metaobject{\n          id\n          type\n          title: field(key: "title") {\n            value\n          }\n          text: field(key: "text") {\n            value\n          }\n          file: field(key: "file") {\n            reference{\n              ...Video\n            }\n          }\n        }\n      }\n    }\n    seo {\n      description\n      title\n    }\n  }\n  #graphql\n  fragment ImageProductVariant on Image{\n    id\n    url\n    altText\n    width\n    height\n  }\n  fragment VideoSourceVariant on VideoSource {\n    url\n    mimeType\n    width\n    format\n    height\n  }\n  fragment ProductVariant on ProductVariant {\n    availableForSale\n    compareAtPrice {\n      amount\n      currencyCode\n    }\n    id\n    image {\n      ...ImageProductVariant\n    }\n    price {\n      amount\n      currencyCode\n    }\n    product {\n      title\n      productType\n      handle\n    }\n    selectedOptions {\n      name\n      value\n    }\n    sku\n    barcode\n    title\n    unitPrice {\n      amount\n      currencyCode\n    }\n    tint: metafield(namespace: "custom", key: "tint") {\n      reference {\n        ...on Metaobject{\n          name: field(key: "name") {\n            value\n          }\n          color: field(key: "color") {\n            value\n          }\n          image: field(key: "image") {\n            reference{\n              ... on MediaImage{\n                id\n                mediaContentType\n                image{\n                  ...ImageProductVariant\n                }\n              }\n            }\n          }\n        }\n      }\n    }\n    textureImg: metafield(namespace: "custom", key: "texture_img") {\n      reference{\n        ... on MediaImage {\n          id\n          mediaContentType\n          image {\n            ...ImageProductVariant\n          }\n        }\n      }\n    }\n    galleryMedias: metafield(namespace: "custom", key: "gallery_medias") {\n      references(first: 100) {\n        nodes {\n          ... on MediaImage {\n            id\n            mediaContentType\n            image {\n              ...ImageProductVariant\n            }\n          }\n          ... on Video {\n            alt\n            mediaContentType\n            previewImage{\n              ...ImageProductVariant\n            }\n            sources {\n              ...VideoSourceVariant\n            }\n          }\n        }\n      }\n    }\n    badges: metafield(namespace: "custom", key: "badges") {\n      references(first: 2) {\n        nodes {\n          ...on Metaobject{\n            id\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n    finish: metafield(namespace: "custom", key: "finish") {\n      value\n    }\n    protector: metafield(namespace: "custom", key: "protector") {\n      value\n    }\n    hideFromBundle: metafield(namespace: "custom", key: "hide_from_bundle") {\n      value\n    }\n    accordion: metafield(namespace: "custom", key: "accordion") {\n      reference {\n        ... on Metaobject {\n          id\n          title: field(key: "title") {\n            value\n          }\n          text: field(key: "text") {\n            value\n          }\n        }\n      }\n    }\n  }\n\n  #graphql\n  fragment Image on Image {\n    id\n    url\n    altText\n    width\n    height\n  }\n  fragment ProductVariantItem on ProductVariant {\n    id\n    title\n    image {\n      ...Image\n    }\n    price {\n      amount\n      currencyCode\n    }\n    compareAtPrice {\n      amount\n      currencyCode\n    }\n    availableForSale\n    selectedOptions {\n      name\n      value\n    }\n    tint: metafield(namespace: "custom", key: "tint") {\n      reference {\n        ...on Metaobject{\n          color: field(key: "color") {\n            value\n          }\n        }\n      }\n    }\n  }\n  fragment ProductItem on Product {\n    id\n    handle\n    title\n    vendor\n    productType\n    featuredImage {\n      ...Image\n    }\n    variants(first: 250) {\n      nodes {\n        ...ProductVariantItem\n      }\n    }\n    defaultVariant: metafield(namespace: "custom", key: "default_variant") {\n      reference {\n        ... on ProductVariant {\n          id\n        }\n      }\n    }\n    capacity: metafield(namespace: "custom", key: "capacity") {\n      value\n    }\n    badges: metafield(namespace: "custom", key: "badges") {\n      references(first: 2) {\n        nodes {\n          ...on Metaobject{\n            id\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n    freeItems: metafield(namespace: "custom", key: "free_items_in_bundle") {\n      references(first: 10) {\n        nodes {\n          ...on Product {\n            id\n            handle\n            title\n            featuredImage {\n              ...Image\n            }\n          }\n        }\n      }\n    }\n  }\n\n\n': {
     return: ProductQuery;
     variables: ProductQueryVariables;
   };
-  '#graphql\n  query RegularSearch(\n    $country: CountryCode\n    $endCursor: String\n    $first: Int\n    $language: LanguageCode\n    $last: Int\n    $term: String!\n    $startCursor: String\n  ) @inContext(country: $country, language: $language) {\n    products: search(\n      after: $endCursor,\n      before: $startCursor,\n      first: $first,\n      last: $last,\n      query: $term,\n      sortKey: RELEVANCE,\n      types: [PRODUCT],\n      unavailableProducts: SHOW,\n      productFilters: [ {\n         price:  {\n            min: 0.1,\n         }\n      }]\n    ) {\n      nodes {\n        ...on Product {\n          ...ProductItem\n        }\n      }\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      totalCount\n    }\n  }\n  #graphql\n  fragment Image on Image {\n    id\n    url\n    altText\n    width\n    height\n  }\n  fragment ProductVariantItem on ProductVariant {\n    id\n    title\n    image {\n      ...Image\n    }\n    price {\n      amount\n      currencyCode\n    }\n    compareAtPrice {\n      amount\n      currencyCode\n    }\n    availableForSale\n    selectedOptions {\n      name\n      value\n    }\n    tint: metafield(namespace: "custom", key: "tint") {\n      reference {\n        ...on Metaobject{\n          color: field(key: "color") {\n            value\n          }\n        }\n      }\n    }\n  }\n  fragment ProductItem on Product {\n    id\n    handle\n    title\n    vendor\n    productType\n    featuredImage {\n      ...Image\n    }\n    variants(first: 250) {\n      nodes {\n        ...ProductVariantItem\n      }\n    }\n    defaultVariant: metafield(namespace: "custom", key: "default_variant") {\n      reference {\n        ... on ProductVariant {\n          id\n        }\n      }\n    }\n    capacity: metafield(namespace: "custom", key: "capacity") {\n      value\n    }\n    badges: metafield(namespace: "custom", key: "badges") {\n      references(first: 2) {\n        nodes {\n          ...on Metaobject{\n            id\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n  }\n\n': {
+  '#graphql\n  query RegularSearch(\n    $country: CountryCode\n    $endCursor: String\n    $first: Int\n    $language: LanguageCode\n    $last: Int\n    $term: String!\n    $startCursor: String\n  ) @inContext(country: $country, language: $language) {\n    products: search(\n      after: $endCursor,\n      before: $startCursor,\n      first: $first,\n      last: $last,\n      query: $term,\n      sortKey: RELEVANCE,\n      types: [PRODUCT],\n      unavailableProducts: SHOW,\n      productFilters: [ {\n         price:  {\n            min: 0.1,\n         }\n      }]\n    ) {\n      nodes {\n        ...on Product {\n          ...ProductItem\n        }\n      }\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      totalCount\n    }\n  }\n  #graphql\n  fragment Image on Image {\n    id\n    url\n    altText\n    width\n    height\n  }\n  fragment ProductVariantItem on ProductVariant {\n    id\n    title\n    image {\n      ...Image\n    }\n    price {\n      amount\n      currencyCode\n    }\n    compareAtPrice {\n      amount\n      currencyCode\n    }\n    availableForSale\n    selectedOptions {\n      name\n      value\n    }\n    tint: metafield(namespace: "custom", key: "tint") {\n      reference {\n        ...on Metaobject{\n          color: field(key: "color") {\n            value\n          }\n        }\n      }\n    }\n  }\n  fragment ProductItem on Product {\n    id\n    handle\n    title\n    vendor\n    productType\n    featuredImage {\n      ...Image\n    }\n    variants(first: 250) {\n      nodes {\n        ...ProductVariantItem\n      }\n    }\n    defaultVariant: metafield(namespace: "custom", key: "default_variant") {\n      reference {\n        ... on ProductVariant {\n          id\n        }\n      }\n    }\n    capacity: metafield(namespace: "custom", key: "capacity") {\n      value\n    }\n    badges: metafield(namespace: "custom", key: "badges") {\n      references(first: 2) {\n        nodes {\n          ...on Metaobject{\n            id\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n    freeItems: metafield(namespace: "custom", key: "free_items_in_bundle") {\n      references(first: 10) {\n        nodes {\n          ...on Product {\n            id\n            handle\n            title\n            featuredImage {\n              ...Image\n            }\n          }\n        }\n      }\n    }\n  }\n\n': {
     return: RegularSearchQuery;
     variables: RegularSearchQueryVariables;
   };
