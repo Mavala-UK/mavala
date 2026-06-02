@@ -1,9 +1,12 @@
-import {useCallback, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {Text} from '../ui/Text';
 import styles from './MarketingBar.module.css';
 
+const ROTATE_INTERVAL_MS = 5000;
+
 export function MarketingBar() {
   const [isDismissed, setIsDismissed] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   const handleSignUp = useCallback(() => {
     const teaserBtn = document.querySelector<HTMLElement>(
@@ -14,20 +17,33 @@ export function MarketingBar() {
     }
   }, []);
 
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveIndex((i) => (i + 1) % 2);
+    }, ROTATE_INTERVAL_MS);
+    return () => clearInterval(timer);
+  }, []);
+
   if (isDismissed) return null;
 
   return (
-    <div className={styles.root}>
+    <div className={styles.root} aria-live="polite" aria-atomic="true">
       <Text size="xs" weight="medium" asChild>
-        <p className={styles.content}>
-          Get 10% OFF.{' '}
-          <button
-            type="button"
-            className={styles.signup}
-            onClick={handleSignUp}
-          >
-            Sign Up Now
-          </button>
+        <p className={styles.content} key={activeIndex}>
+          {activeIndex === 0 ? (
+            <>
+              Get 10% OFF.{' '}
+              <button
+                type="button"
+                className={styles.signup}
+                onClick={handleSignUp}
+              >
+                Sign Up Now
+              </button>
+            </>
+          ) : (
+            <>Free delivery on orders over £49.99</>
+          )}
         </p>
       </Text>
       <button
