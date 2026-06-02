@@ -186,32 +186,46 @@ function BundleComponentsPicker({
     null,
   );
 
+  // Red prompt: turns true when user clicks a locked (not-yet-reached)
+  // component out of band. Resets to false on any valid selection.
+  const [outOfBandError, setOutOfBandError] = useState(false);
+
   useEffect(() => {
     setExplicitOpenHandle(null);
+    setOutOfBandError(false);
   }, [selectedVariants]);
 
   const handleValueChange = useCallback(
     (value: string) => {
       if (value && selectedVariants[value]) {
-        // User clicked a selected item, open it for re-editing
-        setExplicitOpenHandle(value);
+        setExplicitOpenHandle(value);      // re-edit a chosen one
+        setOutOfBandError(false);
+      } else if (value && value !== activeHandle) {
+        setOutOfBandError(true);           // clicked a locked future component
       } else {
         setExplicitOpenHandle(null);
+        setOutOfBandError(false);
       }
     },
-    [selectedVariants],
+    [selectedVariants, activeHandle],
   );
 
   const accordionValue = explicitOpenHandle ?? activeHandle ?? '';
 
   return (
-    <Accordion
-      type="single"
-      collapsible
-      value={accordionValue}
-      onValueChange={handleValueChange}
-      className={styles.components}
-    >
+    <>
+      {activeHandle !== null && (
+        <Text size="sm" className={outOfBandError ? styles.shadePromptError : styles.shadePrompt}>
+          Choose your shade
+        </Text>
+      )}
+      <Accordion
+        type="single"
+        collapsible
+        value={accordionValue}
+        onValueChange={handleValueChange}
+        className={styles.components}
+      >
       {components.map((component, index) => {
         const isSelected = !!selectedVariants[component.handle];
         const isActive = activeHandle === component.handle;
@@ -227,6 +241,7 @@ function BundleComponentsPicker({
         );
       })}
     </Accordion>
+    </>
   );
 }
 
