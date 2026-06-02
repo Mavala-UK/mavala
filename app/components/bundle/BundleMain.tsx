@@ -202,6 +202,16 @@ function BundleComponentsPicker({
         setOutOfBandError(false);
       } else if (value && value !== activeHandle) {
         setOutOfBandError(true);           // clicked a locked future component
+        if (activeHandle) {
+          const prefersReducedMotion =
+            window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
+          document
+            .getElementById(`bundle-component-${activeHandle}`)
+            ?.scrollIntoView({
+              behavior: prefersReducedMotion ? 'auto' : 'smooth',
+              block: 'center',
+            });
+        }
       } else {
         setExplicitOpenHandle(null);
         setOutOfBandError(false);
