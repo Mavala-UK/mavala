@@ -17,6 +17,16 @@
 .content {
   text-align: center;
   letter-spacing: 0.05em;
+  animation: fadein 0.35s ease;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .signup {
