@@ -88,6 +88,7 @@ function BundleComponentItemInner({
 
   return (
     <AccordionItem
+      id={`bundle-component-${component.handle}`}
       value={component.handle}
       className={cn(
         styles.item,
