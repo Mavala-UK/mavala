@@ -5,7 +5,7 @@
   gap: 0.8rem;
   padding-block: 0.8rem;
   padding-inline: var(--padding-global);
-  background-color: var(--color-dark);
+  background-color: var(--color-dark-red);
   color: var(--color-light);
 
   a,
