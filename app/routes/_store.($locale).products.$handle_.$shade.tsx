@@ -24,7 +24,7 @@ import {PRODUCT_FRAGMENT} from '~/lib/fragments/ProductFragment';
 import {PRODUCT_ITEM_FRAGMENT} from '~/lib/fragments/ProductItemFragment';
 import {getYotpoReviews} from '~/lib/yotpo';
 import {truncate} from '~/lib/utils';
-import {findVariantBySlug, buildShadePath} from '~/lib/shadeUrl';
+import {findVariantBySlug, buildShadePath, getShadeOptionName, slugifyShade} from '~/lib/shadeUrl';
 import type {ProductFragment} from 'storefrontapi.generated';
 import {ProductMain} from '~/components/product/ProductMain';
 import {BundleMain} from '~/components/bundle/BundleMain';
@@ -95,6 +95,22 @@ async function loadCriticalData({
   if (!foundVariant) {
     // Unknown slug -> 301 to bare product (never 404, to protect backlinks)
     throw redirect(`${pathPrefix}/products/${handle}`, {status: 301});
+  }
+
+  // LOW-2: Canonical-slug self-redirect.
+  // If the URL slug is non-canonical (e.g. "Vert-Empire" instead of "vert-empire"),
+  // redirect to the canonical form so there is exactly ONE URL per shade.
+  const shadeOptName = getShadeOptionName(product);
+  const resolvedShadeValue = shadeOptName
+    ? foundVariant.selectedOptions.find(
+        (o: {name: string; value: string}) => o.name === shadeOptName,
+      )?.value
+    : undefined;
+  if (resolvedShadeValue) {
+    const canonicalSlug = slugifyShade(resolvedShadeValue);
+    if (canonicalSlug && canonicalSlug !== shadeSlug) {
+      throw redirect(buildShadePath(handle, resolvedShadeValue, pathPrefix), {status: 301});
+    }
   }
 
   // Guard: free/zero-price variants are not for sale

@@ -16,6 +16,7 @@ import {getSelectedProductOptions, getSeoMeta} from '@shopify/hydrogen';
 import type {SelectedOption} from '@shopify/hydrogen/storefront-api-types';
 import type {ProductFragment} from 'storefrontapi.generated';
 import {getVariantUrl, truncate} from '~/lib/utils';
+import {buildShadePath, isShadeOptionName, slugifyShade} from '~/lib/shadeUrl';
 import {PRODUCT_ITEM_FRAGMENT} from '~/lib/fragments/ProductItemFragment';
 import {getYotpoReviews} from '~/lib/yotpo';
 import {faqSectionFragment} from '~/sanity/fragments/faqSectionFragment';
@@ -85,30 +86,37 @@ async function loadCriticalData({
         );
 
         if (variant) {
-          // Redirect to the proper Sanity URL format
-          const newSearchParams = new URLSearchParams(url.search);
-          newSearchParams.delete('variant');
-
-          return redirect(
-            getVariantUrl({
-              handle,
-              selectedOptions: variant.selectedOptions,
-              searchParams: newSearchParams,
-              pathPrefix,
-            }),
-            {status: 301},
+          // Redirect to the path-based shade URL (one hop; drops tracking params).
+          const shadeOption = variant.selectedOptions.find((o: SelectedOption) =>
+            isShadeOptionName(o.name),
           );
+          if (shadeOption) {
+            return redirect(
+              buildShadePath(handle, shadeOption.value, pathPrefix),
+              {status: 301},
+            );
+          }
+          // Non-shade product: redirect to bare product (variant param removed)
+          return redirect(`${pathPrefix}/products/${handle}`, {status: 301});
         }
       }
     } catch (error) {
       console.error('Error looking up variant:', error);
     }
 
-    // If we couldn't find the variant, redirect to product page without variant param
-    const newSearchParams = new URLSearchParams(url.search);
-    newSearchParams.delete('variant');
-    const cleanUrl = `${pathPrefix}/products/${handle}${newSearchParams.toString() ? `?${newSearchParams}` : ''}`;
-    return redirect(cleanUrl, {status: 301});
+    // Variant not found: redirect to bare product (strips variant + tracking)
+    return redirect(`${pathPrefix}/products/${handle}`, {status: 301});
+  }
+
+  // 301-redirect any shade query param (?Teinte=, ?Color=, ?Shade=, etc.)
+  // to the canonical path URL before we even hit Shopify.
+  // Drops all tracking params (fbclid, utm_*, etc.) from the redirect target.
+  // This must come AFTER the ?variant check but BEFORE getSelectedProductOptions
+  // so the Storefront query never sees these params.
+  for (const [key, value] of url.searchParams.entries()) {
+    if (isShadeOptionName(key) && value) {
+      throw redirect(buildShadePath(handle, value, pathPrefix), {status: 301});
+    }
   }
 
   const selectedOptions = getSelectedProductOptions(request);
@@ -320,27 +328,35 @@ function loadDeferredData({context, params}: LoaderFunctionArgs) {
 
 function redirectToFirstVariant({
   product,
-  request,
   pathPrefix,
 }: {
   product: ProductFragment;
   request: Request;
   pathPrefix: string;
 }) {
-  const url = new URL(request.url);
   const defaultVariant =
     product?.defaultVariant?.reference ?? product.variants.nodes[0];
 
+  // For shade products: redirect to the first shade's path URL (drops tracking params)
+  const shadeOption = defaultVariant.selectedOptions.find((o: SelectedOption) =>
+    isShadeOptionName(o.name),
+  );
+  if (shadeOption) {
+    return redirect(
+      buildShadePath(product.handle, shadeOption.value, pathPrefix),
+      {status: 302},
+    );
+  }
+
+  // Non-shade product fallback: use the existing query-param approach
   return redirect(
     getVariantUrl({
       handle: product.handle,
       selectedOptions: defaultVariant.selectedOptions,
-      searchParams: new URLSearchParams(url.search),
+      searchParams: new URLSearchParams(),
       pathPrefix,
     }),
-    {
-      status: 302,
-    },
+    {status: 302},
   );
 }
 

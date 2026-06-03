@@ -72,7 +72,7 @@ export function slugifyShade(value: string): string {
  * so they are never treated as shade selectors.
  * Live catalogue: Teinte x15, Color x12, Shade x10, Shades x2, Teintes x1.
  */
-const SHADE_OPTION_ALLOWLIST = new Set([
+export const SHADE_OPTION_ALLOWLIST = new Set([
   'teinte',
   'teintes',
   'color',
@@ -80,6 +80,15 @@ const SHADE_OPTION_ALLOWLIST = new Set([
   'shade',
   'shades',
 ]);
+
+/**
+ * Returns true if the given option name is a known shade selector name.
+ * Used by route loaders to detect shade query params without loading
+ * the product first.
+ */
+export function isShadeOptionName(name: string): boolean {
+  return SHADE_OPTION_ALLOWLIST.has(name.toLowerCase());
+}
 
 /**
  * Returns the product's single multi-value shade option name
