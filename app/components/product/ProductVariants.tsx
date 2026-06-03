@@ -184,7 +184,7 @@ export function ProductVariants({className}: {className?: string}) {
         <Text size="sm" weight="light" asChild>
           <Link variant="underline" asChild size="sm">
             {allVariants?.length! > maxShadesShown && (
-              <button className={styles.trigger}>
+              <button className={styles.trigger} data-testid="shade-drawer-trigger">
                 <Chromatic />
                 <span>
                   <FormattedMessage id="all_shades" />
