@@ -16,7 +16,8 @@
     "test:e2e": "./node_modules/.bin/playwright test --reporter=list",
     "test:e2e:smoke": "./node_modules/.bin/playwright test e2e/smoke --reporter=list",
     "test:e2e:prod": "PLAYWRIGHT_BASE_URL=https://mavala.co.uk ./node_modules/.bin/playwright test --reporter=list",
-    "test:e2e:headed": "./node_modules/.bin/playwright test --headed --reporter=list"
+    "test:e2e:headed": "./node_modules/.bin/playwright test --headed --reporter=list",
+    "test:unit": "vitest run"
   },
   "prettier": "@shopify/prettier-config",
   "dependencies": {
@@ -107,7 +108,8 @@
     "prettier": "^3.6.0",
     "typescript": "^5.8.3",
     "vite": "^6.3.5",
-    "vite-tsconfig-paths": "^5.1.4"
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^4.1.8"
   },
   "engines": {
     "node": ">=18.0.0"

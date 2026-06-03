@@ -66,6 +66,17 @@ export function slugify(str: string): string {
     .replace(/[^\w-]+/g, '');
 }
 
+/**
+ * Returns true when a URLSearchParams instance has at least one entry.
+ *
+ * Deliberately avoids URLSearchParams.size (Safari 17+ only; undefined on iOS
+ * 15/16, causing `undefined > 0` to silently evaluate to false and block shade
+ * selection on those devices). Use this helper everywhere instead of .size.
+ */
+export function hasSearchParams(sp: URLSearchParams): boolean {
+  return sp.toString() !== '';
+}
+
 export function getVariantSearchString(selectedOptions: SelectedOption[]) {
   const searchParams = new URLSearchParams(
     selectedOptions?.length === 0
@@ -73,7 +84,7 @@ export function getVariantSearchString(selectedOptions: SelectedOption[]) {
       : selectedOptions?.map((option) => [option.name, option.value]),
   );
 
-  return searchParams.size ? `?${searchParams.toString()}` : '';
+  return hasSearchParams(searchParams) ? `?${searchParams.toString()}` : '';
 }
 
 /* variants */
