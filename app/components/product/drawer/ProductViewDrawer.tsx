@@ -20,8 +20,11 @@ export function ProductViewDrawer({
   layout?: 'page' | 'card';
   children: React.ReactElement<typeof DrawerTrigger>;
 }) {
-  const {product: initialProduct, selectedOptions: initialSelectedOptions} =
-    useProductView();
+  const {
+    product: initialProduct,
+    selectedOptions: initialSelectedOptions,
+    selectedVariant: initialSelectedVariant,
+  } = useProductView();
   const [isProductViewDrawerOpen, setIsProductViewDrawerOpen] =
     useState<boolean>(false);
   const [searchValue, setSearchValue] = useState<string>('');
@@ -56,7 +59,14 @@ export function ProductViewDrawer({
     setIsProductViewDrawerOpen(open);
     setSelectedProducts([initialProduct!]);
     setSelectedProduct(initialProduct!);
-    setSelectedOptions(initialSelectedOptions);
+    // Use the path-resolved variant's selectedOptions as the shade source of truth.
+    // On path URLs (/products/handle/shade-slug), the shade is NOT in searchParams,
+    // so initialSelectedOptions (derived from searchParams) would be empty or contain
+    // only tracking params (fbclid, utm_*), breaking the drawer variant match.
+    // initialSelectedVariant.selectedOptions has the correct shade from the server.
+    const drawerOptions =
+      initialSelectedVariant?.selectedOptions ?? initialSelectedOptions;
+    setSelectedOptions(drawerOptions);
   };
 
   return (
