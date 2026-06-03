@@ -6488,6 +6488,1269 @@ export type ProductQuery = {
   >;
 };
 
+export type ShadeProductQueryVariables = StorefrontAPI.Exact<{
+  language?: StorefrontAPI.InputMaybe<StorefrontAPI.LanguageCode>;
+  country?: StorefrontAPI.InputMaybe<StorefrontAPI.CountryCode>;
+  handle: StorefrontAPI.Scalars['String']['input'];
+  selectedOptions:
+    | Array<StorefrontAPI.SelectedOptionInput>
+    | StorefrontAPI.SelectedOptionInput;
+}>;
+
+export type ShadeProductQuery = {
+  product?: StorefrontAPI.Maybe<
+    Pick<
+      StorefrontAPI.Product,
+      'id' | 'title' | 'productType' | 'vendor' | 'handle' | 'description'
+    > & {
+      featuredImage?: StorefrontAPI.Maybe<
+        Pick<StorefrontAPI.Image, 'id' | 'url' | 'altText' | 'width' | 'height'>
+      >;
+      media: {
+        nodes: Array<
+          | Pick<StorefrontAPI.ExternalVideo, 'id' | 'mediaContentType'>
+          | (Pick<StorefrontAPI.MediaImage, 'id' | 'mediaContentType'> & {
+              image?: StorefrontAPI.Maybe<
+                Pick<
+                  StorefrontAPI.Image,
+                  'id' | 'url' | 'altText' | 'width' | 'height'
+                >
+              >;
+            })
+          | Pick<StorefrontAPI.Model3d, 'id' | 'mediaContentType'>
+          | (Pick<StorefrontAPI.Video, 'id' | 'mediaContentType' | 'alt'> & {
+              previewImage?: StorefrontAPI.Maybe<
+                Pick<
+                  StorefrontAPI.Image,
+                  'id' | 'url' | 'altText' | 'width' | 'height'
+                >
+              >;
+              sources: Array<
+                Pick<
+                  StorefrontAPI.VideoSource,
+                  'url' | 'mimeType' | 'width' | 'format' | 'height'
+                >
+              >;
+            })
+        >;
+      };
+      options: Array<
+        Pick<StorefrontAPI.ProductOption, 'name'> & {
+          optionValues: Array<Pick<StorefrontAPI.ProductOptionValue, 'name'>>;
+        }
+      >;
+      variants: {
+        nodes: Array<
+          Pick<
+            StorefrontAPI.ProductVariant,
+            'availableForSale' | 'id' | 'sku' | 'barcode' | 'title'
+          > & {
+            compareAtPrice?: StorefrontAPI.Maybe<
+              Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>
+            >;
+            image?: StorefrontAPI.Maybe<
+              Pick<
+                StorefrontAPI.Image,
+                'id' | 'url' | 'altText' | 'width' | 'height'
+              >
+            >;
+            price: Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>;
+            product: Pick<
+              StorefrontAPI.Product,
+              'title' | 'productType' | 'handle'
+            >;
+            selectedOptions: Array<
+              Pick<StorefrontAPI.SelectedOption, 'name' | 'value'>
+            >;
+            unitPrice?: StorefrontAPI.Maybe<
+              Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>
+            >;
+            tint?: StorefrontAPI.Maybe<{
+              reference?: StorefrontAPI.Maybe<{
+                name?: StorefrontAPI.Maybe<
+                  Pick<StorefrontAPI.MetaobjectField, 'value'>
+                >;
+                color?: StorefrontAPI.Maybe<
+                  Pick<StorefrontAPI.MetaobjectField, 'value'>
+                >;
+                image?: StorefrontAPI.Maybe<{
+                  reference?: StorefrontAPI.Maybe<
+                    Pick<
+                      StorefrontAPI.MediaImage,
+                      'id' | 'mediaContentType'
+                    > & {
+                      image?: StorefrontAPI.Maybe<
+                        Pick<
+                          StorefrontAPI.Image,
+                          'id' | 'url' | 'altText' | 'width' | 'height'
+                        >
+                      >;
+                    }
+                  >;
+                }>;
+              }>;
+            }>;
+            textureImg?: StorefrontAPI.Maybe<{
+              reference?: StorefrontAPI.Maybe<
+                Pick<StorefrontAPI.MediaImage, 'id' | 'mediaContentType'> & {
+                  image?: StorefrontAPI.Maybe<
+                    Pick<
+                      StorefrontAPI.Image,
+                      'id' | 'url' | 'altText' | 'width' | 'height'
+                    >
+                  >;
+                }
+              >;
+            }>;
+            galleryMedias?: StorefrontAPI.Maybe<{
+              references?: StorefrontAPI.Maybe<{
+                nodes: Array<
+                  | (Pick<
+                      StorefrontAPI.MediaImage,
+                      'id' | 'mediaContentType'
+                    > & {
+                      image?: StorefrontAPI.Maybe<
+                        Pick<
+                          StorefrontAPI.Image,
+                          'id' | 'url' | 'altText' | 'width' | 'height'
+                        >
+                      >;
+                    })
+                  | (Pick<StorefrontAPI.Video, 'alt' | 'mediaContentType'> & {
+                      previewImage?: StorefrontAPI.Maybe<
+                        Pick<
+                          StorefrontAPI.Image,
+                          'id' | 'url' | 'altText' | 'width' | 'height'
+                        >
+                      >;
+                      sources: Array<
+                        Pick<
+                          StorefrontAPI.VideoSource,
+                          'url' | 'mimeType' | 'width' | 'format' | 'height'
+                        >
+                      >;
+                    })
+                >;
+              }>;
+            }>;
+            badges?: StorefrontAPI.Maybe<{
+              references?: StorefrontAPI.Maybe<{
+                nodes: Array<
+                  Pick<StorefrontAPI.Metaobject, 'id'> & {
+                    text?: StorefrontAPI.Maybe<
+                      Pick<StorefrontAPI.MetaobjectField, 'value'>
+                    >;
+                  }
+                >;
+              }>;
+            }>;
+            finish?: StorefrontAPI.Maybe<
+              Pick<StorefrontAPI.Metafield, 'value'>
+            >;
+            protector?: StorefrontAPI.Maybe<
+              Pick<StorefrontAPI.Metafield, 'value'>
+            >;
+            hideFromBundle?: StorefrontAPI.Maybe<
+              Pick<StorefrontAPI.Metafield, 'value'>
+            >;
+            accordion?: StorefrontAPI.Maybe<{
+              reference?: StorefrontAPI.Maybe<
+                Pick<StorefrontAPI.Metaobject, 'id'> & {
+                  title?: StorefrontAPI.Maybe<
+                    Pick<StorefrontAPI.MetaobjectField, 'value'>
+                  >;
+                  text?: StorefrontAPI.Maybe<
+                    Pick<StorefrontAPI.MetaobjectField, 'value'>
+                  >;
+                }
+              >;
+            }>;
+          }
+        >;
+      };
+      selectedVariant?: StorefrontAPI.Maybe<
+        Pick<
+          StorefrontAPI.ProductVariant,
+          'availableForSale' | 'id' | 'sku' | 'barcode' | 'title'
+        > & {
+          compareAtPrice?: StorefrontAPI.Maybe<
+            Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>
+          >;
+          image?: StorefrontAPI.Maybe<
+            Pick<
+              StorefrontAPI.Image,
+              'id' | 'url' | 'altText' | 'width' | 'height'
+            >
+          >;
+          price: Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>;
+          product: Pick<
+            StorefrontAPI.Product,
+            'title' | 'productType' | 'handle'
+          >;
+          selectedOptions: Array<
+            Pick<StorefrontAPI.SelectedOption, 'name' | 'value'>
+          >;
+          unitPrice?: StorefrontAPI.Maybe<
+            Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>
+          >;
+          tint?: StorefrontAPI.Maybe<{
+            reference?: StorefrontAPI.Maybe<{
+              name?: StorefrontAPI.Maybe<
+                Pick<StorefrontAPI.MetaobjectField, 'value'>
+              >;
+              color?: StorefrontAPI.Maybe<
+                Pick<StorefrontAPI.MetaobjectField, 'value'>
+              >;
+              image?: StorefrontAPI.Maybe<{
+                reference?: StorefrontAPI.Maybe<
+                  Pick<StorefrontAPI.MediaImage, 'id' | 'mediaContentType'> & {
+                    image?: StorefrontAPI.Maybe<
+                      Pick<
+                        StorefrontAPI.Image,
+                        'id' | 'url' | 'altText' | 'width' | 'height'
+                      >
+                    >;
+                  }
+                >;
+              }>;
+            }>;
+          }>;
+          textureImg?: StorefrontAPI.Maybe<{
+            reference?: StorefrontAPI.Maybe<
+              Pick<StorefrontAPI.MediaImage, 'id' | 'mediaContentType'> & {
+                image?: StorefrontAPI.Maybe<
+                  Pick<
+                    StorefrontAPI.Image,
+                    'id' | 'url' | 'altText' | 'width' | 'height'
+                  >
+                >;
+              }
+            >;
+          }>;
+          galleryMedias?: StorefrontAPI.Maybe<{
+            references?: StorefrontAPI.Maybe<{
+              nodes: Array<
+                | (Pick<StorefrontAPI.MediaImage, 'id' | 'mediaContentType'> & {
+                    image?: StorefrontAPI.Maybe<
+                      Pick<
+                        StorefrontAPI.Image,
+                        'id' | 'url' | 'altText' | 'width' | 'height'
+                      >
+                    >;
+                  })
+                | (Pick<StorefrontAPI.Video, 'alt' | 'mediaContentType'> & {
+                    previewImage?: StorefrontAPI.Maybe<
+                      Pick<
+                        StorefrontAPI.Image,
+                        'id' | 'url' | 'altText' | 'width' | 'height'
+                      >
+                    >;
+                    sources: Array<
+                      Pick<
+                        StorefrontAPI.VideoSource,
+                        'url' | 'mimeType' | 'width' | 'format' | 'height'
+                      >
+                    >;
+                  })
+              >;
+            }>;
+          }>;
+          badges?: StorefrontAPI.Maybe<{
+            references?: StorefrontAPI.Maybe<{
+              nodes: Array<
+                Pick<StorefrontAPI.Metaobject, 'id'> & {
+                  text?: StorefrontAPI.Maybe<
+                    Pick<StorefrontAPI.MetaobjectField, 'value'>
+                  >;
+                }
+              >;
+            }>;
+          }>;
+          finish?: StorefrontAPI.Maybe<Pick<StorefrontAPI.Metafield, 'value'>>;
+          protector?: StorefrontAPI.Maybe<
+            Pick<StorefrontAPI.Metafield, 'value'>
+          >;
+          hideFromBundle?: StorefrontAPI.Maybe<
+            Pick<StorefrontAPI.Metafield, 'value'>
+          >;
+          accordion?: StorefrontAPI.Maybe<{
+            reference?: StorefrontAPI.Maybe<
+              Pick<StorefrontAPI.Metaobject, 'id'> & {
+                title?: StorefrontAPI.Maybe<
+                  Pick<StorefrontAPI.MetaobjectField, 'value'>
+                >;
+                text?: StorefrontAPI.Maybe<
+                  Pick<StorefrontAPI.MetaobjectField, 'value'>
+                >;
+              }
+            >;
+          }>;
+        }
+      >;
+      canonicalCollection?: StorefrontAPI.Maybe<{
+        reference?: StorefrontAPI.Maybe<
+          Pick<StorefrontAPI.Collection, 'handle' | 'title'> & {
+            parentCollection?: StorefrontAPI.Maybe<{
+              reference?: StorefrontAPI.Maybe<
+                Pick<StorefrontAPI.Collection, 'handle' | 'title'> & {
+                  parentCollection?: StorefrontAPI.Maybe<{
+                    reference?: StorefrontAPI.Maybe<
+                      Pick<StorefrontAPI.Collection, 'handle' | 'title'>
+                    >;
+                  }>;
+                }
+              >;
+            }>;
+          }
+        >;
+      }>;
+      canonicalProduct?: StorefrontAPI.Maybe<{
+        reference?: StorefrontAPI.Maybe<
+          Pick<StorefrontAPI.Product, 'handle' | 'title'>
+        >;
+      }>;
+      defaultVariant?: StorefrontAPI.Maybe<{
+        reference?: StorefrontAPI.Maybe<
+          Pick<
+            StorefrontAPI.ProductVariant,
+            'availableForSale' | 'id' | 'sku' | 'barcode' | 'title'
+          > & {
+            compareAtPrice?: StorefrontAPI.Maybe<
+              Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>
+            >;
+            image?: StorefrontAPI.Maybe<
+              Pick<
+                StorefrontAPI.Image,
+                'id' | 'url' | 'altText' | 'width' | 'height'
+              >
+            >;
+            price: Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>;
+            product: Pick<
+              StorefrontAPI.Product,
+              'title' | 'productType' | 'handle'
+            >;
+            selectedOptions: Array<
+              Pick<StorefrontAPI.SelectedOption, 'name' | 'value'>
+            >;
+            unitPrice?: StorefrontAPI.Maybe<
+              Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>
+            >;
+            tint?: StorefrontAPI.Maybe<{
+              reference?: StorefrontAPI.Maybe<{
+                name?: StorefrontAPI.Maybe<
+                  Pick<StorefrontAPI.MetaobjectField, 'value'>
+                >;
+                color?: StorefrontAPI.Maybe<
+                  Pick<StorefrontAPI.MetaobjectField, 'value'>
+                >;
+                image?: StorefrontAPI.Maybe<{
+                  reference?: StorefrontAPI.Maybe<
+                    Pick<
+                      StorefrontAPI.MediaImage,
+                      'id' | 'mediaContentType'
+                    > & {
+                      image?: StorefrontAPI.Maybe<
+                        Pick<
+                          StorefrontAPI.Image,
+                          'id' | 'url' | 'altText' | 'width' | 'height'
+                        >
+                      >;
+                    }
+                  >;
+                }>;
+              }>;
+            }>;
+            textureImg?: StorefrontAPI.Maybe<{
+              reference?: StorefrontAPI.Maybe<
+                Pick<StorefrontAPI.MediaImage, 'id' | 'mediaContentType'> & {
+                  image?: StorefrontAPI.Maybe<
+                    Pick<
+                      StorefrontAPI.Image,
+                      'id' | 'url' | 'altText' | 'width' | 'height'
+                    >
+                  >;
+                }
+              >;
+            }>;
+            galleryMedias?: StorefrontAPI.Maybe<{
+              references?: StorefrontAPI.Maybe<{
+                nodes: Array<
+                  | (Pick<
+                      StorefrontAPI.MediaImage,
+                      'id' | 'mediaContentType'
+                    > & {
+                      image?: StorefrontAPI.Maybe<
+                        Pick<
+                          StorefrontAPI.Image,
+                          'id' | 'url' | 'altText' | 'width' | 'height'
+                        >
+                      >;
+                    })
+                  | (Pick<StorefrontAPI.Video, 'alt' | 'mediaContentType'> & {
+                      previewImage?: StorefrontAPI.Maybe<
+                        Pick<
+                          StorefrontAPI.Image,
+                          'id' | 'url' | 'altText' | 'width' | 'height'
+                        >
+                      >;
+                      sources: Array<
+                        Pick<
+                          StorefrontAPI.VideoSource,
+                          'url' | 'mimeType' | 'width' | 'format' | 'height'
+                        >
+                      >;
+                    })
+                >;
+              }>;
+            }>;
+            badges?: StorefrontAPI.Maybe<{
+              references?: StorefrontAPI.Maybe<{
+                nodes: Array<
+                  Pick<StorefrontAPI.Metaobject, 'id'> & {
+                    text?: StorefrontAPI.Maybe<
+                      Pick<StorefrontAPI.MetaobjectField, 'value'>
+                    >;
+                  }
+                >;
+              }>;
+            }>;
+            finish?: StorefrontAPI.Maybe<
+              Pick<StorefrontAPI.Metafield, 'value'>
+            >;
+            protector?: StorefrontAPI.Maybe<
+              Pick<StorefrontAPI.Metafield, 'value'>
+            >;
+            hideFromBundle?: StorefrontAPI.Maybe<
+              Pick<StorefrontAPI.Metafield, 'value'>
+            >;
+            accordion?: StorefrontAPI.Maybe<{
+              reference?: StorefrontAPI.Maybe<
+                Pick<StorefrontAPI.Metaobject, 'id'> & {
+                  title?: StorefrontAPI.Maybe<
+                    Pick<StorefrontAPI.MetaobjectField, 'value'>
+                  >;
+                  text?: StorefrontAPI.Maybe<
+                    Pick<StorefrontAPI.MetaobjectField, 'value'>
+                  >;
+                }
+              >;
+            }>;
+          }
+        >;
+      }>;
+      badges?: StorefrontAPI.Maybe<{
+        references?: StorefrontAPI.Maybe<{
+          nodes: Array<
+            Pick<StorefrontAPI.Metaobject, 'id'> & {
+              text?: StorefrontAPI.Maybe<
+                Pick<StorefrontAPI.MetaobjectField, 'value'>
+              >;
+            }
+          >;
+        }>;
+      }>;
+      capacity?: StorefrontAPI.Maybe<Pick<StorefrontAPI.Metafield, 'value'>>;
+      reassurances?: StorefrontAPI.Maybe<{
+        references?: StorefrontAPI.Maybe<{
+          nodes: Array<
+            Pick<StorefrontAPI.Metaobject, 'id'> & {
+              text?: StorefrontAPI.Maybe<
+                Pick<StorefrontAPI.MetaobjectField, 'value'>
+              >;
+            }
+          >;
+        }>;
+      }>;
+      mainColor?: StorefrontAPI.Maybe<{
+        reference?: StorefrontAPI.Maybe<
+          Pick<StorefrontAPI.Metaobject, 'id'> & {
+            name?: StorefrontAPI.Maybe<
+              Pick<StorefrontAPI.MetaobjectField, 'value'>
+            >;
+            code?: StorefrontAPI.Maybe<
+              Pick<StorefrontAPI.MetaobjectField, 'value'>
+            >;
+          }
+        >;
+      }>;
+      associatedProducts?: StorefrontAPI.Maybe<{
+        references?: StorefrontAPI.Maybe<{
+          nodes: Array<
+            Pick<StorefrontAPI.Product, 'id' | 'title' | 'handle'> & {
+              variants: {
+                nodes: Array<
+                  Pick<
+                    StorefrontAPI.ProductVariant,
+                    'availableForSale' | 'id' | 'sku' | 'barcode' | 'title'
+                  > & {
+                    compareAtPrice?: StorefrontAPI.Maybe<
+                      Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>
+                    >;
+                    image?: StorefrontAPI.Maybe<
+                      Pick<
+                        StorefrontAPI.Image,
+                        'id' | 'url' | 'altText' | 'width' | 'height'
+                      >
+                    >;
+                    price: Pick<
+                      StorefrontAPI.MoneyV2,
+                      'amount' | 'currencyCode'
+                    >;
+                    product: Pick<
+                      StorefrontAPI.Product,
+                      'title' | 'productType' | 'handle'
+                    >;
+                    selectedOptions: Array<
+                      Pick<StorefrontAPI.SelectedOption, 'name' | 'value'>
+                    >;
+                    unitPrice?: StorefrontAPI.Maybe<
+                      Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>
+                    >;
+                    tint?: StorefrontAPI.Maybe<{
+                      reference?: StorefrontAPI.Maybe<{
+                        name?: StorefrontAPI.Maybe<
+                          Pick<StorefrontAPI.MetaobjectField, 'value'>
+                        >;
+                        color?: StorefrontAPI.Maybe<
+                          Pick<StorefrontAPI.MetaobjectField, 'value'>
+                        >;
+                        image?: StorefrontAPI.Maybe<{
+                          reference?: StorefrontAPI.Maybe<
+                            Pick<
+                              StorefrontAPI.MediaImage,
+                              'id' | 'mediaContentType'
+                            > & {
+                              image?: StorefrontAPI.Maybe<
+                                Pick<
+                                  StorefrontAPI.Image,
+                                  'id' | 'url' | 'altText' | 'width' | 'height'
+                                >
+                              >;
+                            }
+                          >;
+                        }>;
+                      }>;
+                    }>;
+                    textureImg?: StorefrontAPI.Maybe<{
+                      reference?: StorefrontAPI.Maybe<
+                        Pick<
+                          StorefrontAPI.MediaImage,
+                          'id' | 'mediaContentType'
+                        > & {
+                          image?: StorefrontAPI.Maybe<
+                            Pick<
+                              StorefrontAPI.Image,
+                              'id' | 'url' | 'altText' | 'width' | 'height'
+                            >
+                          >;
+                        }
+                      >;
+                    }>;
+                    galleryMedias?: StorefrontAPI.Maybe<{
+                      references?: StorefrontAPI.Maybe<{
+                        nodes: Array<
+                          | (Pick<
+                              StorefrontAPI.MediaImage,
+                              'id' | 'mediaContentType'
+                            > & {
+                              image?: StorefrontAPI.Maybe<
+                                Pick<
+                                  StorefrontAPI.Image,
+                                  'id' | 'url' | 'altText' | 'width' | 'height'
+                                >
+                              >;
+                            })
+                          | (Pick<
+                              StorefrontAPI.Video,
+                              'alt' | 'mediaContentType'
+                            > & {
+                              previewImage?: StorefrontAPI.Maybe<
+                                Pick<
+                                  StorefrontAPI.Image,
+                                  'id' | 'url' | 'altText' | 'width' | 'height'
+                                >
+                              >;
+                              sources: Array<
+                                Pick<
+                                  StorefrontAPI.VideoSource,
+                                  | 'url'
+                                  | 'mimeType'
+                                  | 'width'
+                                  | 'format'
+                                  | 'height'
+                                >
+                              >;
+                            })
+                        >;
+                      }>;
+                    }>;
+                    badges?: StorefrontAPI.Maybe<{
+                      references?: StorefrontAPI.Maybe<{
+                        nodes: Array<
+                          Pick<StorefrontAPI.Metaobject, 'id'> & {
+                            text?: StorefrontAPI.Maybe<
+                              Pick<StorefrontAPI.MetaobjectField, 'value'>
+                            >;
+                          }
+                        >;
+                      }>;
+                    }>;
+                    finish?: StorefrontAPI.Maybe<
+                      Pick<StorefrontAPI.Metafield, 'value'>
+                    >;
+                    protector?: StorefrontAPI.Maybe<
+                      Pick<StorefrontAPI.Metafield, 'value'>
+                    >;
+                    hideFromBundle?: StorefrontAPI.Maybe<
+                      Pick<StorefrontAPI.Metafield, 'value'>
+                    >;
+                    accordion?: StorefrontAPI.Maybe<{
+                      reference?: StorefrontAPI.Maybe<
+                        Pick<StorefrontAPI.Metaobject, 'id'> & {
+                          title?: StorefrontAPI.Maybe<
+                            Pick<StorefrontAPI.MetaobjectField, 'value'>
+                          >;
+                          text?: StorefrontAPI.Maybe<
+                            Pick<StorefrontAPI.MetaobjectField, 'value'>
+                          >;
+                        }
+                      >;
+                    }>;
+                  }
+                >;
+              };
+              mainColor?: StorefrontAPI.Maybe<{
+                reference?: StorefrontAPI.Maybe<
+                  Pick<StorefrontAPI.Metaobject, 'id'> & {
+                    name?: StorefrontAPI.Maybe<
+                      Pick<StorefrontAPI.MetaobjectField, 'value'>
+                    >;
+                    code?: StorefrontAPI.Maybe<
+                      Pick<StorefrontAPI.MetaobjectField, 'value'>
+                    >;
+                  }
+                >;
+              }>;
+              defaultVariant?: StorefrontAPI.Maybe<{
+                reference?: StorefrontAPI.Maybe<
+                  Pick<
+                    StorefrontAPI.ProductVariant,
+                    'availableForSale' | 'id' | 'sku' | 'barcode' | 'title'
+                  > & {
+                    compareAtPrice?: StorefrontAPI.Maybe<
+                      Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>
+                    >;
+                    image?: StorefrontAPI.Maybe<
+                      Pick<
+                        StorefrontAPI.Image,
+                        'id' | 'url' | 'altText' | 'width' | 'height'
+                      >
+                    >;
+                    price: Pick<
+                      StorefrontAPI.MoneyV2,
+                      'amount' | 'currencyCode'
+                    >;
+                    product: Pick<
+                      StorefrontAPI.Product,
+                      'title' | 'productType' | 'handle'
+                    >;
+                    selectedOptions: Array<
+                      Pick<StorefrontAPI.SelectedOption, 'name' | 'value'>
+                    >;
+                    unitPrice?: StorefrontAPI.Maybe<
+                      Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>
+                    >;
+                    tint?: StorefrontAPI.Maybe<{
+                      reference?: StorefrontAPI.Maybe<{
+                        name?: StorefrontAPI.Maybe<
+                          Pick<StorefrontAPI.MetaobjectField, 'value'>
+                        >;
+                        color?: StorefrontAPI.Maybe<
+                          Pick<StorefrontAPI.MetaobjectField, 'value'>
+                        >;
+                        image?: StorefrontAPI.Maybe<{
+                          reference?: StorefrontAPI.Maybe<
+                            Pick<
+                              StorefrontAPI.MediaImage,
+                              'id' | 'mediaContentType'
+                            > & {
+                              image?: StorefrontAPI.Maybe<
+                                Pick<
+                                  StorefrontAPI.Image,
+                                  'id' | 'url' | 'altText' | 'width' | 'height'
+                                >
+                              >;
+                            }
+                          >;
+                        }>;
+                      }>;
+                    }>;
+                    textureImg?: StorefrontAPI.Maybe<{
+                      reference?: StorefrontAPI.Maybe<
+                        Pick<
+                          StorefrontAPI.MediaImage,
+                          'id' | 'mediaContentType'
+                        > & {
+                          image?: StorefrontAPI.Maybe<
+                            Pick<
+                              StorefrontAPI.Image,
+                              'id' | 'url' | 'altText' | 'width' | 'height'
+                            >
+                          >;
+                        }
+                      >;
+                    }>;
+                    galleryMedias?: StorefrontAPI.Maybe<{
+                      references?: StorefrontAPI.Maybe<{
+                        nodes: Array<
+                          | (Pick<
+                              StorefrontAPI.MediaImage,
+                              'id' | 'mediaContentType'
+                            > & {
+                              image?: StorefrontAPI.Maybe<
+                                Pick<
+                                  StorefrontAPI.Image,
+                                  'id' | 'url' | 'altText' | 'width' | 'height'
+                                >
+                              >;
+                            })
+                          | (Pick<
+                              StorefrontAPI.Video,
+                              'alt' | 'mediaContentType'
+                            > & {
+                              previewImage?: StorefrontAPI.Maybe<
+                                Pick<
+                                  StorefrontAPI.Image,
+                                  'id' | 'url' | 'altText' | 'width' | 'height'
+                                >
+                              >;
+                              sources: Array<
+                                Pick<
+                                  StorefrontAPI.VideoSource,
+                                  | 'url'
+                                  | 'mimeType'
+                                  | 'width'
+                                  | 'format'
+                                  | 'height'
+                                >
+                              >;
+                            })
+                        >;
+                      }>;
+                    }>;
+                    badges?: StorefrontAPI.Maybe<{
+                      references?: StorefrontAPI.Maybe<{
+                        nodes: Array<
+                          Pick<StorefrontAPI.Metaobject, 'id'> & {
+                            text?: StorefrontAPI.Maybe<
+                              Pick<StorefrontAPI.MetaobjectField, 'value'>
+                            >;
+                          }
+                        >;
+                      }>;
+                    }>;
+                    finish?: StorefrontAPI.Maybe<
+                      Pick<StorefrontAPI.Metafield, 'value'>
+                    >;
+                    protector?: StorefrontAPI.Maybe<
+                      Pick<StorefrontAPI.Metafield, 'value'>
+                    >;
+                    hideFromBundle?: StorefrontAPI.Maybe<
+                      Pick<StorefrontAPI.Metafield, 'value'>
+                    >;
+                    accordion?: StorefrontAPI.Maybe<{
+                      reference?: StorefrontAPI.Maybe<
+                        Pick<StorefrontAPI.Metaobject, 'id'> & {
+                          title?: StorefrontAPI.Maybe<
+                            Pick<StorefrontAPI.MetaobjectField, 'value'>
+                          >;
+                          text?: StorefrontAPI.Maybe<
+                            Pick<StorefrontAPI.MetaobjectField, 'value'>
+                          >;
+                        }
+                      >;
+                    }>;
+                  }
+                >;
+              }>;
+            }
+          >;
+        }>;
+      }>;
+      favoriteShades?: StorefrontAPI.Maybe<{
+        references?: StorefrontAPI.Maybe<{
+          nodes: Array<
+            Pick<
+              StorefrontAPI.ProductVariant,
+              'availableForSale' | 'id' | 'sku' | 'barcode' | 'title'
+            > & {
+              compareAtPrice?: StorefrontAPI.Maybe<
+                Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>
+              >;
+              image?: StorefrontAPI.Maybe<
+                Pick<
+                  StorefrontAPI.Image,
+                  'id' | 'url' | 'altText' | 'width' | 'height'
+                >
+              >;
+              price: Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>;
+              product: Pick<
+                StorefrontAPI.Product,
+                'title' | 'productType' | 'handle'
+              >;
+              selectedOptions: Array<
+                Pick<StorefrontAPI.SelectedOption, 'name' | 'value'>
+              >;
+              unitPrice?: StorefrontAPI.Maybe<
+                Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>
+              >;
+              tint?: StorefrontAPI.Maybe<{
+                reference?: StorefrontAPI.Maybe<{
+                  name?: StorefrontAPI.Maybe<
+                    Pick<StorefrontAPI.MetaobjectField, 'value'>
+                  >;
+                  color?: StorefrontAPI.Maybe<
+                    Pick<StorefrontAPI.MetaobjectField, 'value'>
+                  >;
+                  image?: StorefrontAPI.Maybe<{
+                    reference?: StorefrontAPI.Maybe<
+                      Pick<
+                        StorefrontAPI.MediaImage,
+                        'id' | 'mediaContentType'
+                      > & {
+                        image?: StorefrontAPI.Maybe<
+                          Pick<
+                            StorefrontAPI.Image,
+                            'id' | 'url' | 'altText' | 'width' | 'height'
+                          >
+                        >;
+                      }
+                    >;
+                  }>;
+                }>;
+              }>;
+              textureImg?: StorefrontAPI.Maybe<{
+                reference?: StorefrontAPI.Maybe<
+                  Pick<StorefrontAPI.MediaImage, 'id' | 'mediaContentType'> & {
+                    image?: StorefrontAPI.Maybe<
+                      Pick<
+                        StorefrontAPI.Image,
+                        'id' | 'url' | 'altText' | 'width' | 'height'
+                      >
+                    >;
+                  }
+                >;
+              }>;
+              galleryMedias?: StorefrontAPI.Maybe<{
+                references?: StorefrontAPI.Maybe<{
+                  nodes: Array<
+                    | (Pick<
+                        StorefrontAPI.MediaImage,
+                        'id' | 'mediaContentType'
+                      > & {
+                        image?: StorefrontAPI.Maybe<
+                          Pick<
+                            StorefrontAPI.Image,
+                            'id' | 'url' | 'altText' | 'width' | 'height'
+                          >
+                        >;
+                      })
+                    | (Pick<StorefrontAPI.Video, 'alt' | 'mediaContentType'> & {
+                        previewImage?: StorefrontAPI.Maybe<
+                          Pick<
+                            StorefrontAPI.Image,
+                            'id' | 'url' | 'altText' | 'width' | 'height'
+                          >
+                        >;
+                        sources: Array<
+                          Pick<
+                            StorefrontAPI.VideoSource,
+                            'url' | 'mimeType' | 'width' | 'format' | 'height'
+                          >
+                        >;
+                      })
+                  >;
+                }>;
+              }>;
+              badges?: StorefrontAPI.Maybe<{
+                references?: StorefrontAPI.Maybe<{
+                  nodes: Array<
+                    Pick<StorefrontAPI.Metaobject, 'id'> & {
+                      text?: StorefrontAPI.Maybe<
+                        Pick<StorefrontAPI.MetaobjectField, 'value'>
+                      >;
+                    }
+                  >;
+                }>;
+              }>;
+              finish?: StorefrontAPI.Maybe<
+                Pick<StorefrontAPI.Metafield, 'value'>
+              >;
+              protector?: StorefrontAPI.Maybe<
+                Pick<StorefrontAPI.Metafield, 'value'>
+              >;
+              hideFromBundle?: StorefrontAPI.Maybe<
+                Pick<StorefrontAPI.Metafield, 'value'>
+              >;
+              accordion?: StorefrontAPI.Maybe<{
+                reference?: StorefrontAPI.Maybe<
+                  Pick<StorefrontAPI.Metaobject, 'id'> & {
+                    title?: StorefrontAPI.Maybe<
+                      Pick<StorefrontAPI.MetaobjectField, 'value'>
+                    >;
+                    text?: StorefrontAPI.Maybe<
+                      Pick<StorefrontAPI.MetaobjectField, 'value'>
+                    >;
+                  }
+                >;
+              }>;
+            }
+          >;
+        }>;
+      }>;
+      complementaryProducts?: StorefrontAPI.Maybe<
+        Pick<StorefrontAPI.Metafield, 'value'> & {
+          references?: StorefrontAPI.Maybe<{
+            nodes: Array<
+              Pick<
+                StorefrontAPI.Product,
+                'id' | 'handle' | 'title' | 'vendor' | 'productType'
+              > & {
+                featuredImage?: StorefrontAPI.Maybe<
+                  Pick<
+                    StorefrontAPI.Image,
+                    'id' | 'url' | 'altText' | 'width' | 'height'
+                  >
+                >;
+                variants: {
+                  nodes: Array<
+                    Pick<
+                      StorefrontAPI.ProductVariant,
+                      'id' | 'title' | 'availableForSale'
+                    > & {
+                      image?: StorefrontAPI.Maybe<
+                        Pick<
+                          StorefrontAPI.Image,
+                          'id' | 'url' | 'altText' | 'width' | 'height'
+                        >
+                      >;
+                      price: Pick<
+                        StorefrontAPI.MoneyV2,
+                        'amount' | 'currencyCode'
+                      >;
+                      compareAtPrice?: StorefrontAPI.Maybe<
+                        Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>
+                      >;
+                      selectedOptions: Array<
+                        Pick<StorefrontAPI.SelectedOption, 'name' | 'value'>
+                      >;
+                      tint?: StorefrontAPI.Maybe<{
+                        reference?: StorefrontAPI.Maybe<{
+                          color?: StorefrontAPI.Maybe<
+                            Pick<StorefrontAPI.MetaobjectField, 'value'>
+                          >;
+                        }>;
+                      }>;
+                    }
+                  >;
+                };
+                defaultVariant?: StorefrontAPI.Maybe<{
+                  reference?: StorefrontAPI.Maybe<
+                    Pick<StorefrontAPI.ProductVariant, 'id'>
+                  >;
+                }>;
+                capacity?: StorefrontAPI.Maybe<
+                  Pick<StorefrontAPI.Metafield, 'value'>
+                >;
+                badges?: StorefrontAPI.Maybe<{
+                  references?: StorefrontAPI.Maybe<{
+                    nodes: Array<
+                      Pick<StorefrontAPI.Metaobject, 'id'> & {
+                        text?: StorefrontAPI.Maybe<
+                          Pick<StorefrontAPI.MetaobjectField, 'value'>
+                        >;
+                      }
+                    >;
+                  }>;
+                }>;
+                freeItems?: StorefrontAPI.Maybe<{
+                  references?: StorefrontAPI.Maybe<{
+                    nodes: Array<
+                      Pick<StorefrontAPI.Product, 'id' | 'handle' | 'title'> & {
+                        featuredImage?: StorefrontAPI.Maybe<
+                          Pick<
+                            StorefrontAPI.Image,
+                            'id' | 'url' | 'altText' | 'width' | 'height'
+                          >
+                        >;
+                      }
+                    >;
+                  }>;
+                }>;
+              }
+            >;
+          }>;
+        }
+      >;
+      accordions?: StorefrontAPI.Maybe<{
+        references?: StorefrontAPI.Maybe<{
+          nodes: Array<
+            Pick<StorefrontAPI.Metaobject, 'id'> & {
+              title?: StorefrontAPI.Maybe<
+                Pick<StorefrontAPI.MetaobjectField, 'value'>
+              >;
+              text?: StorefrontAPI.Maybe<
+                Pick<StorefrontAPI.MetaobjectField, 'value'>
+              >;
+            }
+          >;
+        }>;
+      }>;
+      featuresTitle?: StorefrontAPI.Maybe<
+        Pick<StorefrontAPI.Metafield, 'value'>
+      >;
+      features?: StorefrontAPI.Maybe<{
+        references?: StorefrontAPI.Maybe<{
+          nodes: Array<
+            Pick<StorefrontAPI.Metaobject, 'id'> & {
+              icon?: StorefrontAPI.Maybe<{
+                reference?: StorefrontAPI.Maybe<{
+                  image?: StorefrontAPI.Maybe<
+                    Pick<
+                      StorefrontAPI.Image,
+                      'id' | 'url' | 'altText' | 'width' | 'height'
+                    >
+                  >;
+                }>;
+              }>;
+              text?: StorefrontAPI.Maybe<
+                Pick<StorefrontAPI.MetaobjectField, 'value'>
+              >;
+            }
+          >;
+        }>;
+      }>;
+      bundleComponents?: StorefrontAPI.Maybe<{
+        references?: StorefrontAPI.Maybe<{
+          nodes: Array<
+            Pick<
+              StorefrontAPI.Product,
+              'id' | 'handle' | 'title' | 'vendor' | 'productType'
+            > & {
+              featuredImage?: StorefrontAPI.Maybe<
+                Pick<
+                  StorefrontAPI.Image,
+                  'id' | 'url' | 'altText' | 'width' | 'height'
+                >
+              >;
+              variants: {
+                nodes: Array<
+                  Pick<
+                    StorefrontAPI.ProductVariant,
+                    'id' | 'title' | 'availableForSale'
+                  > & {
+                    image?: StorefrontAPI.Maybe<
+                      Pick<
+                        StorefrontAPI.Image,
+                        'id' | 'url' | 'altText' | 'width' | 'height'
+                      >
+                    >;
+                    price: Pick<
+                      StorefrontAPI.MoneyV2,
+                      'amount' | 'currencyCode'
+                    >;
+                    compareAtPrice?: StorefrontAPI.Maybe<
+                      Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>
+                    >;
+                    selectedOptions: Array<
+                      Pick<StorefrontAPI.SelectedOption, 'name' | 'value'>
+                    >;
+                    tint?: StorefrontAPI.Maybe<{
+                      reference?: StorefrontAPI.Maybe<{
+                        color?: StorefrontAPI.Maybe<
+                          Pick<StorefrontAPI.MetaobjectField, 'value'>
+                        >;
+                      }>;
+                    }>;
+                  }
+                >;
+              };
+              defaultVariant?: StorefrontAPI.Maybe<{
+                reference?: StorefrontAPI.Maybe<
+                  Pick<StorefrontAPI.ProductVariant, 'id'>
+                >;
+              }>;
+              capacity?: StorefrontAPI.Maybe<
+                Pick<StorefrontAPI.Metafield, 'value'>
+              >;
+              badges?: StorefrontAPI.Maybe<{
+                references?: StorefrontAPI.Maybe<{
+                  nodes: Array<
+                    Pick<StorefrontAPI.Metaobject, 'id'> & {
+                      text?: StorefrontAPI.Maybe<
+                        Pick<StorefrontAPI.MetaobjectField, 'value'>
+                      >;
+                    }
+                  >;
+                }>;
+              }>;
+              freeItems?: StorefrontAPI.Maybe<{
+                references?: StorefrontAPI.Maybe<{
+                  nodes: Array<
+                    Pick<StorefrontAPI.Product, 'id' | 'handle' | 'title'> & {
+                      featuredImage?: StorefrontAPI.Maybe<
+                        Pick<
+                          StorefrontAPI.Image,
+                          'id' | 'url' | 'altText' | 'width' | 'height'
+                        >
+                      >;
+                    }
+                  >;
+                }>;
+              }>;
+            }
+          >;
+        }>;
+      }>;
+      freeItems?: StorefrontAPI.Maybe<{
+        references?: StorefrontAPI.Maybe<{
+          nodes: Array<
+            Pick<StorefrontAPI.Product, 'id' | 'handle' | 'title'> & {
+              featuredImage?: StorefrontAPI.Maybe<
+                Pick<
+                  StorefrontAPI.Image,
+                  'url' | 'altText' | 'width' | 'height'
+                >
+              >;
+              priceRange: {
+                minVariantPrice: Pick<
+                  StorefrontAPI.MoneyV2,
+                  'amount' | 'currencyCode'
+                >;
+              };
+            }
+          >;
+        }>;
+      }>;
+      videoSection?: StorefrontAPI.Maybe<{
+        reference?: StorefrontAPI.Maybe<
+          Pick<StorefrontAPI.Metaobject, 'id' | 'type'> & {
+            title?: StorefrontAPI.Maybe<
+              Pick<StorefrontAPI.MetaobjectField, 'value'>
+            >;
+            text?: StorefrontAPI.Maybe<
+              Pick<StorefrontAPI.MetaobjectField, 'value'>
+            >;
+            file?: StorefrontAPI.Maybe<{
+              reference?: StorefrontAPI.Maybe<
+                Pick<StorefrontAPI.Video, 'alt'> & {
+                  previewImage?: StorefrontAPI.Maybe<
+                    Pick<
+                      StorefrontAPI.Image,
+                      'id' | 'url' | 'altText' | 'width' | 'height'
+                    >
+                  >;
+                  sources: Array<
+                    Pick<
+                      StorefrontAPI.VideoSource,
+                      'url' | 'mimeType' | 'width' | 'format' | 'height'
+                    >
+                  >;
+                }
+              >;
+            }>;
+          }
+        >;
+      }>;
+      seo: Pick<StorefrontAPI.Seo, 'description' | 'title'>;
+    }
+  >;
+};
+
+export type ShadeProductRecommendationsQueryVariables = StorefrontAPI.Exact<{
+  productHandle: StorefrontAPI.Scalars['String']['input'];
+  language?: StorefrontAPI.InputMaybe<StorefrontAPI.LanguageCode>;
+  country?: StorefrontAPI.InputMaybe<StorefrontAPI.CountryCode>;
+}>;
+
+export type ShadeProductRecommendationsQuery = {
+  productRecommendations?: StorefrontAPI.Maybe<
+    Array<
+      Pick<
+        StorefrontAPI.Product,
+        'id' | 'handle' | 'title' | 'vendor' | 'productType'
+      > & {
+        featuredImage?: StorefrontAPI.Maybe<
+          Pick<
+            StorefrontAPI.Image,
+            'id' | 'url' | 'altText' | 'width' | 'height'
+          >
+        >;
+        variants: {
+          nodes: Array<
+            Pick<
+              StorefrontAPI.ProductVariant,
+              'id' | 'title' | 'availableForSale'
+            > & {
+              image?: StorefrontAPI.Maybe<
+                Pick<
+                  StorefrontAPI.Image,
+                  'id' | 'url' | 'altText' | 'width' | 'height'
+                >
+              >;
+              price: Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>;
+              compareAtPrice?: StorefrontAPI.Maybe<
+                Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>
+              >;
+              selectedOptions: Array<
+                Pick<StorefrontAPI.SelectedOption, 'name' | 'value'>
+              >;
+              tint?: StorefrontAPI.Maybe<{
+                reference?: StorefrontAPI.Maybe<{
+                  color?: StorefrontAPI.Maybe<
+                    Pick<StorefrontAPI.MetaobjectField, 'value'>
+                  >;
+                }>;
+              }>;
+            }
+          >;
+        };
+        defaultVariant?: StorefrontAPI.Maybe<{
+          reference?: StorefrontAPI.Maybe<
+            Pick<StorefrontAPI.ProductVariant, 'id'>
+          >;
+        }>;
+        capacity?: StorefrontAPI.Maybe<Pick<StorefrontAPI.Metafield, 'value'>>;
+        badges?: StorefrontAPI.Maybe<{
+          references?: StorefrontAPI.Maybe<{
+            nodes: Array<
+              Pick<StorefrontAPI.Metaobject, 'id'> & {
+                text?: StorefrontAPI.Maybe<
+                  Pick<StorefrontAPI.MetaobjectField, 'value'>
+                >;
+              }
+            >;
+          }>;
+        }>;
+        freeItems?: StorefrontAPI.Maybe<{
+          references?: StorefrontAPI.Maybe<{
+            nodes: Array<
+              Pick<StorefrontAPI.Product, 'id' | 'handle' | 'title'> & {
+                featuredImage?: StorefrontAPI.Maybe<
+                  Pick<
+                    StorefrontAPI.Image,
+                    'id' | 'url' | 'altText' | 'width' | 'height'
+                  >
+                >;
+              }
+            >;
+          }>;
+        }>;
+      }
+    >
+  >;
+};
+
 export type RegularSearchQueryVariables = StorefrontAPI.Exact<{
   country?: StorefrontAPI.InputMaybe<StorefrontAPI.CountryCode>;
   endCursor?: StorefrontAPI.InputMaybe<
@@ -6665,6 +7928,14 @@ interface GeneratedQueryTypes {
   '#graphql\n  query Product(\n    $language: LanguageCode\n    $country: CountryCode\n    $handle: String!\n    $selectedOptions: [SelectedOptionInput!]!\n  ) @inContext(language: $language, country: $country) {\n    product(handle: $handle) {\n      ...Product\n    }\n  }\n  #graphql\n  fragment ImageProduct on Image {\n    id\n    url\n    altText\n    width\n    height\n  }\n  fragment Video on Video {\n    alt\n    previewImage{\n      ...ImageProduct\n    }\n    sources {\n      ...VideoSource\n    }\n  }\n  fragment VideoSource on VideoSource {\n    url\n    mimeType\n    width\n    format\n    height\n  }\n  fragment MainColor on Product{\n    id\n    title\n    handle\n    variants(first: 1) {\n      nodes {\n        ...ProductVariant\n      }\n    }\n    mainColor: metafield(namespace: "custom", key: "maincolor") {\n      reference {\n        ...on Metaobject{\n          id\n          name: field(key: "name") {\n            value\n          }\n          code: field(key: "code") {\n            value\n          }\n        }\n      }\n    }\n    defaultVariant: metafield(namespace: "custom", key: "default_variant") {\n      reference {\n        ...ProductVariant\n      }\n    }\n  }\n  fragment Product on Product {\n    id\n    title\n    productType\n    vendor\n    handle\n    description\n    featuredImage {\n      ...ImageProduct\n    }\n    media(first: 100) {\n      nodes {\n        id\n        mediaContentType\n        ... on MediaImage {\n          image {\n            ...ImageProduct\n          }\n        }\n        ...Video\n      }\n    }\n    options {\n      name\n      optionValues {\n        name\n      }\n    }\n    variants(first: 250) {\n      nodes {\n        ...ProductVariant\n      }\n    }\n    selectedVariant: variantBySelectedOptions(selectedOptions: $selectedOptions, ignoreUnknownOptions: true, caseInsensitiveMatch: true) {\n      ...ProductVariant\n    }\n    canonicalCollection: metafield(namespace: "custom", key: "canonical_collection") {\n      reference {\n        ... on Collection {\n          handle\n          title\n          parentCollection: metafield(namespace: "custom", key: "parent_collection") {\n            reference {\n              ... on Collection {\n                handle\n                title\n                parentCollection: metafield(namespace: "custom", key: "parent_collection") {\n                  reference {\n                    ... on Collection {\n                      handle\n                      title\n                    }\n                  }\n                }\n              }\n            }\n          }\n        }\n      }\n    }\n    canonicalProduct: metafield(namespace: "custom", key: "canonical_product") {\n      reference {\n        ... on Product {\n          handle\n          title\n        }\n      }\n    }\n    defaultVariant: metafield(namespace: "custom", key: "default_variant") {\n      reference {\n        ...ProductVariant\n      }\n    }\n    badges: metafield(namespace: "custom", key: "badges") {\n      references(first: 2) {\n        nodes {\n          ...on Metaobject{\n            id\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n    capacity: metafield(namespace: "custom", key: "capacity") {\n      value\n    }\n    reassurances: metafield(namespace: "custom", key: "reassurances") {\n      references(first: 3) {\n        nodes {\n          ...on Metaobject {\n            id\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n    mainColor: metafield(namespace: "custom", key: "maincolor") {\n      reference {\n        ...on Metaobject{\n          id\n          name: field(key: "name") {\n            value\n          }\n          code: field(key: "code") {\n            value\n          }\n        }\n      }\n    }\n    associatedProducts: metafield(namespace: "custom", key: "associated_products") {\n      references(first: 20) {\n        nodes {\n          ...on Product{\n            ...MainColor\n          }\n        }\n      }\n    }\n    favoriteShades: metafield(namespace: "custom", key: "favorite_shades") {\n      references(first: 6) {\n        nodes {\n          ...ProductVariant\n        }\n      }\n    }\n    complementaryProducts: metafield(\n      namespace: "shopify--discovery--product_recommendation"\n      key: "complementary_products"\n    ) {\n      value\n      references(first: 10) {\n        nodes {\n          ...ProductItem\n        }\n      }\n    }\n    accordions: metafield(namespace: "custom", key: "accordions") {\n      references(first: 10) {\n        nodes {\n          ... on Metaobject {\n            id\n            title: field(key: "title") {\n              value\n            }\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n    featuresTitle: metafield(namespace: "custom", key: "features_title") {\n      value\n    }\n    features: metafield(namespace: "custom", key: "features") {\n      references(first: 10) {\n        nodes {\n          ... on Metaobject {\n            id\n            icon: field(key: "icon") {\n              reference {\n                ... on MediaImage {\n                  image {\n                    ...ImageProduct\n                  }\n                }\n              }\n            }\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n    bundleComponents: metafield(namespace: "custom", key: "bundle_components") {\n      references(first: 10) {\n        nodes {\n          ...ProductItem\n        }\n      }\n    }\n    freeItems: metafield(namespace: "custom", key: "free_items_in_bundle") {\n      references(first: 10) {\n        nodes {\n          ... on Product {\n            id\n            handle\n            title\n            featuredImage {\n              url\n              altText\n              width\n              height\n            }\n            priceRange {\n              minVariantPrice {\n                amount\n                currencyCode\n              }\n            }\n          }\n        }\n      }\n    }\n    videoSection: metafield(namespace: "custom", key: "video_section") {\n      reference {\n        ...on Metaobject{\n          id\n          type\n          title: field(key: "title") {\n            value\n          }\n          text: field(key: "text") {\n            value\n          }\n          file: field(key: "file") {\n            reference{\n              ...Video\n            }\n          }\n        }\n      }\n    }\n    seo {\n      description\n      title\n    }\n  }\n  #graphql\n  fragment ImageProductVariant on Image{\n    id\n    url\n    altText\n    width\n    height\n  }\n  fragment VideoSourceVariant on VideoSource {\n    url\n    mimeType\n    width\n    format\n    height\n  }\n  fragment ProductVariant on ProductVariant {\n    availableForSale\n    compareAtPrice {\n      amount\n      currencyCode\n    }\n    id\n    image {\n      ...ImageProductVariant\n    }\n    price {\n      amount\n      currencyCode\n    }\n    product {\n      title\n      productType\n      handle\n    }\n    selectedOptions {\n      name\n      value\n    }\n    sku\n    barcode\n    title\n    unitPrice {\n      amount\n      currencyCode\n    }\n    tint: metafield(namespace: "custom", key: "tint") {\n      reference {\n        ...on Metaobject{\n          name: field(key: "name") {\n            value\n          }\n          color: field(key: "color") {\n            value\n          }\n          image: field(key: "image") {\n            reference{\n              ... on MediaImage{\n                id\n                mediaContentType\n                image{\n                  ...ImageProductVariant\n                }\n              }\n            }\n          }\n        }\n      }\n    }\n    textureImg: metafield(namespace: "custom", key: "texture_img") {\n      reference{\n        ... on MediaImage {\n          id\n          mediaContentType\n          image {\n            ...ImageProductVariant\n          }\n        }\n      }\n    }\n    galleryMedias: metafield(namespace: "custom", key: "gallery_medias") {\n      references(first: 100) {\n        nodes {\n          ... on MediaImage {\n            id\n            mediaContentType\n            image {\n              ...ImageProductVariant\n            }\n          }\n          ... on Video {\n            alt\n            mediaContentType\n            previewImage{\n              ...ImageProductVariant\n            }\n            sources {\n              ...VideoSourceVariant\n            }\n          }\n        }\n      }\n    }\n    badges: metafield(namespace: "custom", key: "badges") {\n      references(first: 2) {\n        nodes {\n          ...on Metaobject{\n            id\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n    finish: metafield(namespace: "custom", key: "finish") {\n      value\n    }\n    protector: metafield(namespace: "custom", key: "protector") {\n      value\n    }\n    hideFromBundle: metafield(namespace: "custom", key: "hide_from_bundle") {\n      value\n    }\n    accordion: metafield(namespace: "custom", key: "accordion") {\n      reference {\n        ... on Metaobject {\n          id\n          title: field(key: "title") {\n            value\n          }\n          text: field(key: "text") {\n            value\n          }\n        }\n      }\n    }\n  }\n\n  #graphql\n  fragment Image on Image {\n    id\n    url\n    altText\n    width\n    height\n  }\n  fragment ProductVariantItem on ProductVariant {\n    id\n    title\n    image {\n      ...Image\n    }\n    price {\n      amount\n      currencyCode\n    }\n    compareAtPrice {\n      amount\n      currencyCode\n    }\n    availableForSale\n    selectedOptions {\n      name\n      value\n    }\n    tint: metafield(namespace: "custom", key: "tint") {\n      reference {\n        ...on Metaobject{\n          color: field(key: "color") {\n            value\n          }\n        }\n      }\n    }\n  }\n  fragment ProductItem on Product {\n    id\n    handle\n    title\n    vendor\n    productType\n    featuredImage {\n      ...Image\n    }\n    variants(first: 250) {\n      nodes {\n        ...ProductVariantItem\n      }\n    }\n    defaultVariant: metafield(namespace: "custom", key: "default_variant") {\n      reference {\n        ... on ProductVariant {\n          id\n        }\n      }\n    }\n    capacity: metafield(namespace: "custom", key: "capacity") {\n      value\n    }\n    badges: metafield(namespace: "custom", key: "badges") {\n      references(first: 2) {\n        nodes {\n          ...on Metaobject{\n            id\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n    freeItems: metafield(namespace: "custom", key: "free_items_in_bundle") {\n      references(first: 10) {\n        nodes {\n          ...on Product {\n            id\n            handle\n            title\n            featuredImage {\n              ...Image\n            }\n          }\n        }\n      }\n    }\n  }\n\n\n': {
     return: ProductQuery;
     variables: ProductQueryVariables;
+  };
+  '#graphql\n  query ShadeProduct(\n    $language: LanguageCode\n    $country: CountryCode\n    $handle: String!\n    $selectedOptions: [SelectedOptionInput!]!\n  ) @inContext(language: $language, country: $country) {\n    product(handle: $handle) {\n      ...Product\n    }\n  }\n  #graphql\n  fragment ImageProduct on Image {\n    id\n    url\n    altText\n    width\n    height\n  }\n  fragment Video on Video {\n    alt\n    previewImage{\n      ...ImageProduct\n    }\n    sources {\n      ...VideoSource\n    }\n  }\n  fragment VideoSource on VideoSource {\n    url\n    mimeType\n    width\n    format\n    height\n  }\n  fragment MainColor on Product{\n    id\n    title\n    handle\n    variants(first: 1) {\n      nodes {\n        ...ProductVariant\n      }\n    }\n    mainColor: metafield(namespace: "custom", key: "maincolor") {\n      reference {\n        ...on Metaobject{\n          id\n          name: field(key: "name") {\n            value\n          }\n          code: field(key: "code") {\n            value\n          }\n        }\n      }\n    }\n    defaultVariant: metafield(namespace: "custom", key: "default_variant") {\n      reference {\n        ...ProductVariant\n      }\n    }\n  }\n  fragment Product on Product {\n    id\n    title\n    productType\n    vendor\n    handle\n    description\n    featuredImage {\n      ...ImageProduct\n    }\n    media(first: 100) {\n      nodes {\n        id\n        mediaContentType\n        ... on MediaImage {\n          image {\n            ...ImageProduct\n          }\n        }\n        ...Video\n      }\n    }\n    options {\n      name\n      optionValues {\n        name\n      }\n    }\n    variants(first: 250) {\n      nodes {\n        ...ProductVariant\n      }\n    }\n    selectedVariant: variantBySelectedOptions(selectedOptions: $selectedOptions, ignoreUnknownOptions: true, caseInsensitiveMatch: true) {\n      ...ProductVariant\n    }\n    canonicalCollection: metafield(namespace: "custom", key: "canonical_collection") {\n      reference {\n        ... on Collection {\n          handle\n          title\n          parentCollection: metafield(namespace: "custom", key: "parent_collection") {\n            reference {\n              ... on Collection {\n                handle\n                title\n                parentCollection: metafield(namespace: "custom", key: "parent_collection") {\n                  reference {\n                    ... on Collection {\n                      handle\n                      title\n                    }\n                  }\n                }\n              }\n            }\n          }\n        }\n      }\n    }\n    canonicalProduct: metafield(namespace: "custom", key: "canonical_product") {\n      reference {\n        ... on Product {\n          handle\n          title\n        }\n      }\n    }\n    defaultVariant: metafield(namespace: "custom", key: "default_variant") {\n      reference {\n        ...ProductVariant\n      }\n    }\n    badges: metafield(namespace: "custom", key: "badges") {\n      references(first: 2) {\n        nodes {\n          ...on Metaobject{\n            id\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n    capacity: metafield(namespace: "custom", key: "capacity") {\n      value\n    }\n    reassurances: metafield(namespace: "custom", key: "reassurances") {\n      references(first: 3) {\n        nodes {\n          ...on Metaobject {\n            id\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n    mainColor: metafield(namespace: "custom", key: "maincolor") {\n      reference {\n        ...on Metaobject{\n          id\n          name: field(key: "name") {\n            value\n          }\n          code: field(key: "code") {\n            value\n          }\n        }\n      }\n    }\n    associatedProducts: metafield(namespace: "custom", key: "associated_products") {\n      references(first: 20) {\n        nodes {\n          ...on Product{\n            ...MainColor\n          }\n        }\n      }\n    }\n    favoriteShades: metafield(namespace: "custom", key: "favorite_shades") {\n      references(first: 6) {\n        nodes {\n          ...ProductVariant\n        }\n      }\n    }\n    complementaryProducts: metafield(\n      namespace: "shopify--discovery--product_recommendation"\n      key: "complementary_products"\n    ) {\n      value\n      references(first: 10) {\n        nodes {\n          ...ProductItem\n        }\n      }\n    }\n    accordions: metafield(namespace: "custom", key: "accordions") {\n      references(first: 10) {\n        nodes {\n          ... on Metaobject {\n            id\n            title: field(key: "title") {\n              value\n            }\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n    featuresTitle: metafield(namespace: "custom", key: "features_title") {\n      value\n    }\n    features: metafield(namespace: "custom", key: "features") {\n      references(first: 10) {\n        nodes {\n          ... on Metaobject {\n            id\n            icon: field(key: "icon") {\n              reference {\n                ... on MediaImage {\n                  image {\n                    ...ImageProduct\n                  }\n                }\n              }\n            }\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n    bundleComponents: metafield(namespace: "custom", key: "bundle_components") {\n      references(first: 10) {\n        nodes {\n          ...ProductItem\n        }\n      }\n    }\n    freeItems: metafield(namespace: "custom", key: "free_items_in_bundle") {\n      references(first: 10) {\n        nodes {\n          ... on Product {\n            id\n            handle\n            title\n            featuredImage {\n              url\n              altText\n              width\n              height\n            }\n            priceRange {\n              minVariantPrice {\n                amount\n                currencyCode\n              }\n            }\n          }\n        }\n      }\n    }\n    videoSection: metafield(namespace: "custom", key: "video_section") {\n      reference {\n        ...on Metaobject{\n          id\n          type\n          title: field(key: "title") {\n            value\n          }\n          text: field(key: "text") {\n            value\n          }\n          file: field(key: "file") {\n            reference{\n              ...Video\n            }\n          }\n        }\n      }\n    }\n    seo {\n      description\n      title\n    }\n  }\n  #graphql\n  fragment ImageProductVariant on Image{\n    id\n    url\n    altText\n    width\n    height\n  }\n  fragment VideoSourceVariant on VideoSource {\n    url\n    mimeType\n    width\n    format\n    height\n  }\n  fragment ProductVariant on ProductVariant {\n    availableForSale\n    compareAtPrice {\n      amount\n      currencyCode\n    }\n    id\n    image {\n      ...ImageProductVariant\n    }\n    price {\n      amount\n      currencyCode\n    }\n    product {\n      title\n      productType\n      handle\n    }\n    selectedOptions {\n      name\n      value\n    }\n    sku\n    barcode\n    title\n    unitPrice {\n      amount\n      currencyCode\n    }\n    tint: metafield(namespace: "custom", key: "tint") {\n      reference {\n        ...on Metaobject{\n          name: field(key: "name") {\n            value\n          }\n          color: field(key: "color") {\n            value\n          }\n          image: field(key: "image") {\n            reference{\n              ... on MediaImage{\n                id\n                mediaContentType\n                image{\n                  ...ImageProductVariant\n                }\n              }\n            }\n          }\n        }\n      }\n    }\n    textureImg: metafield(namespace: "custom", key: "texture_img") {\n      reference{\n        ... on MediaImage {\n          id\n          mediaContentType\n          image {\n            ...ImageProductVariant\n          }\n        }\n      }\n    }\n    galleryMedias: metafield(namespace: "custom", key: "gallery_medias") {\n      references(first: 100) {\n        nodes {\n          ... on MediaImage {\n            id\n            mediaContentType\n            image {\n              ...ImageProductVariant\n            }\n          }\n          ... on Video {\n            alt\n            mediaContentType\n            previewImage{\n              ...ImageProductVariant\n            }\n            sources {\n              ...VideoSourceVariant\n            }\n          }\n        }\n      }\n    }\n    badges: metafield(namespace: "custom", key: "badges") {\n      references(first: 2) {\n        nodes {\n          ...on Metaobject{\n            id\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n    finish: metafield(namespace: "custom", key: "finish") {\n      value\n    }\n    protector: metafield(namespace: "custom", key: "protector") {\n      value\n    }\n    hideFromBundle: metafield(namespace: "custom", key: "hide_from_bundle") {\n      value\n    }\n    accordion: metafield(namespace: "custom", key: "accordion") {\n      reference {\n        ... on Metaobject {\n          id\n          title: field(key: "title") {\n            value\n          }\n          text: field(key: "text") {\n            value\n          }\n        }\n      }\n    }\n  }\n\n  #graphql\n  fragment Image on Image {\n    id\n    url\n    altText\n    width\n    height\n  }\n  fragment ProductVariantItem on ProductVariant {\n    id\n    title\n    image {\n      ...Image\n    }\n    price {\n      amount\n      currencyCode\n    }\n    compareAtPrice {\n      amount\n      currencyCode\n    }\n    availableForSale\n    selectedOptions {\n      name\n      value\n    }\n    tint: metafield(namespace: "custom", key: "tint") {\n      reference {\n        ...on Metaobject{\n          color: field(key: "color") {\n            value\n          }\n        }\n      }\n    }\n  }\n  fragment ProductItem on Product {\n    id\n    handle\n    title\n    vendor\n    productType\n    featuredImage {\n      ...Image\n    }\n    variants(first: 250) {\n      nodes {\n        ...ProductVariantItem\n      }\n    }\n    defaultVariant: metafield(namespace: "custom", key: "default_variant") {\n      reference {\n        ... on ProductVariant {\n          id\n        }\n      }\n    }\n    capacity: metafield(namespace: "custom", key: "capacity") {\n      value\n    }\n    badges: metafield(namespace: "custom", key: "badges") {\n      references(first: 2) {\n        nodes {\n          ...on Metaobject{\n            id\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n    freeItems: metafield(namespace: "custom", key: "free_items_in_bundle") {\n      references(first: 10) {\n        nodes {\n          ...on Product {\n            id\n            handle\n            title\n            featuredImage {\n              ...Image\n            }\n          }\n        }\n      }\n    }\n  }\n\n\n': {
+    return: ShadeProductQuery;
+    variables: ShadeProductQueryVariables;
+  };
+  '#graphql\n  query ShadeProductRecommendations(\n    $productHandle: String!\n    $language: LanguageCode\n    $country: CountryCode\n  ) @inContext(language: $language, country: $country) {\n    productRecommendations(productHandle: $productHandle) {\n      ...ProductItem\n    }\n  }\n  #graphql\n  fragment Image on Image {\n    id\n    url\n    altText\n    width\n    height\n  }\n  fragment ProductVariantItem on ProductVariant {\n    id\n    title\n    image {\n      ...Image\n    }\n    price {\n      amount\n      currencyCode\n    }\n    compareAtPrice {\n      amount\n      currencyCode\n    }\n    availableForSale\n    selectedOptions {\n      name\n      value\n    }\n    tint: metafield(namespace: "custom", key: "tint") {\n      reference {\n        ...on Metaobject{\n          color: field(key: "color") {\n            value\n          }\n        }\n      }\n    }\n  }\n  fragment ProductItem on Product {\n    id\n    handle\n    title\n    vendor\n    productType\n    featuredImage {\n      ...Image\n    }\n    variants(first: 250) {\n      nodes {\n        ...ProductVariantItem\n      }\n    }\n    defaultVariant: metafield(namespace: "custom", key: "default_variant") {\n      reference {\n        ... on ProductVariant {\n          id\n        }\n      }\n    }\n    capacity: metafield(namespace: "custom", key: "capacity") {\n      value\n    }\n    badges: metafield(namespace: "custom", key: "badges") {\n      references(first: 2) {\n        nodes {\n          ...on Metaobject{\n            id\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n    freeItems: metafield(namespace: "custom", key: "free_items_in_bundle") {\n      references(first: 10) {\n        nodes {\n          ...on Product {\n            id\n            handle\n            title\n            featuredImage {\n              ...Image\n            }\n          }\n        }\n      }\n    }\n  }\n\n': {
+    return: ShadeProductRecommendationsQuery;
+    variables: ShadeProductRecommendationsQueryVariables;
   };
   '#graphql\n  query RegularSearch(\n    $country: CountryCode\n    $endCursor: String\n    $first: Int\n    $language: LanguageCode\n    $last: Int\n    $term: String!\n    $startCursor: String\n  ) @inContext(country: $country, language: $language) {\n    products: search(\n      after: $endCursor,\n      before: $startCursor,\n      first: $first,\n      last: $last,\n      query: $term,\n      sortKey: RELEVANCE,\n      types: [PRODUCT],\n      unavailableProducts: SHOW,\n      productFilters: [ {\n         price:  {\n            min: 0.1,\n         }\n      }]\n    ) {\n      nodes {\n        ...on Product {\n          ...ProductItem\n        }\n      }\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      totalCount\n    }\n  }\n  #graphql\n  fragment Image on Image {\n    id\n    url\n    altText\n    width\n    height\n  }\n  fragment ProductVariantItem on ProductVariant {\n    id\n    title\n    image {\n      ...Image\n    }\n    price {\n      amount\n      currencyCode\n    }\n    compareAtPrice {\n      amount\n      currencyCode\n    }\n    availableForSale\n    selectedOptions {\n      name\n      value\n    }\n    tint: metafield(namespace: "custom", key: "tint") {\n      reference {\n        ...on Metaobject{\n          color: field(key: "color") {\n            value\n          }\n        }\n      }\n    }\n  }\n  fragment ProductItem on Product {\n    id\n    handle\n    title\n    vendor\n    productType\n    featuredImage {\n      ...Image\n    }\n    variants(first: 250) {\n      nodes {\n        ...ProductVariantItem\n      }\n    }\n    defaultVariant: metafield(namespace: "custom", key: "default_variant") {\n      reference {\n        ... on ProductVariant {\n          id\n        }\n      }\n    }\n    capacity: metafield(namespace: "custom", key: "capacity") {\n      value\n    }\n    badges: metafield(namespace: "custom", key: "badges") {\n      references(first: 2) {\n        nodes {\n          ...on Metaobject{\n            id\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n    freeItems: metafield(namespace: "custom", key: "free_items_in_bundle") {\n      references(first: 10) {\n        nodes {\n          ...on Product {\n            id\n            handle\n            title\n            featuredImage {\n              ...Image\n            }\n          }\n        }\n      }\n    }\n  }\n\n': {
     return: RegularSearchQuery;

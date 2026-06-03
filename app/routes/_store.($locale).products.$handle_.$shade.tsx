@@ -76,7 +76,9 @@ async function loadCriticalData({
     queryKey: ['product', handle, []],
     queryFn: async () => {
       const {product: p} = await storefront.query(SHADE_PRODUCT_QUERY, {
-        variables: {handle},
+        // selectedOptions: [] so variantBySelectedOptions returns null;
+        // we inject the path-resolved variant below.
+        variables: {handle, selectedOptions: []},
         cache: storefront.CacheShort(),
       });
       return p as ProductFragment | null;
@@ -268,16 +270,17 @@ export default function ShadeProduct() {
 // ── GraphQL ──────────────────────────────────────────────────────────────────
 
 /**
- * Product query without pre-selected options.
- * We resolve the shade from params.shade via findVariantBySlug, then inject
- * the resolved variant as selectedVariant. Using $selectedOptions: [] means
- * variantBySelectedOptions returns null, which we overwrite.
+ * Product query for the shade route.
+ * $selectedOptions is declared (required by PRODUCT_FRAGMENT) but passed as []
+ * so variantBySelectedOptions returns null. We overwrite selectedVariant with
+ * the path-resolved variant from findVariantBySlug.
  */
 const SHADE_PRODUCT_QUERY = `#graphql
   query ShadeProduct(
     $language: LanguageCode
     $country: CountryCode
     $handle: String!
+    $selectedOptions: [SelectedOptionInput!]!
   ) @inContext(language: $language, country: $country) {
     product(handle: $handle) {
       ...Product
