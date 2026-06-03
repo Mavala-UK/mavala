@@ -60,7 +60,7 @@ export async function loader({
 const sitemapQuery = groq`
   *[
     _type == "home" ||
-    _type == "page" ||
+    (_type == "page" && slug.current != "blog") ||
     (_type == "article" && defined(slug.current) && defined(category->slug.current))
   ] {
     _updatedAt,
