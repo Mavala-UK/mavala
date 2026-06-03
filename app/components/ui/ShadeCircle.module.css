@@ -3,6 +3,7 @@
   place-items: center;
   inline-size: var(--size-color);
   block-size: var(--size-color);
+  overflow: hidden;
   overflow: clip;
   border-radius: 50%;
 

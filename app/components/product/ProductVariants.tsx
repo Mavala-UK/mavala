@@ -1,5 +1,5 @@
 import {useEffect, useId} from 'react';
-import {cn} from '~/lib/utils';
+import {cn, hasSearchParams} from '~/lib/utils';
 import {Chromatic} from '../icons/Chromatic';
 import {FormattedMessage} from 'react-intl';
 import {Text} from '../ui/Text';
@@ -66,7 +66,7 @@ export function ProductVariants({className}: {className?: string}) {
       option,
     ];
 
-    if (searchParams.size > 0) {
+    if (hasSearchParams(searchParams)) {
       const newSearchParams = new URLSearchParams(
         newSelectedOptions?.map((option) => [option.name, option.value]),
       );
