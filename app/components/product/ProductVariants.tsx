@@ -143,7 +143,8 @@ export function ProductVariants({className}: {className?: string}) {
                     ? buildShadePath(handle ?? '', optionValue.value, pathPrefix)
                     : undefined;
                   const isPathActive = isShadeOpt
-                    ? optionValue.value === activeShadeValue
+                    ? optionValue.value.toLowerCase() ===
+                      (activeShadeValue?.toLowerCase() ?? '')
                     : optionValue.isActive;
                   return (
                     <ShadeOption

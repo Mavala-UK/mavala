@@ -155,7 +155,7 @@ async function loadCriticalData({
     // if no selected variant was returned from the selected options,
     // we redirect to the first variant's url with it's selected options applied
     if (!product.selectedVariant) {
-      throw redirectToFirstVariant({product, request, pathPrefix});
+      throw redirectToFirstVariant({product, pathPrefix});
     }
   }
 
@@ -200,6 +200,8 @@ async function loadCriticalData({
     env.PRIVATE_YOTPO_APP_KEY as string,
   );
 
+  const requestOrigin = new URL(request.url).origin;
+
   const seo = {
     title: product.seo.title ?? product.title,
     titleTemplate: product.seo.title ? '%s' : undefined,
@@ -225,7 +227,7 @@ async function loadCriticalData({
           position: index + 1,
           name: item.title,
           item: item.pathname
-            ? `${new URL(request.url).origin}${item.pathname}`
+            ? `${requestOrigin}${item.pathname}`
             : undefined,
         })),
       },
@@ -248,8 +250,8 @@ async function loadCriticalData({
             (o: SelectedOption) => isShadeOptionName(o.name),
           );
           const offerUrl = shadeOpt
-            ? `${new URL(request.url).origin}${buildShadePath(handle, shadeOpt.value, pathPrefix)}`
-            : `${new URL(request.url).origin}${pathPrefix}/products/${handle}`;
+            ? `${requestOrigin}${buildShadePath(handle, shadeOpt.value, pathPrefix)}`
+            : `${requestOrigin}${pathPrefix}/products/${handle}`;
           return {
             '@type': 'Offer',
             availability: variant.availableForSale
@@ -334,7 +336,6 @@ function redirectToFirstVariant({
   pathPrefix,
 }: {
   product: ProductFragment;
-  request: Request;
   pathPrefix: string;
 }) {
   const defaultVariant =

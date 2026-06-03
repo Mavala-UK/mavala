@@ -25,7 +25,7 @@ import {PRODUCT_ITEM_FRAGMENT} from '~/lib/fragments/ProductItemFragment';
 import {getYotpoReviews} from '~/lib/yotpo';
 import {truncate} from '~/lib/utils';
 import {findVariantBySlug, buildShadePath, getShadeOptionName, slugifyShade} from '~/lib/shadeUrl';
-import type {ProductFragment} from 'storefrontapi.generated';
+import type {ProductFragment, ProductVariantFragment} from 'storefrontapi.generated';
 import {ProductMain} from '~/components/product/ProductMain';
 import {BundleMain} from '~/components/bundle/BundleMain';
 import groq from 'groq';
@@ -113,14 +113,18 @@ async function loadCriticalData({
     }
   }
 
+  // Cast to the generated type — findVariantBySlug returns the full
+  // ProductVariantFragment object from product.variants.nodes.
+  const resolvedVariant = foundVariant as unknown as ProductVariantFragment;
+
   // Guard: free/zero-price variants are not for sale
-  if ((foundVariant as any).price?.amount === '0.0') {
+  if (resolvedVariant.price?.amount === '0.0') {
     throw new Response(null, {status: 404});
   }
 
   // Inject the path-resolved variant as the selected variant so the
   // ProductMain/BundleMain tree receives the correct shade on first render.
-  (product as any).selectedVariant = foundVariant;
+  product.selectedVariant = resolvedVariant;
 
   // Update the cache entry with the injected selectedVariant so the
   // dehydrated state carries the correct shade to the client.
@@ -162,7 +166,7 @@ async function loadCriticalData({
           },
         ]
       : []),
-    {title: `${product.title} - ${foundVariant.title}`},
+    {title: `${product.title} - ${resolvedVariant.title}`},
   ];
 
   const yotpoReviews = await getYotpoReviews(
@@ -171,7 +175,7 @@ async function loadCriticalData({
   );
 
   const seo: SeoConfig = {
-    title: `${product.seo?.title ?? product.title} - ${foundVariant.title}`,
+    title: `${product.seo?.title ?? product.title} - ${resolvedVariant.title}`,
     description: truncate(product.seo?.description ?? product.description),
     media: product.featuredImage && {
       url: product.featuredImage.url,
@@ -199,15 +203,12 @@ async function loadCriticalData({
       {
         '@context': 'https://schema.org',
         '@type': 'Product',
-        name: `${product.title} - ${foundVariant.title}`,
+        name: `${product.title} - ${resolvedVariant.title}`,
         description: product.description,
         // Use the variant's own image if available; fall back to product featured image.
         // This gives Google the shade-specific swatch image for rich results.
-        image:
-          (foundVariant as any).image?.url ??
-          product.featuredImage?.url ??
-          undefined,
-        sku: (foundVariant as any).sku ?? undefined,
+        image: resolvedVariant.image?.url ?? product.featuredImage?.url,
+        sku: resolvedVariant.sku ?? undefined,
         url: canonicalUrl,
         brand: {
           '@type': 'Brand',
@@ -216,13 +217,12 @@ async function loadCriticalData({
         offers: [
           {
             '@type': 'Offer',
-            availability: (foundVariant as any).availableForSale
+            availability: resolvedVariant.availableForSale
               ? 'https://schema.org/InStock'
               : 'https://schema.org/OutOfStock',
-            price: parseFloat((foundVariant as any).price?.amount ?? '0'),
-            priceCurrency:
-              (foundVariant as any).price?.currencyCode ?? 'GBP',
-            sku: (foundVariant as any).sku ?? '',
+            price: parseFloat(resolvedVariant.price?.amount ?? '0'),
+            priceCurrency: resolvedVariant.price?.currencyCode ?? 'GBP',
+            sku: resolvedVariant.sku ?? '',
             // Per-shade canonical path URL: this is the indexable offer URL
             url: canonicalUrl,
             priceValidUntil: new Intl.DateTimeFormat('fr-CA', {

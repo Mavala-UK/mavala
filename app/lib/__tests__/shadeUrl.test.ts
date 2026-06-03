@@ -250,6 +250,23 @@ describe('findVariantBySlug', () => {
     spy.mockRestore();
   });
 
+  it('SKIP+WARN: skips a variant whose shade value slugifies to "" and still finds the valid variant', () => {
+    // A product where one value is all-punctuation ('...') and one is real ('Vert Empire').
+    // Searching for 'vert-empire' must: skip the '...' variant (console.warn), return 'Vert Empire'.
+    const edgeProduct = makeProduct('Teinte', ['...', 'Vert Empire']);
+    const spy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+    const v = findVariantBySlug(edgeProduct, 'vert-empire');
+
+    // Returns the valid shade, not undefined
+    expect(v?.selectedOptions[0].value).toBe('Vert Empire');
+    // Warns about the degenerate '...' variant that was skipped
+    expect(spy).toHaveBeenCalledWith(
+      expect.stringContaining('slugifies to empty string'),
+    );
+    spy.mockRestore();
+  });
+
   it('COLLISION: deterministic first-match when two values slugify identically', () => {
     // "blanc" and "Blanc" both -> "blanc"
     const collisionProduct = makeProduct('Color', ['blanc', 'Blanc', 'Rouge']);

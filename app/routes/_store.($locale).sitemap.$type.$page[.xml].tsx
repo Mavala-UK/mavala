@@ -2,7 +2,7 @@ import groq from 'groq';
 import {getSitemap} from '@shopify/hydrogen';
 import type {LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import type {SitemapQueryResult} from 'sanity.generated';
-import {SHADE_OPTION_ALLOWLIST, slugifyShade, buildShadePath} from '~/lib/shadeUrl';
+import {getShadeOptionName, slugifyShade, buildShadePath} from '~/lib/shadeUrl';
 
 const SITEMAP_PREFIX = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">`;
@@ -24,8 +24,7 @@ export async function loader({
     //
     // All ~155 products + ~600 shade URLs fit on page 1 (well under 50k).
     // Page 2+ returns an empty sitemap for compatibility with the index.
-    const {params} = {params: {page: new URL(request.url).pathname.match(/\/(\d+)\.xml/)?.[1] ?? '1'}};
-    const page = parseInt(String(params.page), 10);
+    const page = parseInt(String(params.page ?? '1'), 10);
 
     if (page > 1) {
       // Pages beyond 1 are empty (all entries fit on page 1)
@@ -37,6 +36,9 @@ export async function loader({
       });
     }
 
+    // NOTE: products(first: 250) covers the full catalogue (155 as of 2026-06).
+    // If the catalogue grows past 250 multi-variant products this query must
+    // be paginated with a cursor loop or shade entries will be silently dropped.
     const {products} = await storefront.query(PRODUCTS_FOR_SITEMAP_QUERY, {
       cache: storefront.CacheLong(),
     });
@@ -62,11 +64,10 @@ export async function loader({
           </url>`);
 
       // Shade path entries for multi-variant products
-      const shadeOption = product.options.find(
-        (o) =>
-          o.optionValues.length > 1 &&
-          SHADE_OPTION_ALLOWLIST.has(o.name.toLowerCase()),
-      );
+      const shadeOptName = getShadeOptionName(product as any);
+      const shadeOption = shadeOptName
+        ? product.options.find((o) => o.name === shadeOptName)
+        : null;
 
       if (shadeOption) {
         const seen = new Set<string>();
