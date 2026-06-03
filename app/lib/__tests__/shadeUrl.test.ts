@@ -59,8 +59,9 @@ describe('slugifyShade', () => {
     expect(slugifyShade('Vert Empire')).toBe('vert-empire');
   });
 
-  it('strips accents (NFD normalise)', () => {
-    expect(slugifyShade('Vert Celeste')).toBe('vert-celeste');
+  it('strips accents (NFD normalise) -- uses actually-accented input', () => {
+    // "Vert Céleste" = "Vert Céleste" with e-acute, exercises the NFD path
+    expect(slugifyShade('Vert Céleste')).toBe('vert-celeste');
   });
 
   it('strips accents on more complex values', () => {
@@ -86,6 +87,10 @@ describe('slugifyShade', () => {
 
   it('handles empty string gracefully', () => {
     expect(slugifyShade('')).toBe('');
+  });
+
+  it('returns empty string for all-punctuation input (e.g. "...")', () => {
+    expect(slugifyShade('...')).toBe('');
   });
 
   it('handles single-word values', () => {
@@ -146,6 +151,36 @@ describe('getShadeOptionName', () => {
     const product = makeProduct('Teintes', ['Beige', 'Rose']);
     expect(getShadeOptionName(product)).toBe('Teintes');
   });
+
+  // ALLOWLIST tests (MEDIUM fix) -------------------------------------------
+  it('returns null for Packaging even with multiple values (not a shade option)', () => {
+    const product = makeProduct('Packaging', ['Small', 'Large']);
+    expect(getShadeOptionName(product)).toBeNull();
+  });
+
+  it('returns the shade option when both Packaging(multi) + Teinte(multi) exist', () => {
+    const product: FixtureProduct = {
+      options: [
+        {name: 'Packaging', values: ['Small', 'Large']},
+        {name: 'Teinte', values: ['Vert Empire', 'Vert Céleste']},
+      ],
+      variants: {
+        nodes: [
+          {
+            id: 'gid://1',
+            title: 'Vert Empire',
+            selectedOptions: [{name: 'Teinte', value: 'Vert Empire'}],
+          },
+        ],
+      },
+    };
+    expect(getShadeOptionName(product)).toBe('Teinte');
+  });
+
+  it('accepts "Colour" (British spelling) as a shade option name', () => {
+    const product = makeProduct('Colour', ['Red', 'Blue']);
+    expect(getShadeOptionName(product)).toBe('Colour');
+  });
 });
 
 // ── findVariantBySlug ─────────────────────────────────────────────────────────
@@ -192,6 +227,26 @@ describe('findVariantBySlug', () => {
     };
     const v = findVariantBySlug(singleVariant, 'anything');
     expect(v).toBeUndefined();
+  });
+
+  it('returns undefined when slug is empty string (empty slug must never match anything)', () => {
+    const v = findVariantBySlug(product, '');
+    expect(v).toBeUndefined();
+  });
+
+  it('normalises the INPUT slug via slugifyShade before matching (robustness)', () => {
+    // Input "Vert-Empire" (already a slug but with capital) should still match
+    const v = findVariantBySlug(product, 'Vert-Empire');
+    expect(v?.selectedOptions[0].value).toBe('Vert Empire');
+  });
+
+  it('returns undefined for a variant whose shade value slugifies to "" (skips empty slugs)', () => {
+    const edgeProduct = makeProduct('Teinte', ['...', 'Vert Empire']);
+    const spy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    // '...' slugifies to ''; findVariantBySlug with '' must still return undefined
+    const v = findVariantBySlug(edgeProduct, '');
+    expect(v).toBeUndefined();
+    spy.mockRestore();
   });
 
   it('COLLISION: deterministic first-match when two values slugify identically', () => {

@@ -62,15 +62,35 @@ export function slugifyShade(value: string): string {
 // ── getShadeOptionName ────────────────────────────────────────────────────────
 
 /**
+ * Allowlisted shade option names (case-insensitive).
+ * Non-shade multi-value options like "Packaging" are explicitly excluded
+ * so they are never treated as shade selectors.
+ * Live catalogue: Teinte x15, Color x12, Shade x10, Shades x2, Teintes x1.
+ */
+const SHADE_OPTION_ALLOWLIST = new Set([
+  'teinte',
+  'teintes',
+  'color',
+  'colour',
+  'shade',
+  'shades',
+]);
+
+/**
  * Returns the product's single multi-value shade option name
  * (e.g. "Teinte", "Color", "Shade") by finding the first option
- * with more than one value.
+ * whose name is in the SHADE_OPTION_ALLOWLIST AND has more than one value.
  *
- * Returns null for single-variant products (the only option is "Title"
- * with one value, "Default Title") or products with no multi-value option.
+ * Returns null for single-variant products (Title/Default Title),
+ * for non-shade multi-value options (e.g. "Packaging"), and for any product
+ * with no qualifying multi-value shade option.
  */
 export function getShadeOptionName(product: ShadeProduct): string | null {
-  const shadeOption = product.options.find((o) => o.values.length > 1);
+  const shadeOption = product.options.find(
+    (o) =>
+      o.values.length > 1 &&
+      SHADE_OPTION_ALLOWLIST.has(o.name.toLowerCase()),
+  );
   return shadeOption?.name ?? null;
 }
 
@@ -91,15 +111,29 @@ export function findVariantBySlug(
   const optionName = getShadeOptionName(product);
   if (!optionName) return undefined;
 
-  const normSlug = shadeSlug.toLowerCase();
+  // Normalise the input slug via slugifyShade for robustness on
+  // malformed path segments (e.g. "Vert-Empire" with capital).
+  const normSlug = slugifyShade(shadeSlug);
 
-  // Detect slug collisions across all variants
+  // Empty input slug must never match anything (an empty slug could
+  // accidentally match variants whose values also slugify to '').
+  if (!normSlug) return undefined;
+
+  // Detect slug collisions across all variants; skip variants whose
+  // shade value slugifies to empty (degenerate data, warn + skip).
   const matches = product.variants.nodes.filter((variant) => {
     const optValue = variant.selectedOptions.find(
       (o) => o.name === optionName,
     )?.value;
     if (!optValue) return false;
-    return slugifyShade(optValue) === normSlug;
+    const variantSlug = slugifyShade(optValue);
+    if (!variantSlug) {
+      console.warn(
+        `shadeUrl: variant "${variant.id}" shade value "${optValue}" slugifies to empty string -- skipping`,
+      );
+      return false;
+    }
+    return variantSlug === normSlug;
   });
 
   if (matches.length > 1) {
