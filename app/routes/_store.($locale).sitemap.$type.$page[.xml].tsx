@@ -13,7 +13,7 @@ export async function loader({
   context: {storefront, sanity, locales},
 }: LoaderFunctionArgs) {
   const {type} = params;
-  const {language, pathPrefix} = storefront.i18n;
+  const {pathPrefix} = storefront.i18n;
   const baseUrl = new URL(request.url).origin;
 
   if (type === 'sanity') {
@@ -23,7 +23,7 @@ export async function loader({
       .map(
         (page) => `
           <url>
-            <loc>${baseUrl}/${language.toLowerCase()}${page.path}</loc>
+            <loc>${baseUrl}${page.path}</loc>
             <lastmod>${new Date(page._updatedAt).toISOString()}</lastmod>
             <changefreq>weekly</changefreq>
           </url>
@@ -58,11 +58,16 @@ export async function loader({
 }
 
 const sitemapQuery = groq`
-  *[_type == "home" || _type == "page"] {
+  *[
+    _type == "home" ||
+    _type == "page" ||
+    (_type == "article" && defined(slug.current) && defined(category->slug.current))
+  ] {
     _updatedAt,
     "path": select(
       _type == "home" => "/",
-      _type == "page" => "/pages/" + slug.current
+      _type == "page" => "/pages/" + slug.current,
+      _type == "article" => "/blog/" + category->slug.current + "/" + slug.current
     )
   }
 `;
