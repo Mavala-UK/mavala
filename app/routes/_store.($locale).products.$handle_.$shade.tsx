@@ -201,7 +201,12 @@ async function loadCriticalData({
         '@type': 'Product',
         name: `${product.title} - ${foundVariant.title}`,
         description: product.description,
-        image: product.featuredImage?.url,
+        // Use the variant's own image if available; fall back to product featured image.
+        // This gives Google the shade-specific swatch image for rich results.
+        image:
+          (foundVariant as any).image?.url ??
+          product.featuredImage?.url ??
+          undefined,
         sku: (foundVariant as any).sku ?? undefined,
         url: canonicalUrl,
         brand: {
@@ -218,6 +223,7 @@ async function loadCriticalData({
             priceCurrency:
               (foundVariant as any).price?.currencyCode ?? 'GBP',
             sku: (foundVariant as any).sku ?? '',
+            // Per-shade canonical path URL: this is the indexable offer URL
             url: canonicalUrl,
             priceValidUntil: new Intl.DateTimeFormat('fr-CA', {
               year: 'numeric',

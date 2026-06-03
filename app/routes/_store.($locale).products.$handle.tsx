@@ -241,28 +241,31 @@ async function loadCriticalData({
           '@type': 'Brand',
           name: product.vendor,
         },
-        offers: product.variants.nodes.map((variant) => ({
-          '@type': 'Offer',
-          availability: variant.availableForSale
-            ? 'https://schema.org/InStock'
-            : 'https://schema.org/OutOfStock',
-          price: parseFloat(variant.price.amount),
-          priceCurrency: variant.price.currencyCode,
-          sku: variant?.sku ?? '',
-          url: decodeURIComponent(
-            `${request.url.split('?')[0]}?${new URLSearchParams(
-              variant.selectedOptions.map((option) => [
-                option.name,
-                option.value,
-              ]),
-            )}`,
-          ),
-          priceValidUntil: new Intl.DateTimeFormat('fr-CA', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-          }).format(new Date()),
-        })),
+        offers: product.variants.nodes.map((variant) => {
+          // Build offer URL as path URL if the variant has a shade option;
+          // fall back to bare product URL for single-variant products.
+          const shadeOpt = variant.selectedOptions.find(
+            (o: SelectedOption) => isShadeOptionName(o.name),
+          );
+          const offerUrl = shadeOpt
+            ? `${new URL(request.url).origin}${buildShadePath(handle, shadeOpt.value, pathPrefix)}`
+            : `${new URL(request.url).origin}${pathPrefix}/products/${handle}`;
+          return {
+            '@type': 'Offer',
+            availability: variant.availableForSale
+              ? 'https://schema.org/InStock'
+              : 'https://schema.org/OutOfStock',
+            price: parseFloat(variant.price.amount),
+            priceCurrency: variant.price.currencyCode,
+            sku: variant?.sku ?? '',
+            url: offerUrl,
+            priceValidUntil: new Intl.DateTimeFormat('fr-CA', {
+              year: 'numeric',
+              month: '2-digit',
+              day: '2-digit',
+            }).format(new Date()),
+          };
+        }),
         ...(yotpoReviews?.reviews?.length! > 0 && {
           aggregateRating: {
             '@type': 'AggregateRating',
