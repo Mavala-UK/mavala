@@ -16,7 +16,12 @@ import {slugify} from '~/lib/utils';
 
 interface ShadeOption {
   name: string;
-  values: string[];
+  /**
+   * Uses Shopify Storefront API shape: optionValues[].name is the value string
+   * (e.g. [{name: "Vert Empire"}, {name: "Vert Céleste"}]).
+   * NOT the older `values: string[]` shape.
+   */
+  optionValues: {name: string}[];
 }
 
 interface ShadeSelectedOption {
@@ -88,7 +93,7 @@ const SHADE_OPTION_ALLOWLIST = new Set([
 export function getShadeOptionName(product: ShadeProduct): string | null {
   const shadeOption = product.options.find(
     (o) =>
-      o.values.length > 1 &&
+      o.optionValues.length > 1 &&
       SHADE_OPTION_ALLOWLIST.has(o.name.toLowerCase()),
   );
   return shadeOption?.name ?? null;

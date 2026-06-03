@@ -17,7 +17,8 @@ import {
 
 interface FixtureOption {
   name: string;
-  values: string[];
+  // Matches Shopify Storefront API shape: optionValues[].name is the value string
+  optionValues: {name: string}[];
 }
 
 interface FixtureSelectedOption {
@@ -41,7 +42,7 @@ function makeProduct(
   shadeValues: string[],
 ): FixtureProduct {
   return {
-    options: [{name: optionName, values: shadeValues}],
+    options: [{name: optionName, optionValues: shadeValues.map((v) => ({name: v}))}],
     variants: {
       nodes: shadeValues.map((v, i) => ({
         id: `gid://shopify/ProductVariant/${i + 1}`,
@@ -128,7 +129,7 @@ describe('getShadeOptionName', () => {
 
   it('returns null for a single-variant product (Title option)', () => {
     const product: FixtureProduct = {
-      options: [{name: 'Title', values: ['Default Title']}],
+      options: [{name: 'Title', optionValues: [{name: 'Default Title'}]}],
       variants: {
         nodes: [
           {
@@ -161,8 +162,8 @@ describe('getShadeOptionName', () => {
   it('returns the shade option when both Packaging(multi) + Teinte(multi) exist', () => {
     const product: FixtureProduct = {
       options: [
-        {name: 'Packaging', values: ['Small', 'Large']},
-        {name: 'Teinte', values: ['Vert Empire', 'Vert Céleste']},
+        {name: 'Packaging', optionValues: [{name: 'Small'}, {name: 'Large'}]},
+        {name: 'Teinte', optionValues: [{name: 'Vert Empire'}, {name: 'Vert Céleste'}]},
       ],
       variants: {
         nodes: [
@@ -214,7 +215,7 @@ describe('findVariantBySlug', () => {
 
   it('returns undefined for a product with no shade option', () => {
     const singleVariant: FixtureProduct = {
-      options: [{name: 'Title', values: ['Default Title']}],
+      options: [{name: 'Title', optionValues: [{name: 'Default Title'}]}],
       variants: {
         nodes: [
           {
