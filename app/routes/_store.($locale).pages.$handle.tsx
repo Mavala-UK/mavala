@@ -1,7 +1,7 @@
 import {use, Suspense} from 'react';
 import groq from 'groq';
 import imageUrlBuilder from '@sanity/image-url';
-import {type LoaderFunctionArgs} from '@shopify/remix-oxygen';
+import {redirect, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import type {SeoConfig} from '@shopify/hydrogen';
 import type {RootLoader} from '~/root';
 import {getSeoMeta} from '@shopify/hydrogen';
@@ -31,6 +31,13 @@ export const meta: MetaFunction<typeof loader, {root: RootLoader}> = ({
 };
 
 export async function loader(args: LoaderFunctionArgs) {
+  // The /pages/blog slug has a vestigial Sanity page document but no resolving
+  // Hydrogen route (the blog lives at /blog), so it would otherwise 404.
+  // Redirect to the blog index. The UK site uses no locale prefix.
+  if (args.params.handle === 'blog') {
+    throw redirect('/blog', {status: 301});
+  }
+
   // Start fetching non-critical data without blocking time to first byte
   const deferredData = loadDeferredData(args);
 
