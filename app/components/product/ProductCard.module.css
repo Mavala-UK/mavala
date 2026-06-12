@@ -229,6 +229,12 @@
   text-align: start;
 }
 
+/* matched shade name shown on search result cards */
+.matched-shade {
+  margin-block-start: 0.2rem;
+  letter-spacing: 0.04em;
+}
+
 .infos {
   display: flex;
   flex-wrap: wrap;

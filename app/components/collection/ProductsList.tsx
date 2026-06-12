@@ -6,6 +6,7 @@ import {ProductCard} from '../product/ProductCard';
 import {Insert} from './Insert';
 import type {InsertQueryResult} from 'sanity.generated';
 import type {ProductItemFragment} from 'storefrontapi.generated';
+import type {VariantMatch} from '~/lib/searchVariantMatch';
 import styles from './ProductsList.module.css';
 
 export function ProductsList({
@@ -42,6 +43,13 @@ export function ProductsList({
                 handle={node.handle}
                 initialData={node}
                 priority={index < 4}
+                // Search results attach searchVariantMatch onto the node so the
+                // card surfaces the matched shade. Collection nodes do not carry
+                // it (undefined), so their cards render unchanged.
+                searchVariantMatch={
+                  (node as {searchVariantMatch?: VariantMatch | null})
+                    .searchVariantMatch ?? undefined
+                }
               />
             </li>
           </Fragment>
