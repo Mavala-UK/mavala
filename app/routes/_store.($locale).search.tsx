@@ -11,14 +11,22 @@ import {matchVariantForTerm} from '~/lib/searchVariantMatch';
 import type {RootLoader} from '~/root';
 
 export const meta: MetaFunction<typeof loader, {root: RootLoader}> = ({
+  data,
   matches: [root],
 }) => {
-  return [
-    ...(getSeoMeta(root.data.seo, {
-      title: root.data.translations.data.find(({id}) => id === 'search')
-        ?.message,
-    }) ?? []),
-  ];
+  // Base label from the Sanity "search" translation, with a hard 'Search'
+  // fallback. Without it an undefined title falls through to root.tsx's
+  // seo.title:'404', rendering the results page as "404 | Mavala UK" (soft 404)
+  // even on a 200 with results. Same class of bug as the /blog title fix.
+  const searchLabel =
+    root.data.translations.data.find(({id}) => id === 'search')?.message ??
+    'Search';
+
+  // With a query, title the page after the term; otherwise just the label.
+  const term = data?.term?.trim();
+  const title = term ? `${searchLabel} results for ${term}` : searchLabel;
+
+  return [...(getSeoMeta(root.data.seo, {title}) ?? [])];
 };
 
 export async function loader({request, context}: LoaderFunctionArgs) {
