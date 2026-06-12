@@ -52,7 +52,7 @@ export async function loader({context}: LoaderFunctionArgs) {
   const {title, description, image} = blog?.data?.seo ?? {};
 
   const seo = {
-    title: title ?? blog?.data?.title,
+    title: title ?? blog?.data?.title ?? 'Blog',
     titleTemplate: blog.data?.seo?.title ? '%s' : undefined,
     description: truncate(description ?? ''),
     media: image && {

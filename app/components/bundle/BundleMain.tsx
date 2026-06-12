@@ -58,6 +58,14 @@ export function BundleMain() {
     ((product as any).bundleComponents?.references?.nodes as ProductItemFragment[]) ??
     [];
 
+  // Ids of the bundle's free items (custom.free_items_in_bundle metafield).
+  // A component is "free" iff its id is in this set. Matched by id, not price
+  // (a free component's standalone price is non-zero).
+  const freeIds = new Set<string>(
+    (((product as any).freeItems?.references?.nodes as Array<{id: string}>) ??
+      []).map((node) => node.id),
+  );
+
   const bundleVariant =
     product.selectedVariant ?? product.variants.nodes[0] ?? null;
 
@@ -101,7 +109,7 @@ export function BundleMain() {
                 }
               />
 
-              <BundleComponentsPicker components={components} />
+              <BundleComponentsPicker components={components} freeIds={freeIds} />
 
               <BundleAddToCart components={components} />
 
@@ -166,8 +174,10 @@ export function BundleMain() {
 
 function BundleComponentsPicker({
   components,
+  freeIds,
 }: {
   components: ProductItemFragment[];
+  freeIds: Set<string>;
 }) {
   const {selectedVariants} = useBundleContext();
 
@@ -247,6 +257,7 @@ function BundleComponentsPicker({
             isSelected={isSelected}
             isAnySelected={activeHandle === null}
             index={index}
+            isFree={freeIds.has(component.id)}
           />
         );
       })}

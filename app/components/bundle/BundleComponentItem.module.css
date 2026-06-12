@@ -55,6 +55,17 @@
 .lockedText {
 }
 
+.titleRow {
+  display: flex;
+  align-items: baseline;
+  column-gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.freeLabel {
+  text-transform: lowercase;
+}
+
 .shadeName {
   display: flex;
   column-gap: 0.6rem;

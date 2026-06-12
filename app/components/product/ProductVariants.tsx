@@ -1,5 +1,5 @@
 import {useEffect, useId} from 'react';
-import {cn, hasSearchParams} from '~/lib/utils';
+import {cn} from '~/lib/utils';
 import {Chromatic} from '../icons/Chromatic';
 import {FormattedMessage} from 'react-intl';
 import {Text} from '../ui/Text';
@@ -8,24 +8,33 @@ import {ProductViewDrawer} from './drawer/ProductViewDrawer';
 import {VariantSelector} from '@shopify/hydrogen';
 import ShadeCircle from '../ui/ShadeCircle';
 import * as RadioGroup from '@radix-ui/react-radio-group';
-import {useNavigate, useSearchParams} from 'react-router';
+import {useNavigate, useSearchParams, useRouteLoaderData} from 'react-router';
 import {useProductView} from '../product/ProductView';
 import {Carousel, CarouselWrapperButton} from '../ui/Carousel';
 import type {SelectedOption} from '@shopify/hydrogen/storefront-api-types';
 import {ShadeOption} from '../ui/ShadeOption';
+import {buildShadePath, isShadeOptionName} from '~/lib/shadeUrl';
+import type {RootLoader} from '~/root';
 import styles from './ProductVariants.module.css';
-
-const SHADE_LINK_HANDLES = new Set(['mini-color-pink']);
 
 export function ProductVariants({className}: {className?: string}) {
   const maxShadesShown = 6;
   const id = useId();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const rootData = useRouteLoaderData<RootLoader>('root');
+  const pathPrefix = rootData?.selectedLocale?.pathPrefix ?? '';
   const {product, setSelectedOptions, selectedVariant, selectedOptions} =
     useProductView();
   const {handle, options: initialOptions, favoriteShades} = product ?? {};
-  const useLinkSelector = SHADE_LINK_HANDLES.has(handle ?? '');
+
+  // Active shade value from the path-resolved variant (the source of truth)
+  const activeShadeOptionName = initialOptions?.find(
+    (o) => isShadeOptionName(o.name),
+  )?.name;
+  const activeShadeValue = selectedVariant?.selectedOptions?.find(
+    (o) => o.name === activeShadeOptionName,
+  )?.value;
   const allVariants = product?.variants?.nodes;
   const favoriteVariants = favoriteShades?.references?.nodes ?? [];
 
@@ -56,6 +65,7 @@ export function ProductVariants({className}: {className?: string}) {
     })
     .filter((option) => option.optionValues.length > 0);
 
+  // For non-shade options (e.g. Packaging) that are still query-param driven:
   const handleValueChange = (value: string) => {
     const option = JSON.parse(value) as SelectedOption;
 
@@ -66,28 +76,31 @@ export function ProductVariants({className}: {className?: string}) {
       option,
     ];
 
-    if (hasSearchParams(searchParams)) {
-      const newSearchParams = new URLSearchParams(
-        newSelectedOptions?.map((option) => [option.name, option.value]),
-      );
-
-      setSelectedOptions(newSelectedOptions);
-
-      navigate(`?${newSearchParams.toString()}`, {
-        replace: true,
-        preventScrollReset: true,
-        viewTransition: true,
-      });
-    }
-  };
-
-  useEffect(() => {
-    const newSelectedOptions = Array.from(searchParams.entries()).map(
-      ([name, value]) => ({name, value}),
+    const newSearchParams = new URLSearchParams(
+      newSelectedOptions?.map((o) => [o.name, o.value]),
     );
 
     setSelectedOptions(newSelectedOptions);
-  }, [searchParams, setSelectedOptions]);
+
+    navigate(`?${newSearchParams.toString()}`, {
+      replace: true,
+      preventScrollReset: true,
+      viewTransition: true,
+    });
+  };
+
+  useEffect(() => {
+    // Filter to ONLY the product's own option names to prevent tracking params
+    // (fbclid, utm_*, etc.) from polluting selectedOptions and breaking the drawer ATC.
+    const productOptionNames = new Set(
+      initialOptions?.map((o) => o.name) ?? [],
+    );
+    const newSelectedOptions = Array.from(searchParams.entries())
+      .filter(([name]) => productOptionNames.has(name))
+      .map(([name, value]) => ({name, value}));
+
+    setSelectedOptions(newSelectedOptions);
+  }, [searchParams, setSelectedOptions, initialOptions]);
 
   if (variants?.[0].title === 'Default Title') {
     return null;
@@ -110,6 +123,8 @@ export function ProductVariants({className}: {className?: string}) {
         variants={variants}
       >
         {({option}) => {
+          const isShadeOpt = isShadeOptionName(option.name);
+
           const carousel = (
             <CarouselWrapperButton id={id}>
               <Carousel
@@ -120,22 +135,36 @@ export function ProductVariants({className}: {className?: string}) {
                   nextEl: `[id="swiper-button-next-${id}"]`,
                 }}
               >
-                {option.values.map((optionValue) => (
-                  <ShadeOption
-                    option={option}
-                    value={optionValue}
-                    to={useLinkSelector ? optionValue.to : undefined}
-                    key={option.name + optionValue.value}
-                  />
-                ))}
+                {option.values.map((optionValue) => {
+                  // For shade options: path-based link (crawlable, tracking-safe).
+                  // isActive is derived from the path-resolved selectedVariant, not
+                  // from searchParams (which may be empty or contain only tracking params).
+                  const to = isShadeOpt
+                    ? buildShadePath(handle ?? '', optionValue.value, pathPrefix)
+                    : undefined;
+                  const isPathActive = isShadeOpt
+                    ? optionValue.value.toLowerCase() ===
+                      (activeShadeValue?.toLowerCase() ?? '')
+                    : optionValue.isActive;
+                  return (
+                    <ShadeOption
+                      option={option}
+                      value={{...optionValue, isActive: isPathActive}}
+                      to={to}
+                      key={option.name + optionValue.value}
+                    />
+                  );
+                })}
               </Carousel>
             </CarouselWrapperButton>
           );
 
-          if (useLinkSelector) {
+          if (isShadeOpt) {
+            // All shade products: crawlable <Link> swatches, no RadioGroup
             return <div key={option.name}>{carousel}</div>;
           }
 
+          // Non-shade options (e.g. Packaging): keep RadioGroup for query-param selection
           return (
             <RadioGroup.Root
               key={option.name}
@@ -155,7 +184,7 @@ export function ProductVariants({className}: {className?: string}) {
         <Text size="sm" weight="light" asChild>
           <Link variant="underline" asChild size="sm">
             {allVariants?.length! > maxShadesShown && (
-              <button className={styles.trigger}>
+              <button className={styles.trigger} data-testid="shade-drawer-trigger">
                 <Chromatic />
                 <span>
                   <FormattedMessage id="all_shades" />

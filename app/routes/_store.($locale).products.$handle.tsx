@@ -16,6 +16,7 @@ import {getSelectedProductOptions, getSeoMeta} from '@shopify/hydrogen';
 import type {SelectedOption} from '@shopify/hydrogen/storefront-api-types';
 import type {ProductFragment} from 'storefrontapi.generated';
 import {getVariantUrl, truncate} from '~/lib/utils';
+import {buildShadePath, isShadeOptionName, slugifyShade} from '~/lib/shadeUrl';
 import {PRODUCT_ITEM_FRAGMENT} from '~/lib/fragments/ProductItemFragment';
 import {getYotpoReviews} from '~/lib/yotpo';
 import {faqSectionFragment} from '~/sanity/fragments/faqSectionFragment';
@@ -85,30 +86,37 @@ async function loadCriticalData({
         );
 
         if (variant) {
-          // Redirect to the proper Sanity URL format
-          const newSearchParams = new URLSearchParams(url.search);
-          newSearchParams.delete('variant');
-
-          return redirect(
-            getVariantUrl({
-              handle,
-              selectedOptions: variant.selectedOptions,
-              searchParams: newSearchParams,
-              pathPrefix,
-            }),
-            {status: 301},
+          // Redirect to the path-based shade URL (one hop; drops tracking params).
+          const shadeOption = variant.selectedOptions.find((o: SelectedOption) =>
+            isShadeOptionName(o.name),
           );
+          if (shadeOption) {
+            return redirect(
+              buildShadePath(handle, shadeOption.value, pathPrefix),
+              {status: 301},
+            );
+          }
+          // Non-shade product: redirect to bare product (variant param removed)
+          return redirect(`${pathPrefix}/products/${handle}`, {status: 301});
         }
       }
     } catch (error) {
       console.error('Error looking up variant:', error);
     }
 
-    // If we couldn't find the variant, redirect to product page without variant param
-    const newSearchParams = new URLSearchParams(url.search);
-    newSearchParams.delete('variant');
-    const cleanUrl = `${pathPrefix}/products/${handle}${newSearchParams.toString() ? `?${newSearchParams}` : ''}`;
-    return redirect(cleanUrl, {status: 301});
+    // Variant not found: redirect to bare product (strips variant + tracking)
+    return redirect(`${pathPrefix}/products/${handle}`, {status: 301});
+  }
+
+  // 301-redirect any shade query param (?Teinte=, ?Color=, ?Shade=, etc.)
+  // to the canonical path URL before we even hit Shopify.
+  // Drops all tracking params (fbclid, utm_*, etc.) from the redirect target.
+  // This must come AFTER the ?variant check but BEFORE getSelectedProductOptions
+  // so the Storefront query never sees these params.
+  for (const [key, value] of url.searchParams.entries()) {
+    if (isShadeOptionName(key) && value) {
+      throw redirect(buildShadePath(handle, value, pathPrefix), {status: 301});
+    }
   }
 
   const selectedOptions = getSelectedProductOptions(request);
@@ -147,7 +155,7 @@ async function loadCriticalData({
     // if no selected variant was returned from the selected options,
     // we redirect to the first variant's url with it's selected options applied
     if (!product.selectedVariant) {
-      throw redirectToFirstVariant({product, request, pathPrefix});
+      throw redirectToFirstVariant({product, pathPrefix});
     }
   }
 
@@ -192,6 +200,8 @@ async function loadCriticalData({
     env.PRIVATE_YOTPO_APP_KEY as string,
   );
 
+  const requestOrigin = new URL(request.url).origin;
+
   const seo = {
     title: product.seo.title ?? product.title,
     titleTemplate: product.seo.title ? '%s' : undefined,
@@ -217,7 +227,7 @@ async function loadCriticalData({
           position: index + 1,
           name: item.title,
           item: item.pathname
-            ? `${new URL(request.url).origin}${item.pathname}`
+            ? `${requestOrigin}${item.pathname}`
             : undefined,
         })),
       },
@@ -233,28 +243,31 @@ async function loadCriticalData({
           '@type': 'Brand',
           name: product.vendor,
         },
-        offers: product.variants.nodes.map((variant) => ({
-          '@type': 'Offer',
-          availability: variant.availableForSale
-            ? 'https://schema.org/InStock'
-            : 'https://schema.org/OutOfStock',
-          price: parseFloat(variant.price.amount),
-          priceCurrency: variant.price.currencyCode,
-          sku: variant?.sku ?? '',
-          url: decodeURIComponent(
-            `${request.url.split('?')[0]}?${new URLSearchParams(
-              variant.selectedOptions.map((option) => [
-                option.name,
-                option.value,
-              ]),
-            )}`,
-          ),
-          priceValidUntil: new Intl.DateTimeFormat('fr-CA', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-          }).format(new Date()),
-        })),
+        offers: product.variants.nodes.map((variant) => {
+          // Build offer URL as path URL if the variant has a shade option;
+          // fall back to bare product URL for single-variant products.
+          const shadeOpt = variant.selectedOptions.find(
+            (o: SelectedOption) => isShadeOptionName(o.name),
+          );
+          const offerUrl = shadeOpt
+            ? `${requestOrigin}${buildShadePath(handle, shadeOpt.value, pathPrefix)}`
+            : `${requestOrigin}${pathPrefix}/products/${handle}`;
+          return {
+            '@type': 'Offer',
+            availability: variant.availableForSale
+              ? 'https://schema.org/InStock'
+              : 'https://schema.org/OutOfStock',
+            price: parseFloat(variant.price.amount),
+            priceCurrency: variant.price.currencyCode,
+            sku: variant?.sku ?? '',
+            url: offerUrl,
+            priceValidUntil: new Intl.DateTimeFormat('fr-CA', {
+              year: 'numeric',
+              month: '2-digit',
+              day: '2-digit',
+            }).format(new Date()),
+          };
+        }),
         ...(yotpoReviews?.reviews?.length! > 0 && {
           aggregateRating: {
             '@type': 'AggregateRating',
@@ -320,27 +333,34 @@ function loadDeferredData({context, params}: LoaderFunctionArgs) {
 
 function redirectToFirstVariant({
   product,
-  request,
   pathPrefix,
 }: {
   product: ProductFragment;
-  request: Request;
   pathPrefix: string;
 }) {
-  const url = new URL(request.url);
   const defaultVariant =
     product?.defaultVariant?.reference ?? product.variants.nodes[0];
 
+  // For shade products: redirect to the first shade's path URL (drops tracking params)
+  const shadeOption = defaultVariant.selectedOptions.find((o: SelectedOption) =>
+    isShadeOptionName(o.name),
+  );
+  if (shadeOption) {
+    return redirect(
+      buildShadePath(product.handle, shadeOption.value, pathPrefix),
+      {status: 302},
+    );
+  }
+
+  // Non-shade product fallback: use the existing query-param approach
   return redirect(
     getVariantUrl({
       handle: product.handle,
       selectedOptions: defaultVariant.selectedOptions,
-      searchParams: new URLSearchParams(url.search),
+      searchParams: new URLSearchParams(),
       pathPrefix,
     }),
-    {
-      status: 302,
-    },
+    {status: 302},
   );
 }
 

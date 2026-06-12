@@ -6,18 +6,27 @@ import {FormattedMessage} from 'react-intl';
 import {SearchForm} from '~/components/search/SearchForm';
 import {SearchResults} from '~/components/search/SearchResults';
 import {PRODUCT_ITEM_FRAGMENT} from '~/lib/fragments/ProductItemFragment';
-import {type RegularSearchReturn} from '~/lib/search';
+import {type RegularSearchReturn, type SearchProductNode} from '~/lib/search';
+import {matchVariantForTerm} from '~/lib/searchVariantMatch';
 import type {RootLoader} from '~/root';
 
 export const meta: MetaFunction<typeof loader, {root: RootLoader}> = ({
+  data,
   matches: [root],
 }) => {
-  return [
-    ...(getSeoMeta(root.data.seo, {
-      title: root.data.translations.data.find(({id}) => id === 'search')
-        ?.message,
-    }) ?? []),
-  ];
+  // Base label from the Sanity "search" translation, with a hard 'Search'
+  // fallback. Without it an undefined title falls through to root.tsx's
+  // seo.title:'404', rendering the results page as "404 | Mavala UK" (soft 404)
+  // even on a 200 with results. Same class of bug as the /blog title fix.
+  const searchLabel =
+    root.data.translations.data.find(({id}) => id === 'search')?.message ??
+    'Search';
+
+  // With a query, title the page after the term; otherwise just the label.
+  const term = data?.term?.trim();
+  const title = term ? `${searchLabel} results for ${term}` : searchLabel;
+
+  return [...(getSeoMeta(root.data.seo, {title}) ?? [])];
 };
 
 export async function loader({request, context}: LoaderFunctionArgs) {
@@ -115,6 +124,17 @@ async function regularSearch({
 
   if (!items) {
     throw new Error('No search data returned from Shopify API');
+  }
+
+  // Surface the matching VARIANT for shade searches (e.g. "Riga", "701").
+  // Attach searchVariantMatch onto each product node so ProductCard can render
+  // the matched shade (variant image + name) and link to its canonical path
+  // URL, rather than the parent product's default variant. Nodes that match
+  // nothing keep searchVariantMatch === null and render unchanged.
+  const productNodes = items?.products?.nodes ?? [];
+  for (const node of productNodes) {
+    (node as SearchProductNode).searchVariantMatch =
+      matchVariantForTerm(node, term);
   }
 
   const total = Object.values(items).reduce(

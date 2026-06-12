@@ -17,18 +17,23 @@ import {Text} from '../ui/Text';
 import ShadeCircle from '../ui/ShadeCircle';
 import styles from './BundleComponentItem.module.css';
 
+// Single source of truth for the free-component label copy.
+const FREE_ITEM_LABEL = 'free item';
+
 export function BundleComponentItem({
   component,
   isActive,
   isSelected,
   isAnySelected,
   index,
+  isFree,
 }: {
   component: ProductItemFragment;
   isActive: boolean;
   isSelected: boolean;
   isAnySelected: boolean;
   index: number;
+  isFree: boolean;
 }) {
   return (
     <ProductView handle={component.handle} selectedOptions={[]}>
@@ -38,6 +43,7 @@ export function BundleComponentItem({
         isSelected={isSelected}
         isAnySelected={isAnySelected}
         index={index}
+        isFree={isFree}
       />
     </ProductView>
   );
@@ -49,12 +55,14 @@ function BundleComponentItemInner({
   isSelected,
   isAnySelected,
   index,
+  isFree,
 }: {
   component: ProductItemFragment;
   isActive: boolean;
   isSelected: boolean;
   isAnySelected: boolean;
   index: number;
+  isFree: boolean;
 }) {
   const {setSelectedVariant, selectedVariants} = useBundleContext();
   const {product, selectedVariant, selectedOptions, setSelectedOptions} =
@@ -122,13 +130,20 @@ function BundleComponentItemInner({
                 />
               ) : null}
               <span className={styles.triggerText}>
-                <Text
-                  weight="medium"
-                  size="sm"
-                  className={cn(!isActive && !isSelected ? styles.lockedText : undefined)}
-                >
-                  {title}
-                </Text>
+                <span className={styles.titleRow}>
+                  <Text
+                    weight="medium"
+                    size="sm"
+                    className={cn(!isActive && !isSelected ? styles.lockedText : undefined)}
+                  >
+                    {title}
+                  </Text>
+                  {isFree && (
+                    <Text size="2xs" color="medium" className={styles.freeLabel}>
+                      {FREE_ITEM_LABEL}
+                    </Text>
+                  )}
+                </span>
                 {isSelected && pickedVariant && (
                   <Text size="2xs" color="medium" className={styles.shadeName}>
                     <ShadeCircle tint={pickedVariant.tint} size="xs" />

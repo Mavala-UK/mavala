@@ -12,6 +12,8 @@ import {ShopQuery} from 'storefrontapi.generated';
 import {useProductItem} from '~/hooks/useProductItem';
 import {useCartDrawer} from '../cart/CartDrawer';
 import {usePathWithLocale} from '~/hooks/usePathWithLocale';
+import {buildShadePath} from '~/lib/shadeUrl';
+import type {VariantMatch} from '~/lib/searchVariantMatch';
 import {Link} from '../common/Link';
 import {Image} from '../ui/Image';
 import {Button, ButtonEffect} from '../ui/Button';
@@ -63,6 +65,7 @@ function ProductCardContent({
   size,
   showAddButton = true,
   priority = false,
+  searchVariantMatch,
 }: React.ComponentPropsWithoutRef<'div'> & {
   product: ProductItemFragment;
   variant?: VariantType;
@@ -70,18 +73,46 @@ function ProductCardContent({
   size?: SizeButtonCardType;
   showAddButton?: boolean;
   priority?: boolean;
+  /**
+   * When set (search results), surface this matched variant instead of the
+   * default: its image + name on the card, and a link to its canonical
+   * path-based shade URL. Undefined everywhere else (card unchanged).
+   */
+  searchVariantMatch?: VariantMatch | null;
 }) {
   const isDesktop = useMediaQuery('(min-width: 64rem)');
   const data = useRouteLoaderData<RootLoader>('root');
   const {sites, shop} = data ?? {};
   const {isMavalaCorporate} = sites ?? {};
+  const pathPrefix = data?.selectedLocale?.pathPrefix ?? '';
   const {setIsCartDrawerOpen, isCartDrawerOpen} = useCartDrawer();
   const {handle, title, productType, capacity} = product ?? {};
-  const pathWithLocale = usePathWithLocale(`/products/${handle}`);
   const variants = product.variants?.nodes;
-  const selectedVariant = (variants.find(
-    (variant) => variant.id === product.defaultVariant?.reference?.id,
-  ) ?? variants[0]) as ProductVariantFragment;
+
+  // The search-matched variant, re-found by id in this (possibly re-fetched)
+  // product. Falls back to the default selection when there is no match or the
+  // matched id is not present (defensive against catalogue drift).
+  const matchedVariant = searchVariantMatch
+    ? (variants.find((v) => v.id === searchVariantMatch.variantId) as
+        | ProductVariantFragment
+        | undefined)
+    : undefined;
+
+  const selectedVariant = (matchedVariant ??
+    variants.find(
+      (variant) => variant.id === product.defaultVariant?.reference?.id,
+    ) ??
+    variants[0]) as ProductVariantFragment;
+
+  // Link target: the canonical shade path for a matched search variant
+  // (e.g. /products/mini-color-pink/56-riga), else the bare product page.
+  // buildShadePath produces the exact format the shade-URL migration uses, so
+  // the link lands on the path route directly with no 301 redirect.
+  const bareProductPath = usePathWithLocale(`/products/${handle}`);
+  const linkPath =
+    matchedVariant && searchVariantMatch
+      ? buildShadePath(handle ?? '', searchVariantMatch.optionValue, pathPrefix)
+      : bareProductPath;
 
   return (
     <ProductCardContext
@@ -106,8 +137,10 @@ function ProductCardContent({
           </div>
         )}
         <Link
-          to={pathWithLocale}
+          to={linkPath}
           className={styles.link}
+          data-testid="product-card-link"
+          {...(matchedVariant && {'data-matched-shade': searchVariantMatch?.shadeSlug})}
           onClick={() => {
             isCartDrawerOpen && setIsCartDrawerOpen(false);
             GtmProductData('click_product', {
@@ -139,6 +172,18 @@ function ProductCardContent({
             >
               {title}
             </Text>
+            {matchedVariant && searchVariantMatch && (
+              <Text
+                className={styles['matched-shade']}
+                data-testid="product-card-matched-shade"
+                size={variant === 'card' ? 'xs' : '5xs'}
+                weight="medium"
+                color="medium"
+                uppercase
+              >
+                {searchVariantMatch.optionValue}
+              </Text>
+            )}
             {productType && variant !== 'compact' && (
               <Text
                 className={styles.category}

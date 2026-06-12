@@ -81,6 +81,7 @@ export function ProductViewDrawerContent() {
           <AddToCartButton
             className={styles.button}
             selectedVariant={selectedVariant}
+            data-testid="drawer-atc"
           />
         </DrawerFooter>
       )}
