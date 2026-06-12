@@ -25,7 +25,7 @@
  * shade-url and accordion-icons suites.
  */
 
-import {test, expect, type Page} from '@playwright/test';
+import {test, expect} from '@playwright/test';
 
 test.describe.configure({mode: 'serial', retries: 1});
 
@@ -69,23 +69,6 @@ const OPTION_NAME_CASES = [
     label: 'Violet Cerise',
   },
 ];
-
-/**
- * Locate the search-result card that links to a given product handle.
- * Returns the card's link locator (a[data-testid=product-card-link]) whose
- * href contains the handle, or null when the product is absent from results
- * (catalogue drift -> the test skips rather than fails on stale data).
- */
-async function findCardLinkForHandle(page: Page, handle: string) {
-  const link = page
-    .getByTestId('product-card-link')
-    .filter({has: page.locator(`xpath=self::a[contains(@href, "/products/${handle}")]`)});
-  // Fallback: plain href match (data-testid + href filter combined).
-  const byHref = page.locator(
-    `a[data-testid="product-card-link"][href*="/products/${handle}"]`,
-  );
-  return (await byHref.count()) > 0 ? byHref.first() : link.first();
-}
 
 // ── HEADLINE: Riga surfaces the matching variant ────────────────────────────
 
@@ -171,7 +154,7 @@ test('searching a shade number "701" surfaces the 701. Rio Grande variant', asyn
 
 // ── one product per option-name style ───────────────────────────────────────
 
-for (const {optionName, term, handle, slug, label} of OPTION_NAME_CASES) {
+for (const {optionName, term, handle, slug} of OPTION_NAME_CASES) {
   test(`option-name "${optionName}": "${term}" links to /products/${handle}/${slug}`, async ({
     page,
   }) => {
