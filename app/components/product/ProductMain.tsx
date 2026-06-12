@@ -48,6 +48,21 @@ export function ProductMain() {
 
   const {selectedVariant, videoSection} = product ?? {};
 
+  // "Bundle Up & Save" is driven by the complementaryProducts metafield.
+  // PROPOSAL (needs design sign-off): when a product has no complementaryProducts
+  // but DOES have bundle-membership data (the bundle_components metafield Carrie
+  // fills on bundle products), fall back to those components so the cross-sell
+  // strip shows without maintaining a parallel complementaryProducts field.
+  // The product itself is excluded because a bundle lists itself among its own
+  // components (e.g. 930-double-brow's bundle_components includes 930-double-brow).
+  const complementaryNodes = product?.complementaryProducts?.references?.nodes;
+  const bundleUpProducts =
+    complementaryNodes && complementaryNodes.length > 0
+      ? complementaryNodes
+      : (product?.bundleComponents?.references?.nodes ?? []).filter(
+          (node) => node.handle !== product.handle,
+        );
+
   return (
     <>
       <Breadcrumb items={breadcrumbItems} />
@@ -61,9 +76,7 @@ export function ProductMain() {
                 <>
                   <StoreAvailability />
                   <CompleteYourOrder
-                    products={
-                      product?.complementaryProducts?.references?.nodes!
-                    }
+                    products={bundleUpProducts}
                     title="Bundle Up & Save"
                   />
                 </>
