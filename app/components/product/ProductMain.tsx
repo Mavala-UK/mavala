@@ -77,6 +77,19 @@ export function ProductMain() {
       </ProductView>
       {videoSection && <VideoSection content={videoSection?.reference!} />}
       {!isMavalaCorporate && <ProductReviews product={product} />}
+      {!isMavalaCorporate && (
+        <div
+          className="yotpo-widget-instance"
+          data-yotpo-instance-id="1213608"
+          data-yotpo-product-id={product?.id?.split('/').pop()}
+          data-yotpo-name={product?.title}
+          data-yotpo-url={data?.publicStoreDomain ? `https://${data.publicStoreDomain}/products/${product?.handle}` : undefined}
+          data-yotpo-image-url={product?.featuredImage?.url}
+          data-yotpo-price={product?.selectedVariant?.price?.amount}
+          data-yotpo-currency={product?.selectedVariant?.price?.currencyCode ?? 'GBP'}
+          data-yotpo-description={product?.description}
+        />
+      )}
       <Suspense fallback={null}>
         <RelatedProductsLoader relatedProductsPromise={relatedProducts} />
       </Suspense>
