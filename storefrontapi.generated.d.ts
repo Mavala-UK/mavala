@@ -7847,6 +7847,25 @@ export type RegularSearchQuery = {
   };
 };
 
+export type ProductsForSitemapQueryVariables = StorefrontAPI.Exact<{
+  language?: StorefrontAPI.InputMaybe<StorefrontAPI.LanguageCode>;
+  country?: StorefrontAPI.InputMaybe<StorefrontAPI.CountryCode>;
+}>;
+
+export type ProductsForSitemapQuery = {
+  products: {
+    nodes: Array<
+      Pick<StorefrontAPI.Product, 'handle' | 'updatedAt'> & {
+        options: Array<
+          Pick<StorefrontAPI.ProductOption, 'name'> & {
+            optionValues: Array<Pick<StorefrontAPI.ProductOptionValue, 'name'>>;
+          }
+        >;
+      }
+    >;
+  };
+};
+
 export type StoresPageQueryVariables = StorefrontAPI.Exact<{
   language?: StorefrontAPI.InputMaybe<StorefrontAPI.LanguageCode>;
   country?: StorefrontAPI.InputMaybe<StorefrontAPI.CountryCode>;
@@ -7940,6 +7959,10 @@ interface GeneratedQueryTypes {
   '#graphql\n  query RegularSearch(\n    $country: CountryCode\n    $endCursor: String\n    $first: Int\n    $language: LanguageCode\n    $last: Int\n    $term: String!\n    $startCursor: String\n  ) @inContext(country: $country, language: $language) {\n    products: search(\n      after: $endCursor,\n      before: $startCursor,\n      first: $first,\n      last: $last,\n      query: $term,\n      sortKey: RELEVANCE,\n      types: [PRODUCT],\n      unavailableProducts: SHOW,\n      productFilters: [ {\n         price:  {\n            min: 0.1,\n         }\n      }]\n    ) {\n      nodes {\n        ...on Product {\n          ...ProductItem\n        }\n      }\n      pageInfo {\n        hasNextPage\n        hasPreviousPage\n        startCursor\n        endCursor\n      }\n      totalCount\n    }\n  }\n  #graphql\n  fragment Image on Image {\n    id\n    url\n    altText\n    width\n    height\n  }\n  fragment ProductVariantItem on ProductVariant {\n    id\n    title\n    image {\n      ...Image\n    }\n    price {\n      amount\n      currencyCode\n    }\n    compareAtPrice {\n      amount\n      currencyCode\n    }\n    availableForSale\n    selectedOptions {\n      name\n      value\n    }\n    tint: metafield(namespace: "custom", key: "tint") {\n      reference {\n        ...on Metaobject{\n          color: field(key: "color") {\n            value\n          }\n        }\n      }\n    }\n  }\n  fragment ProductItem on Product {\n    id\n    handle\n    title\n    vendor\n    productType\n    featuredImage {\n      ...Image\n    }\n    variants(first: 250) {\n      nodes {\n        ...ProductVariantItem\n      }\n    }\n    defaultVariant: metafield(namespace: "custom", key: "default_variant") {\n      reference {\n        ... on ProductVariant {\n          id\n        }\n      }\n    }\n    capacity: metafield(namespace: "custom", key: "capacity") {\n      value\n    }\n    badges: metafield(namespace: "custom", key: "badges") {\n      references(first: 2) {\n        nodes {\n          ...on Metaobject{\n            id\n            text: field(key: "text") {\n              value\n            }\n          }\n        }\n      }\n    }\n    freeItems: metafield(namespace: "custom", key: "free_items_in_bundle") {\n      references(first: 10) {\n        nodes {\n          ...on Product {\n            id\n            handle\n            title\n            featuredImage {\n              ...Image\n            }\n          }\n        }\n      }\n    }\n  }\n\n': {
     return: RegularSearchQuery;
     variables: RegularSearchQueryVariables;
+  };
+  '#graphql\n  query ProductsForSitemap(\n    $language: LanguageCode\n    $country: CountryCode\n  ) @inContext(language: $language, country: $country) {\n    products(first: 250) {\n      nodes {\n        handle\n        updatedAt\n        options {\n          name\n          optionValues {\n            name\n          }\n        }\n      }\n    }\n  }\n': {
+    return: ProductsForSitemapQuery;
+    variables: ProductsForSitemapQueryVariables;
   };
   '#graphql\n  query StoresPage(\n    $language: LanguageCode\n    $country: CountryCode\n    $handle: MetaobjectHandleInput!\n  ) @inContext(language: $language, country: $country) {\n    storesPage: metaobject(handle: $handle) {\n      title: field(key: "title") {\n        value\n      }\n      description: field(key: "description") {\n        value\n      }\n      seo {\n        title {\n          value\n        }\n        description {\n          value\n        }\n      }\n    }\n  }\n': {
     return: StoresPageQuery;

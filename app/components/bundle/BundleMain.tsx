@@ -13,6 +13,7 @@ import {Breadcrumb} from '../common/Breadcrumb';
 import {Heading} from '../ui/Heading';
 import {Text} from '../ui/Text';
 import {Badges} from '../ui/Badges';
+import {productTypeDisplayName} from '~/lib/utils';
 import {ProductMedias} from '../product/ProductMedias';
 import {ProductView} from '../product/ProductView';
 import {ProductInfos} from '../product/ProductInfos';
@@ -85,7 +86,7 @@ export function BundleMain() {
                 </Heading>
                 {product.productType && (
                   <Text size="sm" className={styles.productType}>
-                    {product.productType}
+                    {productTypeDisplayName(product.productType)}
                   </Text>
                 )}
                 {bundleVariant && (
