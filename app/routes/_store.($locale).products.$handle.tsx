@@ -17,6 +17,7 @@ import type {SelectedOption} from '@shopify/hydrogen/storefront-api-types';
 import type {ProductFragment} from 'storefrontapi.generated';
 import {getVariantUrl, truncate} from '~/lib/utils';
 import {buildShadePath, isShadeOptionName, slugifyShade} from '~/lib/shadeUrl';
+import {withTrackingParams} from '~/lib/trackingParams';
 import {PRODUCT_ITEM_FRAGMENT} from '~/lib/fragments/ProductItemFragment';
 import {getYotpoReviews} from '~/lib/yotpo';
 import {faqSectionFragment} from '~/sanity/fragments/faqSectionFragment';
@@ -86,36 +87,56 @@ async function loadCriticalData({
         );
 
         if (variant) {
-          // Redirect to the path-based shade URL (one hop; drops tracking params).
+          // Redirect to the path-based shade URL (one hop). Preserve the
+          // allowlisted marketing params so ad/email attribution survives.
           const shadeOption = variant.selectedOptions.find((o: SelectedOption) =>
             isShadeOptionName(o.name),
           );
           if (shadeOption) {
             return redirect(
-              buildShadePath(handle, shadeOption.value, pathPrefix),
+              withTrackingParams(
+                buildShadePath(handle, shadeOption.value, pathPrefix),
+                url.searchParams,
+              ),
               {status: 301},
             );
           }
           // Non-shade product: redirect to bare product (variant param removed)
-          return redirect(`${pathPrefix}/products/${handle}`, {status: 301});
+          return redirect(
+            withTrackingParams(
+              `${pathPrefix}/products/${handle}`,
+              url.searchParams,
+            ),
+            {status: 301},
+          );
         }
       }
     } catch (error) {
       console.error('Error looking up variant:', error);
     }
 
-    // Variant not found: redirect to bare product (strips variant + tracking)
-    return redirect(`${pathPrefix}/products/${handle}`, {status: 301});
+    // Variant not found: redirect to bare product (variant dropped, tracking kept)
+    return redirect(
+      withTrackingParams(`${pathPrefix}/products/${handle}`, url.searchParams),
+      {status: 301},
+    );
   }
 
   // 301-redirect any shade query param (?Teinte=, ?Color=, ?Shade=, etc.)
   // to the canonical path URL before we even hit Shopify.
-  // Drops all tracking params (fbclid, utm_*, etc.) from the redirect target.
+  // Preserves the allowlisted marketing params (gclid, utm_*, etc.) so ad and
+  // email attribution survives; the shade param itself is consumed.
   // This must come AFTER the ?variant check but BEFORE getSelectedProductOptions
   // so the Storefront query never sees these params.
   for (const [key, value] of url.searchParams.entries()) {
     if (isShadeOptionName(key) && value) {
-      throw redirect(buildShadePath(handle, value, pathPrefix), {status: 301});
+      throw redirect(
+        withTrackingParams(
+          buildShadePath(handle, value, pathPrefix),
+          url.searchParams,
+        ),
+        {status: 301},
+      );
     }
   }
 
@@ -155,7 +176,11 @@ async function loadCriticalData({
     // if no selected variant was returned from the selected options,
     // we redirect to the first variant's url with it's selected options applied
     if (!product.selectedVariant) {
-      throw redirectToFirstVariant({product, pathPrefix});
+      throw redirectToFirstVariant({
+        product,
+        pathPrefix,
+        searchParams: url.searchParams,
+      });
     }
   }
 
@@ -334,32 +359,43 @@ function loadDeferredData({context, params}: LoaderFunctionArgs) {
 function redirectToFirstVariant({
   product,
   pathPrefix,
+  searchParams,
 }: {
   product: ProductFragment;
   pathPrefix: string;
+  searchParams: URLSearchParams;
 }) {
   const defaultVariant =
     product?.defaultVariant?.reference ?? product.variants.nodes[0];
 
-  // For shade products: redirect to the first shade's path URL (drops tracking params)
+  // For shade products: redirect to the first shade's path URL.
+  // Preserve the allowlisted marketing params so ad/email attribution survives.
   const shadeOption = defaultVariant.selectedOptions.find((o: SelectedOption) =>
     isShadeOptionName(o.name),
   );
   if (shadeOption) {
     return redirect(
-      buildShadePath(product.handle, shadeOption.value, pathPrefix),
+      withTrackingParams(
+        buildShadePath(product.handle, shadeOption.value, pathPrefix),
+        searchParams,
+      ),
       {status: 302},
     );
   }
 
-  // Non-shade product fallback: use the existing query-param approach
+  // Non-shade product fallback: use the existing query-param approach.
+  // Preserve the allowlisted marketing params (the target may already carry a
+  // ?Option=Value query, so the helper merges rather than clobbers).
   return redirect(
-    getVariantUrl({
-      handle: product.handle,
-      selectedOptions: defaultVariant.selectedOptions,
-      searchParams: new URLSearchParams(),
-      pathPrefix,
-    }),
+    withTrackingParams(
+      getVariantUrl({
+        handle: product.handle,
+        selectedOptions: defaultVariant.selectedOptions,
+        searchParams: new URLSearchParams(),
+        pathPrefix,
+      }),
+      searchParams,
+    ),
     {status: 302},
   );
 }

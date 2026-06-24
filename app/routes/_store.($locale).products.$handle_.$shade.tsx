@@ -25,6 +25,7 @@ import {PRODUCT_ITEM_FRAGMENT} from '~/lib/fragments/ProductItemFragment';
 import {getYotpoReviews} from '~/lib/yotpo';
 import {truncate} from '~/lib/utils';
 import {findVariantBySlug, buildShadePath, getShadeOptionName, slugifyShade} from '~/lib/shadeUrl';
+import {withTrackingParams} from '~/lib/trackingParams';
 import type {ProductFragment, ProductVariantFragment} from 'storefrontapi.generated';
 import {ProductMain} from '~/components/product/ProductMain';
 import {BundleMain} from '~/components/bundle/BundleMain';
@@ -67,6 +68,7 @@ async function loadCriticalData({
 
   const {storefront, env} = context;
   const pathPrefix = storefront.i18n.pathPrefix;
+  const {searchParams} = new URL(request.url);
   const queryClient = new QueryClient();
 
   // Load the product with no pre-selected options -- we resolve the variant
@@ -93,8 +95,12 @@ async function loadCriticalData({
   const foundVariant = findVariantBySlug(product, shadeSlug);
 
   if (!foundVariant) {
-    // Unknown slug -> 301 to bare product (never 404, to protect backlinks)
-    throw redirect(`${pathPrefix}/products/${handle}`, {status: 301});
+    // Unknown slug -> 301 to bare product (never 404, to protect backlinks).
+    // Preserve allowlisted marketing params so ad/email attribution survives.
+    throw redirect(
+      withTrackingParams(`${pathPrefix}/products/${handle}`, searchParams),
+      {status: 301},
+    );
   }
 
   // LOW-2: Canonical-slug self-redirect.
@@ -109,7 +115,13 @@ async function loadCriticalData({
   if (resolvedShadeValue) {
     const canonicalSlug = slugifyShade(resolvedShadeValue);
     if (canonicalSlug && canonicalSlug !== shadeSlug) {
-      throw redirect(buildShadePath(handle, resolvedShadeValue, pathPrefix), {status: 301});
+      throw redirect(
+        withTrackingParams(
+          buildShadePath(handle, resolvedShadeValue, pathPrefix),
+          searchParams,
+        ),
+        {status: 301},
+      );
     }
   }
 

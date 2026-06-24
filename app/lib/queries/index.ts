@@ -48,6 +48,12 @@ export const GLOBAL_QUERY = `#graphql
     $handle: MetaobjectHandleInput!
   ) @inContext(language: $language, country: $country) {
     global: metaobject(handle: $handle) {
+      marketingBarText: field(key: "marketing_bar_text") {
+        value
+      }
+      marketingBarLink: field(key: "marketing_bar_link") {
+        value
+      }
       announcements: field(key: "announcements") {
         references(first: 10) {
           nodes {

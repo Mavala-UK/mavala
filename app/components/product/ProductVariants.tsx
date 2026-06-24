@@ -14,6 +14,7 @@ import {Carousel, CarouselWrapperButton} from '../ui/Carousel';
 import type {SelectedOption} from '@shopify/hydrogen/storefront-api-types';
 import {ShadeOption} from '../ui/ShadeOption';
 import {buildShadePath, isShadeOptionName} from '~/lib/shadeUrl';
+import {withTrackingParams} from '~/lib/trackingParams';
 import type {RootLoader} from '~/root';
 import styles from './ProductVariants.module.css';
 
@@ -82,7 +83,10 @@ export function ProductVariants({className}: {className?: string}) {
 
     setSelectedOptions(newSelectedOptions);
 
-    navigate(`?${newSearchParams.toString()}`, {
+    // Preserve the allowlisted marketing params so an in-page non-shade
+    // selection keeps ad/email attribution (the rebuilt query would otherwise
+    // drop gclid/utm_*).
+    navigate(withTrackingParams(`?${newSearchParams.toString()}`, searchParams), {
       replace: true,
       preventScrollReset: true,
       viewTransition: true,
@@ -139,8 +143,14 @@ export function ProductVariants({className}: {className?: string}) {
                   // For shade options: path-based link (crawlable, tracking-safe).
                   // isActive is derived from the path-resolved selectedVariant, not
                   // from searchParams (which may be empty or contain only tracking params).
+                  // Re-append the allowlisted marketing params so an in-page shade
+                  // switch keeps ad/email attribution. When none are present (the
+                  // crawler/SSR case), the href stays the clean canonical path.
                   const to = isShadeOpt
-                    ? buildShadePath(handle ?? '', optionValue.value, pathPrefix)
+                    ? withTrackingParams(
+                        buildShadePath(handle ?? '', optionValue.value, pathPrefix),
+                        searchParams,
+                      )
                     : undefined;
                   const isPathActive = isShadeOpt
                     ? optionValue.value.toLowerCase() ===
