@@ -51,4 +51,18 @@ describe('withTrackingParams', () => {
       '/fr/products/foo',
     );
   });
+
+  it('merges tracking params into a target that already has a query string', () => {
+    const source = new URLSearchParams('gclid=ABC123');
+    expect(withTrackingParams('/products/foo?Packaging=Tube', source)).toBe(
+      '/products/foo?Packaging=Tube&gclid=ABC123',
+    );
+  });
+
+  it('keeps an existing query string intact when no tracking params present', () => {
+    const source = new URLSearchParams();
+    expect(withTrackingParams('/products/foo?Packaging=Tube', source)).toBe(
+      '/products/foo?Packaging=Tube',
+    );
+  });
 });

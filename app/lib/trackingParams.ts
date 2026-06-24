@@ -25,22 +25,29 @@ const TRACKING_PARAM_KEYS = [
 ] as const;
 
 /**
- * Returns `path` (a clean path with no query string) with the allowlisted
- * marketing params from `source` re-appended. Returns `path` unchanged if no
- * allowlisted params are present.
+ * Returns `target` with the allowlisted marketing params from `source`
+ * re-appended. `target` is normally a clean path, but it may already carry a
+ * query string (e.g. `/products/foo?Packaging=Tube`), in which case the
+ * allowlisted params are merged into the existing query without clobbering it.
+ * Returns `target` unchanged if no allowlisted params are present.
  */
 export function withTrackingParams(
-  path: string,
+  target: string,
   source: URLSearchParams,
 ): string {
-  const preserved = new URLSearchParams();
+  const queryStart = target.indexOf('?');
+  const path = queryStart === -1 ? target : target.slice(0, queryStart);
+  const merged = new URLSearchParams(
+    queryStart === -1 ? '' : target.slice(queryStart + 1),
+  );
+
   for (const key of TRACKING_PARAM_KEYS) {
     const value = source.get(key);
     if (value !== null) {
-      preserved.set(key, value);
+      merged.set(key, value);
     }
   }
 
-  const query = preserved.toString();
+  const query = merged.toString();
   return query ? `${path}?${query}` : path;
 }

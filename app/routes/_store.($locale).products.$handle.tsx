@@ -383,14 +383,19 @@ function redirectToFirstVariant({
     );
   }
 
-  // Non-shade product fallback: use the existing query-param approach
+  // Non-shade product fallback: use the existing query-param approach.
+  // Preserve the allowlisted marketing params (the target may already carry a
+  // ?Option=Value query, so the helper merges rather than clobbers).
   return redirect(
-    getVariantUrl({
-      handle: product.handle,
-      selectedOptions: defaultVariant.selectedOptions,
-      searchParams: new URLSearchParams(),
-      pathPrefix,
-    }),
+    withTrackingParams(
+      getVariantUrl({
+        handle: product.handle,
+        selectedOptions: defaultVariant.selectedOptions,
+        searchParams: new URLSearchParams(),
+        pathPrefix,
+      }),
+      searchParams,
+    ),
     {status: 302},
   );
 }
