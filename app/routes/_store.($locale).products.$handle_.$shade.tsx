@@ -183,7 +183,7 @@ async function loadCriticalData({
 
   const yotpoReviews = await getYotpoReviews(
     product.id.split('/').pop()!,
-    env.PRIVATE_YOTPO_APP_KEY as string,
+    'qfBl6DELQsnPNDKk8lHzWt0e47C1cCeeCR1448Fh',
   );
 
   const seo: SeoConfig = {
