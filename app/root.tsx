@@ -306,6 +306,11 @@ export default function App() {
             `,
           }}
         />
+      {/* Yotpo Integration */}
+      <script
+        async
+        src="https://cdn-widgetsrepository.yotpo.com/v1/loader/qfBl6DELQsnPNDKk8lHzWt0e47C1cCeeCR1448Fh"
+      />
       </head>
       <body>
         <noscript>
