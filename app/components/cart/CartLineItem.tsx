@@ -5,7 +5,7 @@ import {useCartDrawer} from './CartDrawer';
 import {useIntl} from 'react-intl';
 import {useVariantUrl} from '~/hooks/useVariantUrl';
 import {Remove} from '../icons/Remove';
-import {slugify} from '~/lib/utils';
+import {slugify, productTypeDisplayName} from '~/lib/utils';
 import {Image} from '../ui/Image';
 import {Text} from '../ui/Text';
 import {Heading} from '../ui/Heading';
@@ -77,7 +77,7 @@ export function CartLineItem({
       <div className={styles.content}>
         {productType && (
           <Text size="5xs" uppercase color="medium" className={styles.type}>
-            {productType}
+            {productTypeDisplayName(productType)}
           </Text>
         )}
         <Heading asChild size="sm">
