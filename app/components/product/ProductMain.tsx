@@ -33,6 +33,7 @@ export function ProductMain() {
     relatedProducts,
     faqSection,
     relatedArticles: relatedArticlesPromise,
+    yotpoReviews,
   } = useLoaderData<typeof loader>();
   const {handle} = useParams();
   const [searchParams] = useSearchParams();
@@ -77,7 +78,7 @@ export function ProductMain() {
       </ProductView>
       {videoSection && <VideoSection content={videoSection?.reference!} />}
       {!isMavalaCorporate && <ProductReviews product={product} />}
-      {!isMavalaCorporate && (
+      {!isMavalaCorporate && (yotpoReviews?.bottomline?.total_review ?? 0) > 0 ? (
         <div
           className="yotpo-widget-instance"
           data-yotpo-instance-id="1213608"
@@ -89,7 +90,7 @@ export function ProductMain() {
           data-yotpo-currency={product?.selectedVariant?.price?.currencyCode ?? 'GBP'}
           data-yotpo-description={product?.description}
         />
-      )}
+      ) : null}
       <Suspense fallback={null}>
         <RelatedProductsLoader relatedProductsPromise={relatedProducts} />
       </Suspense>

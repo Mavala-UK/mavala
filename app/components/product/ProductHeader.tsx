@@ -1,4 +1,5 @@
-import {useRouteLoaderData} from 'react-router';
+import {useLoaderData, useRouteLoaderData} from 'react-router';
+import type {loader} from '~/routes/_store.($locale).products.$handle';
 import {RootLoader} from '~/root';
 import {useProductView} from './ProductView';
 import {useMediaQuery} from '~/hooks/useMediaQuery';
@@ -14,6 +15,8 @@ export function ProductHeader() {
   const {product, selectedVariant} = useProductView();
   const {title, capacity} = product ?? {};
   const badges = selectedVariant?.badges ?? product?.badges;
+  const {yotpoReviews} = useLoaderData<typeof loader>();
+  const {bottomline} = yotpoReviews ?? {};
   const productCapacity = capacity?.value?.split('(');
 
   return (
@@ -32,7 +35,7 @@ export function ProductHeader() {
           )}
         </div>
       )}
-      {!isMavalaCorporate && (
+      {!isMavalaCorporate && bottomline?.total_review ? (
         <div
           className="yotpo-widget-instance"
           data-yotpo-instance-id="1213609"
@@ -40,7 +43,7 @@ export function ProductHeader() {
           data-yotpo-cart-product-id={product?.id?.split('/').pop()}
           data-yotpo-section-id="product"
         />
-      )}
+      ) : null}
     </header>)
   );
 }
