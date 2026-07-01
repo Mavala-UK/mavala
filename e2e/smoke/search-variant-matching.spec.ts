@@ -245,3 +245,39 @@ test('no-match number "275" returns 200 with a no-results state (not 404)', asyn
     timeout: 10000,
   });
 });
+
+/**
+ * Admin API fallback test: purely-alphabetic shade name.
+ *
+ * "Vert Empire" appears only in variant titles / option values, never in any
+ * product-level field (title, description, tags, vendor, product_type). The
+ * Storefront API product search alone returns zero results. This test verifies
+ * that the Admin API variant search fallback finds the parent product and
+ * surfaces the matched variant correctly.
+ */
+test('purely-alphabetic shade name "Vert Empire" surfaces the correct variant', async ({
+  page,
+}) => {
+  await page.goto('/search?q=Vert+Empire', {timeout: 30000});
+  await expect(page.getByTestId('product-card-link').first()).toBeAttached({
+    timeout: 20000,
+  });
+
+  const matchedLink = page.locator(
+    'a[data-testid="product-card-link"][href*="/products/crayon-lumiere/vert-empire"]',
+  );
+  await expect(matchedLink).toHaveCount(1, {timeout: 20000});
+
+  await expect(
+    page
+      .getByTestId('product-card-matched-shade')
+      .filter({hasText: 'Vert Empire'}),
+  ).toBeAttached({timeout: 20000});
+
+  const href = await matchedLink.getAttribute('href');
+  expect(href).toContain('/products/crayon-lumiere/vert-empire');
+  expect(href).not.toContain('?');
+
+  const resp = await page.request.get(href!);
+  expect(resp.status()).toBe(200);
+});

@@ -8,6 +8,7 @@ import {SearchResults} from '~/components/search/SearchResults';
 import {PRODUCT_ITEM_FRAGMENT} from '~/lib/fragments/ProductItemFragment';
 import {type RegularSearchReturn, type SearchProductNode} from '~/lib/search';
 import {matchVariantForTerm} from '~/lib/searchVariantMatch';
+import {ADMIN_VARIANT_SEARCH} from '~/graphql/admin/VariantSearchQuery';
 import type {RootLoader} from '~/root';
 
 export const meta: MetaFunction<typeof loader, {root: RootLoader}> = ({
@@ -113,7 +114,7 @@ async function regularSearch({
   LoaderFunctionArgs,
   'request' | 'context'
 >): Promise<RegularSearchReturn> {
-  const {storefront} = context;
+  const {storefront, admin} = context;
   const url = new URL(request.url);
   const variables = getPaginationVariables(request, {pageBy: 24});
   const term = String(url.searchParams.get('q') || '');
@@ -126,12 +127,45 @@ async function regularSearch({
     throw new Error('No search data returned from Shopify API');
   }
 
+  // ── Phase 1: Primary product search (Storefront API) ──────────────────────
+  // Shopify's search with `types: [PRODUCT]` indexes product-level fields only
+  // (title, description, tags, vendor, product_type). It does NOT index variant
+  // titles or option values, so shade-name searches ("Riga", "Vert Empire")
+  // return zero products. The Admin API fallback below handles that case.
+
+  const productNodes = items?.products?.nodes ?? [];
+
+  // ── Phase 2: Admin API variant search fallback ────────────────────────────
+  // When the primary search returns few products, query variant titles directly
+  // via the Admin API (which searches variant.title). For each matching variant
+  // we fetch the parent product's full Storefront data and add it to the
+  // results, so shade-name searches surface the correct product.
+
+  if (productNodes.length < 5 && term.trim().length >= 2) {
+    const variantProducts = await searchVariantsViaAdmin(admin, term);
+    const existingHandles = new Set(
+      productNodes.map((p) => (p as {handle: string}).handle),
+    );
+
+    const newGids = variantProducts
+      .filter((p) => !existingHandles.has(p.handle))
+      .map((p) => p.gid);
+
+    if (newGids.length > 0) {
+      const fallbackProducts = await fetchProductsByGids(storefront, newGids);
+      for (const fp of fallbackProducts) {
+        productNodes.push(fp as (typeof productNodes)[number]);
+      }
+    }
+  }
+
+  // ── Attach variant match info ────────────────────────────────────────────
   // Surface the matching VARIANT for shade searches (e.g. "Riga", "701").
   // Attach searchVariantMatch onto each product node so ProductCard can render
   // the matched shade (variant image + name) and link to its canonical path
   // URL, rather than the parent product's default variant. Nodes that match
   // nothing keep searchVariantMatch === null and render unchanged.
-  const productNodes = items?.products?.nodes ?? [];
+
   for (const node of productNodes) {
     (node as SearchProductNode).searchVariantMatch =
       matchVariantForTerm(node, term);
@@ -148,3 +182,103 @@ async function regularSearch({
 
   return {type: 'regular', term, error, result: {total, items}};
 }
+
+/**
+ * Escape special characters in a search term for use in the Admin API `query`
+ * parameter. Replaces characters that have special meaning in Shopify's search
+ * syntax with spaces, then collapses whitespace.
+ */
+function escapeAdminQuery(value: string): string {
+  return value
+    .replace(/[\\"]/g, ' ')
+    .replace(/[(){}[\]!^~]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/**
+ * Search for variants via the Admin API when the primary Storefront API product
+ * search returns few results. The Admin API `productVariants` query can search
+ * variant titles directly, which is how we find products whose shade name
+ * matches the search term but whose product-level fields do not.
+ *
+ * Returns deduplicated product references (GID + handle) for the matched
+ * variants' parent products. An empty array means no variants matched.
+ */
+async function searchVariantsViaAdmin(
+  admin: unknown,
+  term: string,
+): Promise<Array<{gid: string; handle: string}>> {
+  if (!term || term.trim().length < 2) return [];
+
+  const sanitised = escapeAdminQuery(term);
+  const query = `title:*${sanitised}*`;
+
+  try {
+    const result = await (admin as {request: Function}).request(
+      ADMIN_VARIANT_SEARCH,
+      {variables: {query}},
+    );
+
+    if (!result?.data?.productVariants?.edges) return [];
+
+    const seen = new Set<string>();
+    const products: Array<{gid: string; handle: string}> = [];
+
+    for (const edge of result.data.productVariants.edges) {
+      const product = edge?.node?.product;
+      if (product?.id && !seen.has(product.id)) {
+        seen.add(product.id);
+        products.push({gid: product.id, handle: product.handle});
+      }
+    }
+
+    return products;
+  } catch (e) {
+    console.error('Variant search fallback failed:', e);
+    return [];
+  }
+}
+
+/**
+ * Fetch full product data (with variants) for a list of product GIDs, using
+ * the Storefront API `nodes` query with the ProductItem fragment. Returns
+ * an array whose elements have the same shape as search result product nodes,
+ * suitable for matchVariantForTerm and ProductCard rendering.
+ */
+async function fetchProductsByGids(
+  storefront: unknown,
+  gids: string[],
+): Promise<Array<Record<string, unknown>>> {
+  if (gids.length === 0) return [];
+
+  try {
+    const result = await (
+      storefront as {query: Function}
+    ).query(PRODUCTS_BY_GID_QUERY, {variables: {ids: gids}});
+
+    const nodes = (result as Record<string, unknown>)?.nodes as
+      | Array<Record<string, unknown>>
+      | undefined;
+    return nodes?.filter(Boolean) ?? [];
+  } catch (e) {
+    console.error('Failed to fetch products by GID:', e);
+    return [];
+  }
+}
+
+/**
+ * Storefront API query to fetch products by GID with the full ProductItem
+ * fragment. Used by the Admin API fallback to get Storefront-shaped product
+ * data for variant-matched products.
+ */
+const PRODUCTS_BY_GID_QUERY = `#graphql
+  query ProductsByGid($ids: [ID!]!) {
+    nodes(ids: $ids) {
+      ...on Product {
+        ...ProductItem
+      }
+    }
+  }
+  ${PRODUCT_ITEM_FRAGMENT}
+` as const;
