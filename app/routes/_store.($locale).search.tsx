@@ -9,6 +9,7 @@ import {PRODUCT_ITEM_FRAGMENT} from '~/lib/fragments/ProductItemFragment';
 import {type RegularSearchReturn, type SearchProductNode} from '~/lib/search';
 import {matchVariantForTerm} from '~/lib/searchVariantMatch';
 import {ADMIN_VARIANT_SEARCH} from '~/graphql/admin/VariantSearchQuery';
+import {ADMIN_PRODUCT_TITLE_SEARCH} from '~/graphql/admin/ProductTitleSearchQuery';
 import type {RootLoader} from '~/root';
 
 export const meta: MetaFunction<typeof loader, {root: RootLoader}> = ({
@@ -147,14 +148,37 @@ async function regularSearch({
       productNodes.map((p) => (p as {handle: string}).handle),
     );
 
-    const newGids = variantProducts
+    const variantGids = variantProducts
       .filter((p) => !existingHandles.has(p.handle))
       .map((p) => p.gid);
 
-    if (newGids.length > 0) {
-      const fallbackProducts = await fetchProductsByGids(storefront, newGids);
+    if (variantGids.length > 0) {
+      const fallbackProducts = await fetchProductsByGids(storefront, variantGids);
       for (const fp of fallbackProducts) {
         productNodes.push(fp as (typeof productNodes)[number]);
+      }
+    }
+
+    // ── Tier 3: Admin API product title search ──────────────────────────────
+    // When variant title search finds nothing, try searching product titles
+    // directly via the Admin API. This catches partial product-name matches
+    // like "lumi" for "Crayon Lumiere".
+
+    if (variantProducts.length === 0) {
+      const titleProducts = await searchProductsViaAdmin(admin, term);
+      const currentHandles = new Set(
+        productNodes.map((p) => (p as {handle: string}).handle),
+      );
+
+      const titleGids = titleProducts
+        .filter((p) => !currentHandles.has(p.handle))
+        .map((p) => p.gid);
+
+      if (titleGids.length > 0) {
+        const titleFallbackProducts = await fetchProductsByGids(storefront, titleGids);
+        for (const fp of titleFallbackProducts) {
+          productNodes.push(fp as (typeof productNodes)[number]);
+        }
       }
     }
   }
@@ -188,12 +212,18 @@ async function regularSearch({
  * parameter. Replaces characters that have special meaning in Shopify's search
  * syntax with spaces, then collapses whitespace.
  */
-function escapeAdminQuery(value: string): string {
+function sanitiseSearchTerm(value: string): string {
   return value
     .replace(/[\\"]/g, ' ')
     .replace(/[(){}[\]!^~]/g, ' ')
     .replace(/\s+/g, ' ')
     .trim();
+}
+
+function escapeAdminQuery(value: string): string {
+  return sanitiseSearchTerm(value)
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '');
 }
 
 /**
@@ -211,8 +241,14 @@ async function searchVariantsViaAdmin(
 ): Promise<Array<{gid: string; handle: string}>> {
   if (!term || term.trim().length < 2) return [];
 
-  const sanitised = escapeAdminQuery(term);
-  const query = `title:*${sanitised}*`;
+  const unaccented = escapeAdminQuery(term);
+  const accented = sanitiseSearchTerm(term);
+
+  const titleQueries = [`title:*${unaccented}*`];
+  if (accented !== unaccented) {
+    titleQueries.push(`title:*${accented}*`);
+  }
+  const query = titleQueries.join(' OR ');
 
   try {
     const result = await (admin as {request: Function}).request(
@@ -236,6 +272,52 @@ async function searchVariantsViaAdmin(
     return products;
   } catch (e) {
     console.error('Variant search fallback failed:', e);
+    return [];
+  }
+}
+
+/**
+ * Search for products via the Admin API when both primary Storefront search and
+ * variant title search return zero results. The Admin API `products` query can
+ * search product titles with wildcards, finding partial name matches like "lumi"
+ * that match no variant title but should surface the product.
+ *
+ * Returns deduplicated product references (GID + handle). An empty array means
+ * no products matched the title search.
+ */
+async function searchProductsViaAdmin(
+  admin: unknown,
+  term: string,
+): Promise<Array<{gid: string; handle: string}>> {
+  if (!term || term.trim().length < 2) return [];
+
+  const sanitised = escapeAdminQuery(term);
+  if (!sanitised) return [];
+
+  const query = `title:*${sanitised}*`;
+
+  try {
+    const result = await (admin as {request: Function}).request(
+      ADMIN_PRODUCT_TITLE_SEARCH,
+      {variables: {query}},
+    );
+
+    if (!result?.data?.products?.edges) return [];
+
+    const seen = new Set<string>();
+    const products: Array<{gid: string; handle: string}> = [];
+
+    for (const edge of result.data.products.edges) {
+      const product = edge?.node;
+      if (product?.id && !seen.has(product.id)) {
+        seen.add(product.id);
+        products.push({gid: product.id, handle: product.handle});
+      }
+    }
+
+    return products;
+  } catch (e) {
+    console.error('Product title search fallback failed:', e);
     return [];
   }
 }
