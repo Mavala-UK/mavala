@@ -3,7 +3,7 @@ import type {
   ProductItemFragment,
   ProductVariantFragment,
 } from 'storefrontapi.generated';
-import {cn} from '~/lib/utils';
+import {cn, productTypeDisplayName} from '~/lib/utils';
 import { useRouteLoaderData } from 'react-router';
 import {RootLoader} from '~/root';
 import {useMediaQuery} from '~/hooks/useMediaQuery';
@@ -202,7 +202,7 @@ function ProductCardContent({
                 weight="light"
                 color="medium"
               >
-                {productType}
+                {productTypeDisplayName(productType)}
               </Text>
             )}
             {variant !== 'compact' && (variant !== 'card' || !isDesktop) && (

@@ -77,6 +77,18 @@ export function hasSearchParams(sp: URLSearchParams): boolean {
   return sp.toString() !== '';
 }
 
+/**
+ * Maps internal product type names to customer-facing display labels.
+ * Keeps the Shopify-driven productType detection intact (conditional logic
+ * checks the raw value) while changing only what customers see.
+ */
+export function productTypeDisplayName(
+  productType: string | null | undefined,
+): string | null | undefined {
+  if (productType === 'Bundle') return 'SET';
+  return productType;
+}
+
 export function getVariantSearchString(selectedOptions: SelectedOption[]) {
   const searchParams = new URLSearchParams(
     selectedOptions?.length === 0

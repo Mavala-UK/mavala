@@ -65,7 +65,7 @@ export function ProductMain() {
                     products={
                       product?.complementaryProducts?.references?.nodes!
                     }
-                    title="Bundle Up & Save"
+                    title="Save on Sets"
                   />
                 </>
               )}
