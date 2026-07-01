@@ -227,10 +227,74 @@ function escapeAdminQuery(value: string): string {
 }
 
 /**
+ * French vowel accent map for generating accent variants. Maps each vowel to
+ * its common accented forms so that unaccented search terms ("celeste") can
+ * match accented variant titles ("Céleste") in the Admin API.
+ */
+const ACCENT_MAP: Record<string, string[]> = {
+  a: ['à', 'â'],   // à = à, â = â
+  e: ['é', 'è', 'ê', 'ë'], // é = é, è = è, ê = ê, ë = ë
+  i: ['î', 'ï'],   // î = î, ï = ï
+  o: ['ô'],              // ô = ô
+  u: ['ù', 'û', 'ü'], // ù = ù, û = û, ü = ü
+  c: ['ç'],              // ç = ç
+};
+
+/**
+ * Generate Admin API query terms for a single word, including both the original
+ * (unaccented) form and variants with common French accents on each vowel.
+ * Example: "celeste" -> ["celeste", "céleste", "cèleste", "celéste", "celèste", "celesté", "celestè"]
+ */
+function generateWordAccentVariants(word: string): string[] {
+  if (!word) return [word];
+
+  const variants = new Set<string>();
+  variants.add(word); // original (unaccented) form
+
+  for (let i = 0; i < word.length; i++) {
+    const ch = word[i].toLowerCase();
+    const accentForms = ACCENT_MAP[ch];
+    if (!accentForms) continue;
+
+    for (const accented of accentForms) {
+      // Replace the vowel at position i with its accented form
+      const variant = word.slice(0, i) + accented + word.slice(i + 1);
+      variants.add(variant);
+    }
+  }
+
+  return Array.from(variants).filter(Boolean);
+}
+
+/**
+ * Build an Admin API query string that matches accent-insensitively.
+ * For each word in the search term, generates accent variants and ORs them,
+ * then ANDs the word groups together.
+ * Example: "vert celeste" ->
+ *   (title:*vert* OR title:*vért* OR title:*vèrt*) AND (title:*celeste* OR title:*céleste* OR ...)
+ */
+function buildAccentInsensitiveQuery(sanitised: string): string {
+  const words = sanitised.split(/\s+/).filter(Boolean);
+  if (words.length === 0) return '';
+
+  const wordGroups = words.map((word) => {
+    const variants = generateWordAccentVariants(word);
+    return '(' + variants.map((v) => `title:*${v}*`).join(' OR ') + ')';
+  });
+
+  return wordGroups.join(' AND ');
+}
+
+/**
  * Search for variants via the Admin API when the primary Storefront API product
  * search returns few results. The Admin API `productVariants` query can search
  * variant titles directly, which is how we find products whose shade name
  * matches the search term but whose product-level fields do not.
+ *
+ * The query uses accent-insensitive matching: for each word, common French
+ * accent variants (é, è, ê, ë, à, â, î, ï, ô, ù, û, ü, ç) are
+ * generated and OR'd together, so unaccented searches ("celeste") match
+ * accented variant titles ("Céleste") in the Admin API.
  *
  * Returns deduplicated product references (GID + handle) for the matched
  * variants' parent products. An empty array means no variants matched.
@@ -241,14 +305,12 @@ async function searchVariantsViaAdmin(
 ): Promise<Array<{gid: string; handle: string}>> {
   if (!term || term.trim().length < 2) return [];
 
-  const unaccented = escapeAdminQuery(term);
-  const accented = sanitiseSearchTerm(term);
+  const sanitised = sanitiseSearchTerm(term);
 
-  const titleQueries = [`title:*${unaccented}*`];
-  if (accented !== unaccented) {
-    titleQueries.push(`title:*${accented}*`);
-  }
-  const query = titleQueries.join(' OR ');
+  // Build an accent-insensitive query: for each word in the search term,
+  // generate variants with common French accents and OR them together
+  const query = buildAccentInsensitiveQuery(sanitised);
+  if (!query) return [];
 
   try {
     const result = await (admin as {request: Function}).request(
@@ -279,7 +341,7 @@ async function searchVariantsViaAdmin(
 /**
  * Search for products via the Admin API when both primary Storefront search and
  * variant title search return zero results. The Admin API `products` query can
- * search product titles with wildcards, finding partial name matches like "lumi"
+ * search product titles with accent-insensitive wildcards, finding partial name matches like "lumi"
  * that match no variant title but should surface the product.
  *
  * Returns deduplicated product references (GID + handle). An empty array means
@@ -291,10 +353,12 @@ async function searchProductsViaAdmin(
 ): Promise<Array<{gid: string; handle: string}>> {
   if (!term || term.trim().length < 2) return [];
 
-  const sanitised = escapeAdminQuery(term);
-  if (!sanitised) return [];
+  const sanitised = sanitiseSearchTerm(term);
 
-  const query = `title:*${sanitised}*`;
+  // Build accent-insensitive query so "lumiere" (unaccented) matches
+  // products with accented characters in their titles
+  const query = buildAccentInsensitiveQuery(sanitised);
+  if (!query) return [];
 
   try {
     const result = await (admin as {request: Function}).request(
