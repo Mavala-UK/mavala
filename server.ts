@@ -40,6 +40,25 @@ export default {
         );
       }
 
+      /**
+       * Enable full-page caching for anonymous visitors.
+       * Only cache when there's no cart, no customer account session,
+       * and no preview session cookie.
+       */
+      const cookieHeader = request.headers.get('Cookie') || '';
+      const isAnonymous =
+        !cookieHeader.includes('cart=') &&
+        !cookieHeader.includes('customer_account_') &&
+        !cookieHeader.includes('__session');
+
+      if (isAnonymous) {
+        response.headers.set(
+          'Oxygen-Cache-Control',
+          'public, max-age=300, stale-while-revalidate=600',
+        );
+        response.headers.set('Vary', 'Accept-Encoding');
+      }
+
       if (response.status === 404) {
         /**
          * Check for redirects only when there's a 404 from the app.
