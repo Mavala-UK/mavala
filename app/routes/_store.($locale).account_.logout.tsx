@@ -2,7 +2,7 @@ import {
   redirect,
   type ActionFunctionArgs,
   type LoaderFunctionArgs,
-} from '@shopify/remix-oxygen';
+} from 'react-router';
 
 export async function loader({params}: LoaderFunctionArgs) {
   const {locale} = params;

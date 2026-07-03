@@ -10,7 +10,10 @@ export function cn(...classes: (string | undefined)[]) {
   return classes.filter(Boolean).join(' ');
 }
 
-export function formatMoney(money: Partial<MoneyV2> | null | undefined) {
+export function formatMoney(money: {
+  amount?: string | null;
+  currencyCode?: string | null;
+} | null | undefined) {
   const data = useRouteLoaderData<RootLoader>('root');
   const {language} = data?.selectedLocale ?? {};
 

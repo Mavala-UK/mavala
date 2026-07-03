@@ -7,8 +7,8 @@ export function ProductPrice({
   compareAtPrice,
   className,
 }: {
-  price: MoneyV2 | null | undefined;
-  compareAtPrice?: MoneyV2 | null | undefined;
+  price: {amount?: string | null; currencyCode?: string | null} | null | undefined;
+  compareAtPrice?: {amount?: string | null; currencyCode?: string | null} | null | undefined;
   className?: string;
 }) {
   if (!price) {

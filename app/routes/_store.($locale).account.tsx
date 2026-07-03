@@ -1,7 +1,7 @@
 import {
   data as remixData,
   type LoaderFunctionArgs,
-} from '@shopify/remix-oxygen';
+} from 'react-router';
 import {CUSTOMER_DETAILS_QUERY} from '~/graphql/customer-account/CustomerDetailsQuery';
 import { useRouteLoaderData } from 'react-router';
 import {RootLoader} from '~/root';

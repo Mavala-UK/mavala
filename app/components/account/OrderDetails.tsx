@@ -118,7 +118,7 @@ export function OrderDetails() {
                   case 'MoneyV2':
                     return formatMoney({
                       amount: (Number(discount.amount) * -1).toString(),
-                      currencyCode: discount.currencyCode,
+                      currencyCode: discount.currencyCode as string,
                     });
                 }
               })()}

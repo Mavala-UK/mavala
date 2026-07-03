@@ -14,7 +14,7 @@
  * Bad slug -> 301 to the bare product (protects backlinks).
  */
 
-import {redirect, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
+import {redirect, type LoaderFunctionArgs} from 'react-router';
 import {dehydrate, HydrationBoundary, QueryClient} from '@tanstack/react-query';
 import {useLoaderData, type MetaFunction} from 'react-router';
 import type {SeoConfig} from '@shopify/hydrogen';

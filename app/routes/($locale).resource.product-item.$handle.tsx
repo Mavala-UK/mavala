@@ -1,4 +1,4 @@
-import {type LoaderFunctionArgs} from '@shopify/remix-oxygen';
+import {type LoaderFunctionArgs} from 'react-router';
 import {PRODUCT_ITEM_FRAGMENT} from '~/lib/fragments/ProductItemFragment';
 
 export async function loader({params, context}: LoaderFunctionArgs) {

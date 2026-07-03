@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router';
-import {type LinksFunction} from '@shopify/remix-oxygen';
+import {type LinksFunction} from 'react-router';
 import {ErrorMain} from '~/components/common/ErrorMain';
 import {PageLayout} from '~/components/layout/PageLayout';
 import ArchivoRegular from '/fonts/Archivo-Regular.woff2';

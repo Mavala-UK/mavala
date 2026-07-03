@@ -1,6 +1,6 @@
 import groq from 'groq';
 import {use, Suspense} from 'react';
-import {type LoaderFunctionArgs} from '@shopify/remix-oxygen';
+import {type LoaderFunctionArgs} from 'react-router';
 import { useLoaderData, type MetaFunction } from 'react-router';
 import {truncate} from '~/lib/utils';
 import {

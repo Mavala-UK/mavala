@@ -1,5 +1,5 @@
 import {useEffect} from 'react';
-import type {LoaderFunctionArgs, MetaFunction} from '@shopify/remix-oxygen';
+import type {LoaderFunctionArgs, MetaFunction} from 'react-router';
 import {
   Links,
   Meta,

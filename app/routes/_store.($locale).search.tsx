@@ -1,6 +1,6 @@
 import { useLoaderData, type MetaFunction } from 'react-router';
 import {getPaginationVariables, Analytics, getSeoMeta} from '@shopify/hydrogen';
-import {type LoaderFunctionArgs} from '@shopify/remix-oxygen';
+import {type LoaderFunctionArgs} from 'react-router';
 import {VisuallyHidden} from '@radix-ui/react-visually-hidden';
 import {FormattedMessage} from 'react-intl';
 import {SearchForm} from '~/components/search/SearchForm';

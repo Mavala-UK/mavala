@@ -4,7 +4,7 @@ import {
   type ActionFunction,
   type LoaderFunction,
   redirect,
-} from '@shopify/remix-oxygen';
+} from 'react-router';
 import type {SanityContext} from 'hydrogen-sanity';
 
 /**

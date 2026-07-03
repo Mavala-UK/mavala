@@ -1,4 +1,4 @@
-import {type LoaderFunctionArgs} from '@shopify/remix-oxygen';
+import {type LoaderFunctionArgs} from 'react-router';
 import {getSeoMeta, type SeoConfig} from '@shopify/hydrogen';
 import { useLoaderData, type MetaFunction } from 'react-router';
 import type {RootLoader} from '~/root';
