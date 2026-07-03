@@ -4,7 +4,7 @@ import type {
   ProductRelatedArticlesQueryResult,
   ProductFaqSectionQueryResult,
 } from 'sanity.generated';
-import {redirect, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
+import {redirect, type LoaderFunctionArgs} from 'react-router';
 import {ProductMain} from '~/components/product/ProductMain';
 import {BundleMain} from '~/components/bundle/BundleMain';
 import {dehydrate, HydrationBoundary, QueryClient} from '@tanstack/react-query';

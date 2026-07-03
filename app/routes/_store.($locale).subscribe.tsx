@@ -1,9 +1,9 @@
 import {
   type ActionFunctionArgs,
   type LoaderFunctionArgs,
-} from '@shopify/remix-oxygen';
+} from 'react-router';
 import {NEWSLETTER_SUBSCRIPTION_MUTATION} from '~/graphql/unstable-storefront/NewsletterSubscriptionMutation';
-import {data} from '@shopify/remix-oxygen';
+import {data} from 'react-router';
 
 export async function action({request, context}: ActionFunctionArgs) {
   const formData = await request.formData();

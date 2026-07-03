@@ -3,7 +3,7 @@ import {CartForm} from '@shopify/hydrogen';
 import type {
   LoaderFunctionArgs,
   ActionFunctionArgs,
-} from '@shopify/remix-oxygen';
+} from 'react-router';
 
 export async function action({request, context}: ActionFunctionArgs) {
   const {cart, storefront} = context;

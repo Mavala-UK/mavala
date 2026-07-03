@@ -2,7 +2,7 @@ import groq from 'groq';
 import { useOutletContext, useLoaderData, type MetaFunction } from 'react-router';
 import {getSeoMeta} from '@shopify/hydrogen';
 import {type ArticlesQueryResult} from 'sanity.generated';
-import type {LoaderFunctionArgs} from '@shopify/remix-oxygen';
+import type {LoaderFunctionArgs} from 'react-router';
 import {RootLoader} from '~/root';
 import {PER_PAGE, type BlogLoader} from './_store.($locale).blog';
 import {Breadcrumb} from '~/components/common/Breadcrumb';

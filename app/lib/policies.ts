@@ -3,7 +3,7 @@ import {
   SHOP_POLICY_QUERY,
 } from '~/graphql/admin/ShopPoliciesQueries';
 import {slugify} from './utils';
-import {type AppLoadContext} from '@shopify/remix-oxygen';
+import {type AppLoadContext} from 'react-router';
 
 export async function getPolicyByHandle(
   context: AppLoadContext,

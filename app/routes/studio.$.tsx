@@ -1,4 +1,4 @@
-import type {MetaFunction} from '@shopify/remix-oxygen';
+import type {MetaFunction} from 'react-router';
 import {Suspense, lazy} from 'react';
 import {useIsHydrated} from '~/hooks/useIsHydrated';
 

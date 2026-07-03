@@ -1,7 +1,7 @@
 import type {
   ActionFunctionArgs,
   LoaderFunctionArgs,
-} from '@shopify/remix-oxygen';
+} from 'react-router';
 
 export async function action({request, context}: ActionFunctionArgs) {
   const formData = await request.formData();

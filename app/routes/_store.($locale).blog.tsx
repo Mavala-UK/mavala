@@ -3,7 +3,7 @@ import { Outlet, useLoaderData, type MetaFunction } from 'react-router';
 import imageUrlBuilder from '@sanity/image-url';
 import {truncate} from '~/lib/utils';
 import {RootLoader} from '~/root';
-import {type LoaderFunctionArgs} from '@shopify/remix-oxygen';
+import {type LoaderFunctionArgs} from 'react-router';
 import {getSeoMeta, type SeoConfig} from '@shopify/hydrogen';
 import {seoFragment} from '~/sanity/fragments/seoFragment';
 import {

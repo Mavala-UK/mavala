@@ -5,7 +5,7 @@ import {
   data,
   type ActionFunctionArgs,
   type LoaderFunctionArgs,
-} from '@shopify/remix-oxygen';
+} from 'react-router';
 import { type MetaFunction } from 'react-router';
 import {getSeoMeta} from '@shopify/hydrogen';
 import {RootLoader} from '~/root';

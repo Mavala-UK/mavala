@@ -1,6 +1,6 @@
 import { useLoaderData, type MetaFunction } from 'react-router';
 import {getSeoMeta} from '@shopify/hydrogen';
-import {type LoaderFunctionArgs} from '@shopify/remix-oxygen';
+import {type LoaderFunctionArgs} from 'react-router';
 import type {RootLoader} from '~/root';
 import {getPolicyByHandle} from '~/lib/policies';
 import {Breadcrumb} from '~/components/common/Breadcrumb';

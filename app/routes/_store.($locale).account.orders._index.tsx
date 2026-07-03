@@ -1,6 +1,6 @@
 import { type MetaFunction } from 'react-router';
 import {getSeoMeta} from '@shopify/hydrogen';
-import {type LoaderFunctionArgs} from '@shopify/remix-oxygen';
+import {type LoaderFunctionArgs} from 'react-router';
 import {RootLoader} from '~/root';
 import {CUSTOMER_ORDERS_QUERY} from '~/graphql/customer-account/CustomerOrdersQuery';
 import {ACCOUNT_ROUTES} from '~/components/account/AccountMain';

@@ -1,7 +1,7 @@
 import {use, Suspense} from 'react';
 import groq from 'groq';
 import imageUrlBuilder from '@sanity/image-url';
-import {type LoaderFunctionArgs} from '@shopify/remix-oxygen';
+import {type LoaderFunctionArgs} from 'react-router';
 import type {SeoConfig} from '@shopify/hydrogen';
 import type {RootLoader} from '~/root';
 import {getSeoMeta} from '@shopify/hydrogen';

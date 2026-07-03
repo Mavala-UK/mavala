@@ -1,5 +1,5 @@
 import {getSelectedProductOptions} from '@shopify/hydrogen';
-import {type LoaderFunctionArgs} from '@shopify/remix-oxygen';
+import {type LoaderFunctionArgs} from 'react-router';
 import {PRODUCT_FRAGMENT} from '~/lib/fragments/ProductFragment';
 
 export async function loader({params, request, context}: LoaderFunctionArgs) {

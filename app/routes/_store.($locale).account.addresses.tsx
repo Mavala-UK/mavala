@@ -5,7 +5,7 @@ import {
   data,
   type ActionFunctionArgs,
   type LoaderFunctionArgs,
-} from '@shopify/remix-oxygen';
+} from 'react-router';
 import { useActionData, type MetaFunction } from 'react-router';
 import {
   UPDATE_ADDRESS_MUTATION,

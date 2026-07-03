@@ -1,4 +1,4 @@
-import {redirect, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
+import {redirect, type LoaderFunctionArgs} from 'react-router';
 
 // /pages/blog has a vestigial Sanity page document with no resolving Hydrogen
 // route (the blog lives at /blog). This dedicated route file outscores both
