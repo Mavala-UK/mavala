@@ -1,13 +1,67 @@
 import path from 'path';
-import {defineConfig} from 'vite';
+import {defineConfig, type Plugin} from 'vite';
 import {hydrogen} from '@shopify/hydrogen/vite';
 import {oxygen} from '@shopify/mini-oxygen/vite';
 import {reactRouter} from '@react-router/dev/vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import babel from 'vite-plugin-babel';
 
+/**
+ * Shim node:crypto for Cloudflare Workers / Oxygen runtime.
+ *
+ * uuid v13+ resolved to dist-node which imports node:crypto for
+ * randomFillSync, randomUUID, createHash. Workers has globalThis.crypto
+ * (Web Crypto API) which provides getRandomValues and randomUUID.
+ * createHash is mapped via SubtleCrypto.digest.
+ */
+function nodeCryptoShimPlugin(): Plugin {
+  const VIRTUAL_ID = '\0virtual:node-crypto';
+  return {
+    name: 'node-crypto-shim',
+    enforce: 'pre',
+    resolveId(source) {
+      if (source === 'node:crypto') {
+        return VIRTUAL_ID;
+      }
+      return null;
+    },
+    load(id) {
+      if (id === VIRTUAL_ID) {
+        return `
+var cr = globalThis.crypto || {};
+var subtle = cr.subtle || {};
+var enc = new TextEncoder();
+
+function randomFillSync(buf, off, sz) {
+  var bytes = cr.getRandomValues(new Uint8Array(sz || buf.byteLength - (off || 0)));
+  if (off) buf.set(bytes, off); else buf.set(bytes);
+  return buf;
+}
+
+function randomUUID() { return cr.randomUUID(); }
+
+function createHash(algo) {
+  var a = algo && algo.toLowerCase() === 'md5' ? 'MD5' : 'SHA-1';
+  return { update: function(d) {
+    var e = typeof d === 'string' ? enc.encode(d) : d;
+    return { digest: function() {
+      var r = subtle.digest(a, e);
+      return r && typeof r.then === 'function' ? r.then(function(h) { return new Uint8Array(h); }) : new Uint8Array(r);
+    }};
+  }};
+}
+
+export { randomFillSync, randomUUID, createHash };
+`;
+      }
+      return null;
+    },
+  };
+}
+
 export default defineConfig({
   plugins: [
+    nodeCryptoShimPlugin(),
     hydrogen(),
     oxygen(),
     reactRouter(),
@@ -52,6 +106,9 @@ export default defineConfig({
     },
   },
   ssr: {
+    // Force-bundle uuid to prevent Vite from auto-externalizing its node:crypto
+    // import (uuid v13+ dist-node imports node:crypto).
+    noExternal: ['uuid'],
     optimizeDeps: {
       /**
        * Include dependencies here if they throw CJS<>ESM errors.
