@@ -39,14 +39,22 @@ export function AxeptioConsent() {
                   'Error syncing Axeptio with Shopify customer privacy',
                   result,
                 );
-                return;
               }
-              ready();
             },
           );
         });
       });
     });
+
+    // Mark this integration ready IMMEDIATELY, not inside cookies:complete.
+    // cookies:complete only fires when the visitor clicks a banner button, so
+    // gating ready() on it left Hydrogen's Analytics.Provider queue frozen for
+    // every visitor who ignored the banner: zero analytics events reached
+    // Shopify for their whole session (orders showed as self-referral instead
+    // of carrying the landing UTM/gclid). Consent enforcement does not live
+    // here: Hydrogen's canTrack/hasUserConsent gates, driven by the Customer
+    // Privacy bridge above, decide whether queued events actually send.
+    ready();
   }, [customerPrivacy, ready]);
 
   return null;
