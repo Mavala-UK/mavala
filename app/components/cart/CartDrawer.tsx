@@ -125,15 +125,6 @@ export function CartDrawer() {
           <Button
             aria-busy={isFetchingCart}
             onClick={() => {
-              console.log('checkout click', {
-                checkoutUrl,
-                areAllItemsAvailable,
-                lines: lines?.map((l) => ({
-                  title: l?.merchandise?.product?.title,
-                  quantityAvailable: l?.merchandise?.quantityAvailable,
-                  id: l?.merchandise?.id,
-                })),
-              });
               if (!areAllItemsAvailable) return;
               location.href = checkoutUrl ?? '/checkout';
             }}
