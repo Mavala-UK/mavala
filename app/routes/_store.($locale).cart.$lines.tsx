@@ -1,4 +1,5 @@
 import {redirect, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
+import {appendGclidToUrl} from '~/lib/trackingParams';
 
 /**
  * Automatically creates a new cart based on the URL and redirects straight to checkout.
@@ -56,9 +57,13 @@ export async function loader({request, context, params}: LoaderFunctionArgs) {
   // Update cart id in cookie
   const headers = cart.setCartId(cartResult.id);
 
-  // redirect to checkout
+  // redirect to checkout, appending gclid from _gcl_aw cookie if present
   if (cartResult.checkoutUrl) {
-    return redirect(cartResult.checkoutUrl, {headers});
+    const checkoutUrl = appendGclidToUrl(
+      cartResult.checkoutUrl,
+      request.headers.get('Cookie') ?? undefined,
+    );
+    return redirect(checkoutUrl, {headers});
   } else {
     throw new Error('No checkout URL found');
   }

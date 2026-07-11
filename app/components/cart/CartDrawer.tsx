@@ -28,6 +28,7 @@ import {ProductPrice} from '../product/ProductPrice';
 import {CompleteYourOrder} from '../ui/CompleteYourOrder';
 import {DiscountsBanners} from './DiscountsBanners';
 import {Gifts} from './Gifts';
+import {appendGclidToUrl} from '~/lib/trackingParams';
 import styles from './CartDrawer.module.css';
 
 export function CartDrawer() {
@@ -70,7 +71,7 @@ export function CartDrawer() {
 
     event.preventDefault();
 
-    location.href = checkoutUrl ?? '/';
+    location.href = appendGclidToUrl(checkoutUrl, undefined, '/');
   };
 
   return (
@@ -126,7 +127,7 @@ export function CartDrawer() {
             aria-busy={isFetchingCart}
             onClick={() => {
               if (!areAllItemsAvailable) return;
-              location.href = checkoutUrl ?? '/checkout';
+              location.href = appendGclidToUrl(checkoutUrl, undefined, '/checkout');
             }}
           >
             <ButtonEffect>
