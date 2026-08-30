@@ -24,12 +24,17 @@ export function removeZeroWidthSpace(str: string) {
   return str.replace(/[\u200B-\u200D\uFEFF]/g, '');
 }
 
-export function truncate(str: string, num = 120): string {
+export function truncate(str: string, num = 160): string {
   if (typeof str !== 'string') return '';
-  if (str.length <= num) {
-    return str;
+  const trimmed = str.trim();
+  if (trimmed.length <= num) {
+    return trimmed;
   }
-  return str.slice(0, num - 3) + '…';
+  const lastSpace = trimmed.lastIndexOf(' ', num);
+  if (lastSpace > 0) {
+    return trimmed.slice(0, lastSpace).trim();
+  }
+  return trimmed.slice(0, num).trim();
 }
 
 export function toTitleCase(string: string) {
