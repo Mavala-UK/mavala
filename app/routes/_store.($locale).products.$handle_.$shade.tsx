@@ -188,6 +188,7 @@ async function loadCriticalData({
 
   const seo: SeoConfig = {
     title: `${product.seo?.title ?? product.title} - ${resolvedVariant.title}`,
+    titleTemplate: '%s',
     description: truncate(product.seo?.description ?? product.description),
     media: product.featuredImage && {
       url: product.featuredImage.url,
