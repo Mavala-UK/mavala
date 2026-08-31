@@ -4,8 +4,26 @@ import type {LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import type {SitemapQueryResult} from 'sanity.generated';
 import {getShadeOptionName, slugifyShade, buildShadePath} from '~/lib/shadeUrl';
 
+function xmlEscape(str: string): string {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
+}
+
+function renderImageXml(image: {url: string; altText?: string | null} | null | undefined): string {
+  if (!image?.url) return '';
+  return `
+            <image:image>
+              <image:loc>${xmlEscape(image.url)}</image:loc>
+              ${image.altText ? `<image:title>${xmlEscape(image.altText)}</image:title>` : ''}
+            </image:image>`;
+}
+
 const SITEMAP_PREFIX = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">`;
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:xhtml="http://www.w3.org/1999/xhtml">`;
 const SITEMAP_SUFFIX = `</urlset>`;
 
 export async function loader({
@@ -46,7 +64,16 @@ export async function loader({
     const allProducts: Array<{
       handle: string;
       updatedAt: string;
+      featuredImage?: {url: string; altText?: string | null} | null;
       options: Array<{name: string; optionValues: Array<{name: string}>}>;
+      variants: {
+        nodes: Array<{
+          id: string;
+          title: string;
+          selectedOptions: Array<{name: string; value: string}>;
+          image?: {url: string; altText?: string | null} | null;
+        }>;
+      };
     }> = products?.nodes ?? [];
 
     const entries: string[] = [];
@@ -54,13 +81,14 @@ export async function loader({
     for (const product of allProducts) {
       const productUrl = `${baseUrl}${pathPrefix}/products/${product.handle}`;
       const lastmod = new Date(product.updatedAt).toISOString();
+      const productImageXml = renderImageXml(product.featuredImage);
 
       // Bare product entry (present for all products)
       entries.push(`
           <url>
-            <loc>${productUrl}</loc>
+            <loc>${xmlEscape(productUrl)}</loc>
             <lastmod>${lastmod}</lastmod>
-            <changefreq>weekly</changefreq>
+            <changefreq>weekly</changefreq>${productImageXml}
           </url>`);
 
       // Shade path entries for multi-variant products
@@ -76,11 +104,21 @@ export async function loader({
           if (!slug || seen.has(slug)) continue; // skip empty slugs + collisions
           seen.add(slug);
           const shadePath = buildShadePath(product.handle, value, pathPrefix);
+
+          // Find the matching variant for this shade value to get its image
+          const variant = product.variants.nodes.find((v) =>
+            v.selectedOptions.some(
+              (opt) => opt.name === shadeOptName && opt.value === value,
+            ),
+          );
+          const shadeImage = variant?.image ?? product.featuredImage;
+          const shadeImageXml = renderImageXml(shadeImage);
+
           entries.push(`
           <url>
-            <loc>${baseUrl}${shadePath}</loc>
+            <loc>${xmlEscape(`${baseUrl}${shadePath}`)}</loc>
             <lastmod>${lastmod}</lastmod>
-            <changefreq>weekly</changefreq>
+            <changefreq>weekly</changefreq>${shadeImageXml}
           </url>`);
         }
       }
@@ -144,10 +182,28 @@ const PRODUCTS_FOR_SITEMAP_QUERY = `#graphql
       nodes {
         handle
         updatedAt
+        featuredImage {
+          url
+          altText
+        }
         options {
           name
           optionValues {
             name
+          }
+        }
+        variants(first: 100) {
+          nodes {
+            id
+            title
+            selectedOptions {
+              name
+              value
+            }
+            image {
+              url
+              altText
+            }
           }
         }
       }
