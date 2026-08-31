@@ -42,7 +42,9 @@ export function ProductReviews({product}: {product: ProductFragment}) {
             <StarBold />
             <p className={styles['rating-container']}>
               <span className={styles['rating-value']}>
-                {bottomline?.average_score}
+                {typeof bottomline?.average_score === 'number'
+                  ? bottomline.average_score.toFixed(1)
+                  : bottomline?.average_score}
               </span>{' '}
               <span className={styles['rating-count']}>
                 ({bottomline?.total_review}{' '}
