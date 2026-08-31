@@ -186,16 +186,18 @@ async function loadCriticalData({
     'qfBl6DELQsnPNDKk8lHzWt0e47C1cCeeCR1448Fh',
   );
 
+  const ogImage = resolvedVariant.image ?? product.featuredImage;
+
   const seo: SeoConfig = {
     title: `${product.seo?.title ?? product.title} - ${resolvedVariant.title}`,
     titleTemplate: '%s',
     description: truncate(product.seo?.description ?? product.description),
-    media: product.featuredImage && {
-      url: product.featuredImage.url,
+    media: ogImage && {
+      url: ogImage.url,
       type: 'image',
-      width: 1200,
-      height: 1200,
-      altText: product.featuredImage.altText,
+      width: ogImage.width ?? 1200,
+      height: ogImage.height ?? 1200,
+      altText: ogImage.altText ?? undefined,
     },
     // Per-shade canonical: THIS is the SEO win.
     // Every shade canonicalises to ITSELF, not the bare product URL.

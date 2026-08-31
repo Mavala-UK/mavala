@@ -7946,11 +7946,26 @@ export type ProductsForSitemapQuery = {
   products: {
     nodes: Array<
       Pick<StorefrontAPI.Product, 'handle' | 'updatedAt'> & {
+        featuredImage?: StorefrontAPI.Maybe<
+          Pick<StorefrontAPI.Image, 'url' | 'altText'>
+        >;
         options: Array<
           Pick<StorefrontAPI.ProductOption, 'name'> & {
             optionValues: Array<Pick<StorefrontAPI.ProductOptionValue, 'name'>>;
           }
         >;
+        variants: {
+          nodes: Array<
+            Pick<StorefrontAPI.ProductVariant, 'id' | 'title'> & {
+              selectedOptions: Array<
+                Pick<StorefrontAPI.SelectedOption, 'name' | 'value'>
+              >;
+              image?: StorefrontAPI.Maybe<
+                Pick<StorefrontAPI.Image, 'url' | 'altText'>
+              >;
+            }
+          >;
+        };
       }
     >;
   };
@@ -8054,7 +8069,7 @@ interface GeneratedQueryTypes {
     return: ProductsByGidQuery;
     variables: ProductsByGidQueryVariables;
   };
-  '#graphql\n  query ProductsForSitemap(\n    $language: LanguageCode\n    $country: CountryCode\n  ) @inContext(language: $language, country: $country) {\n    products(first: 250) {\n      nodes {\n        handle\n        updatedAt\n        options {\n          name\n          optionValues {\n            name\n          }\n        }\n      }\n    }\n  }\n': {
+  '#graphql\n  query ProductsForSitemap(\n    $language: LanguageCode\n    $country: CountryCode\n  ) @inContext(language: $language, country: $country) {\n    products(first: 250) {\n      nodes {\n        handle\n        updatedAt\n        featuredImage {\n          url\n          altText\n        }\n        options {\n          name\n          optionValues {\n            name\n          }\n        }\n        variants(first: 100) {\n          nodes {\n            id\n            title\n            selectedOptions {\n              name\n              value\n            }\n            image {\n              url\n              altText\n            }\n          }\n        }\n      }\n    }\n  }\n': {
     return: ProductsForSitemapQuery;
     variables: ProductsForSitemapQueryVariables;
   };
