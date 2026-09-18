@@ -30,14 +30,9 @@ export async function createAppLoadContext(
     AppSession.init(request, [env.SESSION_SECRET]),
   ]);
 
-  const isWarehouseTest = env.WAREHOUSE_TEST_MODE === 'true';
-  const storeDomain = isWarehouseTest
-    ? 'mavala-uk-bc-test.myshopify.com'
-    : env.PUBLIC_STORE_DOMAIN;
-  const storefrontToken =
-    isWarehouseTest && env.PUBLIC_STORE_DOMAIN === 'mavalauk.myshopify.com'
-      ? 'ebeb1764de6114cf68621eb83d42a2fb'
-      : env.PUBLIC_STOREFRONT_API_TOKEN;
+  // Warehouse staging branch connects directly to the test store
+  const storeDomain: string = 'mavala-uk-bc-test.myshopify.com';
+  const storefrontToken: string = 'ebeb1764de6114cf68621eb83d42a2fb';
 
   const sites: Sites = {
     isMavalaFrance:
