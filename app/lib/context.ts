@@ -4,7 +4,7 @@ import {createSanityContext} from 'hydrogen-sanity';
 import {CART_QUERY_FRAGMENT} from './fragments/CartQueryFragment';
 import {AppSession} from '~/lib/session';
 import {SANITY_API_VERSION} from '~/sanity/constants';
-import {CacheShort, createHydrogenContext} from '@shopify/hydrogen';
+import {CacheLong, CacheShort, createHydrogenContext} from '@shopify/hydrogen';
 import {getLocaleFromRequest, getLocalesByDomain} from './i18n';
 import type {Localizations, Sites} from './types';
 
@@ -30,16 +30,33 @@ export async function createAppLoadContext(
     AppSession.init(request, [env.SESSION_SECRET]),
   ]);
 
+  const isWarehouseTest = env.WAREHOUSE_TEST_MODE === 'true';
+  const storeDomain = isWarehouseTest
+    ? 'mavala-uk-bc-test.myshopify.com'
+    : env.PUBLIC_STORE_DOMAIN;
+  const storefrontToken =
+    isWarehouseTest && env.PUBLIC_STORE_DOMAIN === 'mavalauk.myshopify.com'
+      ? 'ebeb1764de6114cf68621eb83d42a2fb'
+      : env.PUBLIC_STOREFRONT_API_TOKEN;
+
   const sites: Sites = {
-    isMavalaFrance: env.PUBLIC_STORE_DOMAIN === 'mavalauk.myshopify.com',
+    isMavalaFrance:
+      storeDomain === 'mavalauk.myshopify.com' ||
+      storeDomain === 'mavala-uk-bc-test.myshopify.com',
     isMavalaCorporate:
-      env.PUBLIC_STORE_DOMAIN === 'mavala-corporate.myshopify.com',
+      storeDomain === 'mavala-corporate.myshopify.com',
   };
 
   const locales: Localizations = getLocalesByDomain(sites);
 
+  const effectiveEnv: Env = {
+    ...env,
+    PUBLIC_STORE_DOMAIN: storeDomain,
+    PUBLIC_STOREFRONT_API_TOKEN: storefrontToken,
+  };
+
   const hydrogenContext = createHydrogenContext({
-    env,
+    env: effectiveEnv,
     request,
     cache,
     waitUntil,
@@ -51,13 +68,13 @@ export async function createAppLoadContext(
   });
 
   const unstable_storefront = createStorefrontApiClient({
-    storeDomain: env.PUBLIC_STORE_DOMAIN,
+    storeDomain,
     apiVersion: 'unstable',
-    publicAccessToken: env.PUBLIC_STOREFRONT_API_TOKEN,
+    publicAccessToken: storefrontToken,
   });
 
   const admin = createAdminApiClient({
-    storeDomain: env.PUBLIC_STORE_DOMAIN,
+    storeDomain,
     apiVersion: '2026-04',
     accessToken: env.PRIVATE_ADMIN_API_TOKEN as string,
   });
@@ -67,7 +84,7 @@ export async function createAppLoadContext(
     request,
     // Caching mechanism
     cache,
-    defaultStrategy: CacheShort(),
+    defaultStrategy: CacheLong(),
     waitUntil,
 
     // Sanity client configuration
@@ -108,6 +125,7 @@ export async function createAppLoadContext(
 
   return {
     ...hydrogenContext,
+    env: effectiveEnv,
     unstable_storefront,
     admin,
     sanity,

@@ -18,6 +18,7 @@ declare global {
     PRIVATE_YOTPO_APP_KEY?: string;
     MAPBOX_ACCESS_TOKEN?: string;
     OMNISEND_BRAND_ID?: string;
+    WAREHOUSE_TEST_MODE?: string;
   }
 
   interface Window {
