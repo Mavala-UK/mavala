@@ -4,7 +4,7 @@ import {createSanityContext} from 'hydrogen-sanity';
 import {CART_QUERY_FRAGMENT} from './fragments/CartQueryFragment';
 import {AppSession} from '~/lib/session';
 import {SANITY_API_VERSION} from '~/sanity/constants';
-import {CacheLong, createHydrogenContext} from '@shopify/hydrogen';
+import {CacheShort, createHydrogenContext} from '@shopify/hydrogen';
 import {getLocaleFromRequest, getLocalesByDomain} from './i18n';
 import type {Localizations, Sites} from './types';
 
@@ -67,7 +67,7 @@ export async function createAppLoadContext(
     request,
     // Caching mechanism
     cache,
-    defaultStrategy: CacheLong(),
+    defaultStrategy: CacheShort(),
     waitUntil,
 
     // Sanity client configuration
